@@ -1,14 +1,8 @@
 import React from 'react';
 import AppLayout from '../components/AppLayout';
 import LoginForm from '../components/LoginForm';
-import styled from 'styled-components';
 import Head from 'next/head';
-
-const PageTitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 700;
-  padding-bottom: 3rem;
-`;
+import { PageTitle } from '../styles/layout/GlobalStyles';
 
 const Login = () => {
   return (

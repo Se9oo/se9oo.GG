@@ -2,8 +2,8 @@ import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
-import styled from 'styled-components';
 import PostCard from '../components/PostCard';
+import { PageTitle } from '../styles/layout/GlobalStyles';
 
 export const data = [
   {
@@ -38,12 +38,6 @@ export const data = [
   },
 
 ];
-
-const PageTitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 700;
-  padding-bottom: 3rem;
-`;
 
 const Community = () => {
   const isLoggedIn = false;

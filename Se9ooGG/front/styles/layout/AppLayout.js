@@ -44,6 +44,7 @@ export const DesktopNav = styled.nav`
 `;
 
 export const ContentContainer = styled.section`
+  display: block;
   padding: 1rem 1rem 71px;
 
   @media ${props => props.theme.laptop} {
