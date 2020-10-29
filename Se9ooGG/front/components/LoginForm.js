@@ -1,10 +1,14 @@
 import React, { useCallback, useState } from 'react';
 import Link from 'next/link';
+import { useDispatch } from 'react-redux';
 import { Button, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/LoginForm';
+import { LoginAction } from '../reducer/user';
 
 const LoginForm = () => {
+  const dispatch = useDispatch('');
+
   // email
   const [email, setEmail] = useState('');
   const onChangeEmail = useCallback((e) => {
@@ -19,7 +23,8 @@ const LoginForm = () => {
 
   // Login Submit
   const onSubmitForm = useCallback(() => {
-    console.log(`id: ${id}, password: ${password}`);
+    console.log(`email: ${email}, password: ${password}`);
+    dispatch(LoginAction({ email: email, password: password }));
   }, [email, password]);
 
   return (
@@ -53,7 +58,7 @@ const LoginForm = () => {
         {/* button */}
         <ButtonContainer>
           <Button><Link href="/signup"><a>회원가입</a></Link></Button>
-          <Button type="primary">로그인</Button>
+          <Button type="primary" htmlType="submit">로그인</Button>
         </ButtonContainer>
       </FormContainer>
     </>

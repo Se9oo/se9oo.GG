@@ -27,6 +27,10 @@ export const DesktopNav = styled.nav`
     font-size: 2rem;
   }
 
+  & button {
+    justify-content: flex-end;
+  }
+
   & ul {
     display: flex;
     justify-content: flex-end;

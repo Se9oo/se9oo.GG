@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import GlobalStyles from '../styles/layout/GlobalStyles';
-import 'antd/dist/antd.css';
 import { ThemeProvider } from 'styled-components';
 import theme from '../styles/layout/theme';
+import wrapper from '../store/configureStore';
+import 'antd/dist/antd.css';
 
 const Se9oogg = ({ Component }) => {
   return (
@@ -27,4 +28,4 @@ Se9oogg.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
 
-export default Se9oogg;
+export default wrapper.withRedux(Se9oogg);

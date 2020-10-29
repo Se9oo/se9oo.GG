@@ -9,13 +9,12 @@ const ChampionImg = styled.img`
 `;
 
 const ChampionList = ({ data }) => {
-  console.log(JSON.stringify(data));
   return (
     <>
       <ul style={{ display: 'flex', flexWrap: 'wrap', height: '100px'}}>
         {
           data.map((v) => {
-            return <li><ChampionImg src={`/img/champion/${v}.png`} alt={ `${v}` }/></li>
+            return <li key={v}><ChampionImg src={`/img/champion/${v}.png`} alt={ `${v}` }/></li>
           })
         }
       </ul>
