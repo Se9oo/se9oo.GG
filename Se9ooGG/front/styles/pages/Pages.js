@@ -5,7 +5,6 @@ import { Input } from 'antd'
 export const PageTitle = styled.h2`
   font-size: 2rem;
   font-weight: 700;
-  padding-bottom: 3rem;
 `;
 
 // index
@@ -26,6 +25,13 @@ export const UserSearchInput = styled(Input.Search)`
   padding: 0 10%;
 
   & ::placeholder {
-    font-size: 1rem;
+    font-size: 1.2rem;
   }
+`;
+
+// profile
+export const ProfileHeader = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;

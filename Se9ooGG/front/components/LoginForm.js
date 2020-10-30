@@ -16,13 +16,13 @@ const LoginForm = () => {
   const [email, setEmail] = useState('');
   const onChangeEmail = useCallback((e) => {
     setEmail(e.target.value);
-  }, []);
+  }, [email]);
 
   // password
   const [password, setPassword] = useState('');
   const onChangePassword = useCallback((e) => {
     setPassword(e.target.value);
-  }, []);
+  }, [password]);
 
   // Login Submit
   const onSubmitForm = useCallback(() => {

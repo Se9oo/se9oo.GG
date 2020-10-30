@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { Container, ContentContainer, DesktopNav, MobileNav, MobileFooter } from '../styles/layout/AppLayout';
+import { Container, ContentContainer, DesktopNav, MobileFooter } from '../styles/layout/AppLayout';
 import { BarChartOutlined, CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
 
 const AppLayout = ({ children }) => {
   const { isLoggedIn } = useSelector((state) => state.user);
-  const [isToggleMenu, setIsToggleMenu ]= useState(false);
 
   return (
     <Container>

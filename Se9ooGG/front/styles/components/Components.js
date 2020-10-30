@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Form } from 'antd';
 
+// common
+export const ErrorMessage = styled.div`
+  color: #e03131;
+`;
+
 // LoginForm
 export const FormContainer = styled(Form)`
   padding: 3rem 0;

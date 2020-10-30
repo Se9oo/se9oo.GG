@@ -10,7 +10,7 @@ function getChampionList() {
   for (let i in championData.data) {
     arr.push(i);
   }
-  console.log(JSON.stringify(arr));
+  
   return arr;
 };
 
