@@ -1,6 +1,7 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
-import { useDispatch } from 'react-redux';
+import Router from 'next/router';
+import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/LoginForm';
@@ -8,6 +9,8 @@ import { LoginAction } from '../reducer/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch('');
+  // 로그인 성공 여부
+  const { isLoginSuccess } = useSelector((state) => (state.user));
 
   // email
   const [email, setEmail] = useState('');
@@ -23,9 +26,16 @@ const LoginForm = () => {
 
   // Login Submit
   const onSubmitForm = useCallback(() => {
-    console.log(`email: ${email}, password: ${password}`);
     dispatch(LoginAction({ email: email, password: password }));
   }, [email, password]);
+
+  // isLoginSuccess state 값이 변할 경우
+  // profile page로 이동
+  useEffect(() => {
+    if (isLoginSuccess) {
+      Router.push('/profile');
+    }
+  }, [isLoginSuccess]);
 
   return (
     <>
