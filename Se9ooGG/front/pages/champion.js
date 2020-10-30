@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
-import { PageTitle } from '../styles/layout/GlobalStyles';
+import { PageTitle } from '../styles/pages/Pages';
 import ChampionList from '../components/ChampionList';
 import championData from '../json/champion.json';
 

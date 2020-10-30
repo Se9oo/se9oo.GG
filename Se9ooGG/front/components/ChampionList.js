@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const ChampionImg = styled.img`
@@ -11,7 +11,7 @@ const ChampionImg = styled.img`
 const ChampionList = ({ data }) => {
   return (
     <>
-      <ul style={{ display: 'flex', flexWrap: 'wrap', height: '100px'}}>
+      <ul style={{ display: 'flex', flexWrap: 'wrap'}}>
         {
           data.map((v) => {
             return <li key={v}><ChampionImg src={`/img/champion/${v}.png`} alt={ `${v}` }/></li>

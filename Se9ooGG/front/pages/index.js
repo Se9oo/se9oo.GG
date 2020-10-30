@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
-import { HomeContainer, MainLogoImg, UserSearchInput } from '../styles/pages/Index';
+import { HomeContainer, MainLogoImg, UserSearchInput } from '../styles/pages/Pages';
 
 const Home = () => {
   const [search, setSearch] = useState('');

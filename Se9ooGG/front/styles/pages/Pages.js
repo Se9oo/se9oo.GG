@@ -1,6 +1,14 @@
 import styled from 'styled-components';
 import { Input } from 'antd'
 
+// PageTitle
+export const PageTitle = styled.h2`
+  font-size: 2rem;
+  font-weight: 700;
+  padding-bottom: 3rem;
+`;
+
+// index
 export const HomeContainer = styled.div`
   width: 100%;
   margin: 0;

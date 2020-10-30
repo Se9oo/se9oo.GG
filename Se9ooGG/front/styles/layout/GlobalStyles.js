@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components';
+import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 
 const GlobalStyles = createGlobalStyle`
@@ -58,13 +58,6 @@ const GlobalStyles = createGlobalStyle`
   .ant-menu-horizontal > .ant-menu-item a {
     color: #ffffff;
   }
-`;
-
-// Page Title Style
-export const PageTitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 700;
-  padding-bottom: 3rem;
 `;
 
 export default GlobalStyles;

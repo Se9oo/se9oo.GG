@@ -1,6 +1,6 @@
-import React, { useCallback, useState } from 'react';
-import { Form, Input } from 'antd';
+import React, { useCallback } from 'react';
 import useInput from '../hooks/useInput';
+import { Form, Input } from 'antd';
 
 const SignUpForm = () => {
   const [email, setEmail, onChangeEmail] = useInput('');

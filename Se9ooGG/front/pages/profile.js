@@ -1,12 +1,14 @@
 import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
+import { PageTitle } from '../styles/pages/Pages';
+import { Button } from 'antd';
 import styled from 'styled-components';
 
-const PageTitle = styled.h2`
-  font-size: 2rem;
-  font-weight: 700;
-  padding-bottom: 3rem;
+const ProfileContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 `;
 
 const Profile = () => {
@@ -15,7 +17,10 @@ const Profile = () => {
       <Head>
         <title>se9oo.GG | 프로필</title>
       </Head>
-      <PageTitle>프로필</PageTitle>
+      <ProfileContainer>
+        <PageTitle>프로필</PageTitle>
+        <Button type="primary">로그아웃</Button>
+      </ProfileContainer>
     </AppLayout>
   );
 };

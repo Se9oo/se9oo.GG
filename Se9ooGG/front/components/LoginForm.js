@@ -4,7 +4,7 @@ import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/LoginForm';
+import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/Components';
 import { LoginAction } from '../reducer/user';
 
 const LoginForm = () => {
