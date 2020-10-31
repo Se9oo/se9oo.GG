@@ -3,6 +3,14 @@ import useInput from '../hooks/useInput';
 import { ButtonContainer, ErrorMessage, InputContainer } from '../styles/components/Components';
 import { Button, Form, Input, Modal } from 'antd';
 
+function errorModal (msg) {
+  Modal.error({
+    title: 'ERROR',
+    content: `${msg}란을 채워주세요.`,
+    okText: '닫기',
+  })
+}
+
 const SignUpForm = () => {
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -27,19 +35,51 @@ const SignUpForm = () => {
 
   // 회원가입 버튼 클릭
   const onClickSignupBtn = useCallback(() => {
-    setShowModal(true);
+    if (!email) {
+      errorModal('이메일');
+      return;
+    }
+
+    if (!nickname) {
+      errorModal('닉네임');
+      return;
+    }
+
+    if (!password) {
+      errorModal('비밀번호');
+      return;
+    }
+
+    if (!passwordCheck) {
+      errorModal('비밀번호 확인');
+      return;
+    }
+
+    if (password !== passwordCheck) {
+      Modal.error({
+        title: 'ERROR',
+        content: '비밀번호가 다릅니다.',
+        okText: '닫기',
+      });
+    }
+
+    if (password && passwordCheck && (password === passwordCheck)) {
+      setShowModal(true);
+    }
+  }, [email, nickname, password, passwordCheck]);
+  
+  const onSubmitForm = useCallback(() => {
+    console.log(`email: ${email} password: ${password} nickname: ${nickname}`)  
   }, []);
+
   // 회원가입 모달 - ok버튼 클릭
   const onOkModal = useCallback(() => {
     setShowModal(false);
+    onSubmitForm();
   }, []);
   // 회원가입 모달 - cancel 버튼 클릭
   const onCancelModal = useCallback(() => {
     setShowModal(false);
-  }, []);
-
-  const onSubmitForm = useCallback(() => {
-    
   }, []);
   
   return (
@@ -54,6 +94,7 @@ const SignUpForm = () => {
             placeholder="이메일"
             value={email}
             onChange={onChangeEmail}
+            required
           />
         </InputContainer>
         <InputContainer>
@@ -64,6 +105,7 @@ const SignUpForm = () => {
             placeholder="닉네임"
             value={nickname}
             onChange={onChangeNickname}
+            required
           />
         </InputContainer>
         <InputContainer>
@@ -74,6 +116,7 @@ const SignUpForm = () => {
             placeholder="비밀번호"
             value={password}
             onChange={onChangePassword}
+            required
           />
         </InputContainer>
         <InputContainer>
@@ -84,6 +127,7 @@ const SignUpForm = () => {
             placeholder="비밀번호 확인"
             value={passwordCheck}
             onChange={onChangePasswordCheck}
+            required
           />
         </InputContainer>
         { passwordError && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage> }
@@ -96,6 +140,8 @@ const SignUpForm = () => {
         visible={showModal}
         onOk={onOkModal}
         onCancel={onCancelModal}
+        okText="가입"
+        cancelText="취소"
       >
         <p>가입 하시겠습니까?</p>
       </Modal>
