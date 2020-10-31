@@ -1,12 +1,15 @@
 import React, { useCallback, useState } from 'react';
 import useInput from '../hooks/useInput';
 import { ButtonContainer, ErrorMessage, InputContainer } from '../styles/components/Components';
-import { Button, Form, Input } from 'antd';
+import { Button, Form, Input, Modal } from 'antd';
 
 const SignUpForm = () => {
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [passwordError, setPasswordError] = useState(false);
+  // 회원가입 modal 노출 여부
+  const [showModal, setShowModal] = useState(false);
+
   // 비밀번호
   const [password, setPassword] = useState('');
   // 비밀번호 확인
@@ -21,6 +24,19 @@ const SignUpForm = () => {
     setPasswordCheck(e.target.value);
     setPasswordError(password !== e.target.value);
   }, [password]);
+
+  // 회원가입 버튼 클릭
+  const onClickSignupBtn = useCallback(() => {
+    setShowModal(true);
+  }, []);
+  // 회원가입 모달 - ok버튼 클릭
+  const onOkModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
+  // 회원가입 모달 - cancel 버튼 클릭
+  const onCancelModal = useCallback(() => {
+    setShowModal(false);
+  }, []);
 
   const onSubmitForm = useCallback(() => {
     
@@ -72,9 +88,17 @@ const SignUpForm = () => {
         </InputContainer>
         { passwordError && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage> }
         <ButtonContainer>
-          <Button type="primary">가입하기</Button>
+          <Button type="primary" onClick={onClickSignupBtn}>가입하기</Button>
         </ButtonContainer>
       </Form>
+      <Modal
+        title="회원가입"
+        visible={showModal}
+        onOk={onOkModal}
+        onCancel={onCancelModal}
+      >
+        <p>가입 하시겠습니까?</p>
+      </Modal>
     </>
   );
 };
