@@ -6,6 +6,14 @@ const GlobalStyles = createGlobalStyle`
   * { 
     margin: 0;
     padding: 0;
+    box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
   }
 
   html {
@@ -13,12 +21,11 @@ const GlobalStyles = createGlobalStyle`
 
     @media ${props => props.theme.laptop} {
       font-size: 16px;
-    }
+    } 
   }
 
-  body {
-    box-sizing: border-box;
-    font-family: 'Spoqa Han Sans', 'Sans-serif' !important;
+  body, input, a, ol, ul, li, button {
+    font-family: 'GmarketSansMedium', 'Sans-serif' !important;
   }
 
   #__next {
@@ -45,10 +52,6 @@ const GlobalStyles = createGlobalStyle`
 
   input, button {
     background-color: transparent;
-  }
-
-  input, a, ol, ul, li, button {
-    font-family: 'Spoqa Han Sans', 'Sans-serif';
   }
 
   .ant-menu-item {
