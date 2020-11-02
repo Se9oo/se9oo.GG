@@ -4,6 +4,7 @@ import AppLayout from '../components/AppLayout';
 import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
 import { PageTitle } from '../styles/pages/Pages';
+import { useSelector } from 'react-redux';
 
 export const data = [
   {
@@ -40,7 +41,7 @@ export const data = [
 ];
 
 const Community = () => {
-  const isLoggedIn = false;
+  const { isLogin } = useSelector((state) => (state.user));
   return (
     <AppLayout>
       <Head>
@@ -48,7 +49,7 @@ const Community = () => {
       </Head>
       <PageTitle>커뮤니티</PageTitle>
       {
-        isLoggedIn ? <PostForm /> : null,
+        isLogin ? <PostForm /> : null,
         data.map((v, i) => <PostCard data={v} key={i} />)
       }
     </AppLayout>

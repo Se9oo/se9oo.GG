@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogoutAction } from '../reducer/user';
+import { LogoutRequestAction } from '../reducer/user';
 import AppLayout from '../components/AppLayout';
 import { ProfileHeader } from '../styles/pages/Pages';
 import { PageTitle } from '../styles/pages/Pages';
@@ -10,17 +10,17 @@ import { Button } from 'antd';
 
 const Profile = () => {
   const dispatch = useDispatch('');
-  const { isLogoutSuccess } = useSelector((state) => (state.user));
+  const { isLogin, isLogoutLoading } = useSelector((state) => (state.user));
 
   const onClickLogoutBtn = useCallback(() => {
-    dispatch(LogoutAction());
+    dispatch(LogoutRequestAction());
   }, []);
 
   useEffect(() => {
-    if (isLogoutSuccess) {
+    if (!isLogin) {
       Router.push('/login');
     }
-  }, [isLogoutSuccess]);
+  }, [isLogin]);
 
   return (
     <AppLayout>
@@ -29,7 +29,7 @@ const Profile = () => {
       </Head>
       <ProfileHeader>
         <PageTitle>프로필</PageTitle>
-        <Button type="primary" onClick={onClickLogoutBtn}>로그아웃</Button>
+        <Button type="primary" onClick={onClickLogoutBtn} loading={isLogoutLoading}>로그아웃</Button>
       </ProfileHeader>
     </AppLayout>
   );

@@ -1,46 +1,70 @@
 export const initialState = {
-  isLoggedIn: false,
-  isLoginSuccess: false,
-  isLogoutSuccess: false,
+  isLogin: false,
+  isLoginLoading: false,
+  isLogoutLoading: false,
   user: null,
   loginData: {},
   signUpData: {},
 }
 
-export const LOG_IN = 'LOG_IN';
-export const LOG_OUT = 'LOG_OUT';
+// 로그인
+export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
+export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
+export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+// 로그아웃
+export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
+export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
+export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
-export const LoginAction = (data) => {
-  return {
-    type: LOG_IN,
-    data
-  }
-};
+export const LoginRequsetAction = (data) => ({
+  type: LOG_IN_REQUEST,
+  data
+});
 
-export const LogoutAction = () => {
+export const LogoutRequestAction = () => {
   return {
-    type: LOG_OUT,
+    type: LOG_OUT_REQUEST,
   }
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOG_IN:
+    case LOG_IN_REQUEST:
       return {
         ...state,
-        isLoggedIn: true,
-        isLoginSuccess: true,
-        isLogoutSuccess: false,
+        isLoginLoading: true,
+      };
+    case LOG_IN_SUCCESS:
+      return {
+        ...state,
+        isLogin: true,
+        isLoginLoading: false,
         user: action.data,
-      };
-    case LOG_OUT:
+      }
+    case LOG_IN_FAILURE:
       return {
         ...state,
-        isLoggedIn: false,
-        isLoginSuccess: false,
-        isLogoutSuccess: true,
+        isLogin: false,
+        isLoginLoading: false,
         user: null,
+      }
+    case LOG_OUT_REQUEST:
+      return {
+        ...state,
+        isLogoutLoading: true,
       };
+    case LOG_OUT_SUCCESS:
+      return {
+        ...state,
+        isLogin: false,
+        isLogoutLoading: false,
+        user: null,
+      }
+    case LOG_OUT_FAILURE:
+      return {
+        ...state,
+        isLogoutLoading: false,
+      }
     default:
       return state;
   }

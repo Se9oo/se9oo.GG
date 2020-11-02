@@ -1,14 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import Router from 'next/router';
+import useInput from '../hooks/useInput';
 import AppLayout from '../components/AppLayout';
 import { HomeContainer, MainLogoImg, UserSearchInput } from '../styles/pages/Pages';
 
 const Home = () => {
-  const [search, setSearch] = useState('');
-
-  const onSearchInput = useCallback((e) => {
-    setSearch(e.target.value);
-  }, []);
+  const [search, onSearchInput] = useInput('');
 
   const onSubmitForm = useCallback(() => {
     Router.push('/statistic');

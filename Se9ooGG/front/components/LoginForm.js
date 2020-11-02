@@ -5,12 +5,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/Components';
-import { LoginAction } from '../reducer/user';
+import { LoginRequsetAction } from '../reducer/user';
 
 const LoginForm = () => {
   const dispatch = useDispatch('');
   // 로그인 성공 여부
-  const { isLoginSuccess } = useSelector((state) => (state.user));
+  const { isLogin, isLoginLoading } = useSelector((state) => (state.user));
 
   // email
   const [email, setEmail] = useState('');
@@ -26,16 +26,16 @@ const LoginForm = () => {
 
   // Login Submit
   const onSubmitForm = useCallback(() => {
-    dispatch(LoginAction({ email: email, password: password }));
+    dispatch(LoginRequsetAction({email, password}));
   }, [email, password]);
 
   // isLoginSuccess state 값이 변할 경우
   // profile page로 이동
   useEffect(() => {
-    if (isLoginSuccess) {
+    if (isLogin) {
       Router.push('/profile');
     }
-  }, [isLoginSuccess]);
+  }, [isLogin]);
 
   return (
     <>
@@ -68,7 +68,7 @@ const LoginForm = () => {
         {/* button */}
         <ButtonContainer>
           <Button><Link href="/signup"><a>회원가입</a></Link></Button>
-          <Button type="primary" htmlType="submit">로그인</Button>
+          <Button type="primary" htmlType="submit" loading={isLoginLoading}>로그인</Button>
         </ButtonContainer>
       </FormContainer>
     </>
