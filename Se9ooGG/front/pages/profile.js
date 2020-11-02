@@ -3,6 +3,7 @@ import Head from 'next/head';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutRequestAction } from '../reducer/user';
+import UserProfile from '../components/UserProfile';
 import AppLayout from '../components/AppLayout';
 import { ProfileHeader } from '../styles/pages/Pages';
 import { PageTitle } from '../styles/pages/Pages';
@@ -31,6 +32,7 @@ const Profile = () => {
         <PageTitle>프로필</PageTitle>
         <Button type="primary" onClick={onClickLogoutBtn} loading={isLogoutLoading}>로그아웃</Button>
       </ProfileHeader>
+      <UserProfile />
     </AppLayout>
   );
 };

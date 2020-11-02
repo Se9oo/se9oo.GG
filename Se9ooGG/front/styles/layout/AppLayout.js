@@ -2,6 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   width: 100%;
+  height: 100%;
+  background-color: #e5e5e5;
 
   @media ${props => props.theme.laptop} {
     max-width: 1024px;
