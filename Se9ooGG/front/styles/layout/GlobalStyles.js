@@ -24,6 +24,10 @@ const GlobalStyles = createGlobalStyle`
     } 
   }
 
+  body {
+    background-color: #e5e5e5;
+  }
+
   body, input, a, ol, ul, li, button {
     font-family: 'GmarketSansMedium', 'Sans-serif' !important;
   }
