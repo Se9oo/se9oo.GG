@@ -2,7 +2,7 @@ export const initialState = {
   isLogin: false,
   isLoginLoading: false,
   isLogoutLoading: false,
-  user: null,
+  me: null,
   loginData: {},
   signUpData: {},
 }
@@ -16,15 +16,17 @@ export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
 
-export const LoginRequsetAction = (data) => ({
-  type: LOG_IN_REQUEST,
-  data
-});
+export const LoginRequsetAction = (data) => {
+  return {
+    type: LOG_IN_REQUEST,
+    data
+  };
+};
 
 export const LogoutRequestAction = () => {
   return {
     type: LOG_OUT_REQUEST,
-  }
+  };
 };
 
 const reducer = (state = initialState, action) => {
@@ -39,15 +41,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLogin: true,
         isLoginLoading: false,
-        user: action.data,
-      }
+        me: action.data,
+      };
     case LOG_IN_FAILURE:
       return {
         ...state,
         isLogin: false,
         isLoginLoading: false,
-        user: null,
-      }
+        me: null,
+      };
     case LOG_OUT_REQUEST:
       return {
         ...state,
@@ -58,13 +60,13 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLogin: false,
         isLogoutLoading: false,
-        user: null,
-      }
+        me: null,
+      };
     case LOG_OUT_FAILURE:
       return {
         ...state,
         isLogoutLoading: false,
-      }
+      };
     default:
       return state;
   }

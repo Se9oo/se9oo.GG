@@ -7,7 +7,14 @@ function* login(action) {
     yield delay(1000);
     yield put({
       type: LOG_IN_SUCCESS,
-      data: action.data,
+      //data: action.data,
+      data: {
+        email: 'se9oo@kakao.com',
+        nickname: '세구',
+        userPostCount: 10,
+        level: 20,
+        signupDate: '2020.11.02',
+      }
     });
   } catch (err) {
     yield put({

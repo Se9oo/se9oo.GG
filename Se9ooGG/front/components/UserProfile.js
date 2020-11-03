@@ -7,7 +7,7 @@ import { Button } from 'antd';
 
 const UserProfile = () => {
   const dispatch = useDispatch('');
-  const { isLogin, isLogoutLoading } = useSelector((state) => (state.user));
+  const { isLogin, isLogoutLoading, me } = useSelector((state) => (state.user));
 
   const onClickLogoutBtn = useCallback(() => {
     dispatch(LogoutRequestAction());
@@ -22,19 +22,19 @@ const UserProfile = () => {
   return (
     <UserProfileContainer>
       <img src="/img/champion/Blitzcrank.png" alt="user-icon" />
-      <UserNickname>세구</UserNickname>
+      <UserNickname>{me && me.nickname}</UserNickname>
       <UserInfo>
         <div>
           <dt>작성글 수</dt>
-          <dd>20</dd>
+          <dd>{me && me.userPostCount}</dd>
         </div>
         <div>
           <dt>레벨</dt>
-          <dd>Lv. 2</dd>
+          <dd>Lv. {me && me.level}</dd>
         </div>
         <div>
           <dt>가입일</dt>
-          <dd>2020.11.02</dd>
+          <dd>{me && me.signupDate}</dd>
         </div>
       </UserInfo>
       <Button type="primary">비밀번호 변경하기</Button>

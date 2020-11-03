@@ -5,7 +5,7 @@ import { Container, ContentContainer, DesktopNav, MobileFooter } from '../styles
 import { BarChartOutlined, CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
 
 const AppLayout = ({ children }) => {
-  const { isLoggedIn } = useSelector((state) => state.user);
+  const { isLogin } = useSelector((state) => state.user);
 
   return (
     <Container>
@@ -14,7 +14,7 @@ const AppLayout = ({ children }) => {
         <h1><Link href="/"><a>se9oo.GG</a></Link></h1>
         <ul>
             {
-              isLoggedIn
+              isLogin
               ? <li><Link href="/profile"><a>프로필</a></Link></li>
               : <li><Link href="/login"><a>로그인</a></Link></li>
             }
@@ -32,7 +32,7 @@ const AppLayout = ({ children }) => {
         <ul>
           <li><Link href="/"><a><HomeOutlined /></a></Link></li>
           {
-            isLoggedIn
+            isLogin
             ? <li><Link href="/profile"><a><UserOutlined /></a></Link></li>
             : <li><Link href="/login"><a><UserOutlined /></a></Link></li>
           }
