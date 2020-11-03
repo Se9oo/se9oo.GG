@@ -49,9 +49,11 @@ const Community = () => {
       </Head>
       <PageTitle>커뮤니티</PageTitle>
       {
-        isLogin ? <PostForm /> : null,
-        data.map((v, i) => <PostCard data={v} key={i} />)
+          isLogin ? <PostForm /> : null
       }
+      <div>
+        {data.map((v, i) => <PostCard data={v} key={i} />)}
+      </div>
     </AppLayout>
   );
 };
