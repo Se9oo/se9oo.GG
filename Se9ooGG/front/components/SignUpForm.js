@@ -1,15 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import useInput from '../hooks/useInput';
+import CommonModal, { errorModal } from './CommonModal';
 import { ButtonContainer, ErrorMessage, InputContainer } from '../styles/components/Components';
-import { Button, Form, Input, Modal } from 'antd';
-
-function errorModal (msg) {
-  Modal.error({
-    title: 'ERROR',
-    content: `${msg}란을 채워주세요.`,
-    okText: '닫기',
-  })
-}
+import { Button, Form, Input } from 'antd';
 
 const SignUpForm = () => {
   const [email, onChangeEmail] = useInput('');
@@ -36,31 +29,28 @@ const SignUpForm = () => {
   // 회원가입 버튼 클릭
   const onClickSignupBtn = useCallback(() => {
     if (!email) {
-      errorModal('이메일');
+      errorModal(`'이메일' 란을 채워주세요.`);
       return;
     }
 
     if (!nickname) {
-      errorModal('닉네임');
+      errorModal(`'닉네임' 란을 채워주세요.`);
       return;
     }
 
     if (!password) {
-      errorModal('비밀번호');
+      errorModal(`'비밀번호' 란을 채워주세요.`);
       return;
     }
 
     if (!passwordCheck) {
-      errorModal('비밀번호 확인');
+      errorModal(`'비밀번호 확인' 란을 채워주세요.`);
       return;
     }
 
     if (password !== passwordCheck) {
-      Modal.error({
-        title: 'ERROR',
-        content: '비밀번호가 다릅니다.',
-        okText: '닫기',
-      });
+      errorModal(`'비밀번호가 다릅니다.'`);
+      return;
     }
 
     if (password && passwordCheck && (password === passwordCheck)) {
@@ -135,16 +125,15 @@ const SignUpForm = () => {
           <Button type="primary" onClick={onClickSignupBtn}>가입하기</Button>
         </ButtonContainer>
       </Form>
-      <Modal
+      <CommonModal
         title="회원가입"
         visible={showModal}
         onOk={onOkModal}
         onCancel={onCancelModal}
         okText="가입"
         cancelText="취소"
-      >
-        <p>가입 하시겠습니까?</p>
-      </Modal>
+        content="가입 하시겠습니까?"
+      />
     </>
   );
 };

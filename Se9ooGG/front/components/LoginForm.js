@@ -6,6 +6,7 @@ import { Button, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/Components';
 import { LoginRequsetAction } from '../reducer/user';
+import { errorModal } from './CommonModal';
 
 const LoginForm = () => {
   const dispatch = useDispatch('');
@@ -26,6 +27,16 @@ const LoginForm = () => {
 
   // Login Submit
   const onSubmitForm = useCallback(() => {
+    if (!email) {
+      errorModal(`'이메일' 란을 채워주세요.`);
+      return;
+    }
+
+    if (!password) {
+      errorModal(`'비밀번호' 란을 채워주세요.`);
+      return;
+    }
+
     dispatch(LoginRequsetAction({email, password}));
   }, [email, password]);
 
