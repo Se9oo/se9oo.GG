@@ -14,9 +14,10 @@ const Se9oogg = ({ Component }) => {
       <ThemeProvider theme={theme}>
         <Head>
           <meta charSet="utf-8"/>
-          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <meta name="viewport" 
+          content="initial-scale=1.0, width=device-width,
+           maximum-scale=1, minimum-scale=1, user-scalable=no" />
           <title>se9oo.GG</title>
-          <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'/>
         </Head>
         <GlobalStyles />
         <Component />
