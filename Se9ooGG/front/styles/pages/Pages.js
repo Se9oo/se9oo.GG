@@ -28,10 +28,3 @@ export const UserSearchInput = styled(Input.Search)`
     font-size: 1.2rem;
   }
 `;
-
-// profile
-export const ProfileHeader = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-`;
