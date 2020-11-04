@@ -1,9 +1,27 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Button, Form, Input, } from 'antd';
+import { useDispatch, useSelector } from 'react-redux';
+import { addPostRequestAction } from '../reducer/post';
 
 const PostForm = () => {
+  const dispatch = useDispatch('');
+  const { me } = useSelector((state) => (state.user));
+
+  // 게시글 등록
+  const onSubmitAddPost = useCallback(() => {
+    dispatch(addPostRequestAction({
+      user: {
+        email: me.email,
+        nickname: me.nickname,
+      },
+      title: 'dummy',
+      content: '내용내용',
+      comments: [],
+    }))
+  }, [me]);
+
   return (
-    <Form>
+    <Form onFinish={onSubmitAddPost}>
       <div style={{ borderBottom: '1px solid #e5e5e5', marginBottom: '1rem' }}>
         <Input.TextArea
           rows={3}
@@ -11,7 +29,13 @@ const PostForm = () => {
           maxLength={140}
           style={{ marginBottom: '.5rem' }}
         />
-        <Button type="primary" style={{ marginBottom: '1rem'}}>등록</Button>
+        <Button 
+        type="primary"
+        htmlType="submit"
+        style={{ marginBottom: '1rem'}}
+        >
+          등록
+        </Button>
       </div>
     </Form>
   );

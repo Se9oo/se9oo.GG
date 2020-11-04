@@ -28,3 +28,12 @@ export const UserSearchInput = styled(Input.Search)`
     font-size: 1.2rem;
   }
 `;
+
+// community
+export const PostSearchInput = styled(Input.Search)`
+  margin: 1rem 0;
+
+  & ::placeholder {
+    font-size: 1.2rem;
+  }
+`;
