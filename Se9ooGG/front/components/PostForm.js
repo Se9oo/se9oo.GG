@@ -1,11 +1,13 @@
 import React, { useCallback } from 'react';
-import { Button, Form, Input, } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { addPostRequestAction } from '../reducer/post';
+import useInput from '../hooks/useInput';
+import { Button, Form, Input, } from 'antd';
 
 const PostForm = () => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => (state.user));
+  const [addPostText, onChangeAddPostText] = useInput();
 
   // 게시글 등록
   const onSubmitAddPost = useCallback(() => {
@@ -14,11 +16,11 @@ const PostForm = () => {
         email: me.email,
         nickname: me.nickname,
       },
-      title: 'dummy',
-      content: '내용내용',
+      title: addPostText,
+      content: '',
       comments: [],
     }))
-  }, [me]);
+  }, [me, addPostText]);
 
   return (
     <Form onFinish={onSubmitAddPost}>
@@ -26,7 +28,10 @@ const PostForm = () => {
         <Input.TextArea
           rows={3}
           placeholder="오늘 무슨 일이 있었나요?"
+          showCount
           maxLength={140}
+          value={addPostText}
+          onChange={onChangeAddPostText}
           style={{ marginBottom: '.5rem' }}
         />
         <Button 
