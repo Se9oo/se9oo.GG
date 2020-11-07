@@ -1,14 +1,19 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import Head from 'next/head';
+import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
-import PostForm from '../components/PostForm';
 import PostCard from '../components/PostCard';
-import { PageTitle, PostSearchInput } from '../styles/pages/Pages';
+import { PageTitle, PostAddBtn, PostSearchInput } from '../styles/pages/Pages';
 import { useSelector } from 'react-redux';
 
 const Community = () => {
   const { isLogin } = useSelector((state) => (state.user));
   const { postList } = useSelector((state) => (state.post));
+
+  const onClickAddPostBtn = useCallback(() => {
+    Router.push('/editPost');
+  }, []);
+  
   return (
     <AppLayout>
       <Head>
@@ -20,7 +25,14 @@ const Community = () => {
         enterButton
       />
       {
-          isLogin ? <PostForm /> : null
+          isLogin 
+          ? <PostAddBtn 
+            type="primary"
+            onClick={onClickAddPostBtn}
+            >
+              글쓰기
+            </PostAddBtn> 
+          : null
       }
       <div>
         {postList.map((v, i) => <PostCard data={v} key={i} />)}

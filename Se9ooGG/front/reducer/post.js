@@ -1,6 +1,9 @@
+import shortId from 'shortid';
+
 export const initialState = {
   postList: [
     {
+      postId: shortId.generate(),
       user: {
         email: 'se9oo@kakao.com',
         nickname: '세구'
@@ -17,7 +20,8 @@ export const initialState = {
         }
       ]
     }
-  ]
+  ],
+  addPostLoading: false,
 };
 
 // 글등록
@@ -37,15 +41,18 @@ const reducer = (state = initialState, action) => {
     case ADD_POST_REQUEST:
       return {
         ...state,
+        addPostLoading: true,
       }
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        postList: [action.data, ...state.postList]
+        postList: [action.data, ...state.postList],
+        addPostLoading: false,
       }
     case ADD_POST_FAILURE:
       return {
         ...state,
+        addPostLoading: false,
       }
     
     default:

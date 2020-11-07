@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Form } from 'antd';
+import { Button, Form, Input } from 'antd';
 
 // common
 export const ErrorMessage = styled.div`
@@ -81,4 +81,24 @@ export const UserInfo = styled.dl`
   & dd {
     text-align: center;
   }
+`;
+
+// postForm
+export const PostFormContainer = styled.div`
+  width: 100%;
+  padding: 1rem;
+  background-color: #ffffff;
+`;
+
+export const PostContentContainer = styled.div`
+  margin-bottom: 1rem;
+
+  & strong {
+    display: block;
+    opacity: .5;
+  }
+`;
+
+export const PostAddButton = styled(Button)`
+  width: 100%;
 `;

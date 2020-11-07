@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Input } from 'antd'
+import { Button, Input } from 'antd'
 
 // PageTitle
 export const PageTitle = styled.h2`
@@ -36,4 +36,9 @@ export const PostSearchInput = styled(Input.Search)`
   & ::placeholder {
     font-size: 1.2rem;
   }
+`;
+
+export const PostAddBtn = styled(Button)`
+  width: 100%;
+  margin-bottom: 1rem;
 `;
