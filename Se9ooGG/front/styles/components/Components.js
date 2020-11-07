@@ -99,6 +99,6 @@ export const PostContentContainer = styled.div`
   }
 `;
 
-export const PostAddButton = styled(Button)`
+export const PostButton = styled(Button)`
   width: 100%;
 `;

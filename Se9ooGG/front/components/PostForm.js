@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { addPostRequestAction } from '../reducer/post';
 import useInput from '../hooks/useInput';
-import { PostFormContainer, PostContentContainer, PostAddButton } from '../styles/components/Components';
+import { PostFormContainer, PostContentContainer, PostButton } from '../styles/components/Components';
 import { Form, Input, } from 'antd';
 import shortId from 'shortid';
+import { errorModal } from './CommonModal';
 
 const PostForm = () => {
   const dispatch = useDispatch('');
@@ -19,6 +20,16 @@ const PostForm = () => {
 
   // 게시글 등록
   const onSubmitAddPost = useCallback(() => {
+    if (!postTitle) {
+      errorModal(`'제목' 란을 채워주세요.`);
+      return;
+    }
+
+    if (!postContent) {
+      errorModal(`'내용' 란을 채워주세요.`);
+      return;
+    }
+
     dispatch(addPostRequestAction({
       postId: shortId.generate(),
       user: {
@@ -31,6 +42,10 @@ const PostForm = () => {
     }));
     Router.push('/community'); 
   }, [me, postTitle, postContent]);
+
+  const onClickPostCancel = useCallback(() => {
+    Router.push('/community');
+  }, []);
 
   return (
     <PostFormContainer>
@@ -66,16 +81,22 @@ const PostForm = () => {
           />
         </PostContentContainer>
         {/* 등록 */}
-        <PostAddButton 
-        type="primary"
-        htmlType="submit"
-        loading={addPostLoading}
-        style={{ marginBottom: '1rem'}}
+        <PostButton 
+          type="primary"
+          htmlType="submit"
+          loading={addPostLoading}
+          style={{ marginBottom: '1rem'}}
         >
           등록
-        </PostAddButton>
+        </PostButton>
+        <PostButton
+          onClick={onClickPostCancel}
+        >
+          취소
+        </PostButton>
       </Form>
     </PostFormContainer>
+    
   );
 };
 
