@@ -83,7 +83,7 @@ export const UserInfo = styled.dl`
   }
 `;
 
-// postForm
+// PostForm
 export const PostFormContainer = styled.div`
   width: 100%;
   padding: 1rem;
@@ -101,4 +101,9 @@ export const PostContentContainer = styled.div`
 
 export const PostButton = styled(Button)`
   width: 100%;
+`;
+
+// PostCard
+export const PostCardContentContainer = styled.div`
+  margin-top: 2rem;
 `;

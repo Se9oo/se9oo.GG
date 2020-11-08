@@ -1,8 +1,12 @@
 import React, { useCallback, useState } from 'react';
-import { Avatar, Card } from 'antd';
+import { useSelector } from 'react-redux';
+import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
+import { PostCardContentContainer } from '../styles/components/Components';
 
 const PostCard = ({ data }) => {
+  console.log(JSON.stringify(data));
+  const { me } = useSelector((state) => (state.user));
   const [liked, setLiked] = useState(false);
 
   const onToggleSmile = useCallback(() => {
@@ -17,7 +21,19 @@ const PostCard = ({ data }) => {
         liked
         ? <SmileTwoTone twoToneColor="#eb2f96" key="heartTwo" onClick={onToggleSmile}/>
         : <SmileOutlined key="like" onClick={onToggleSmile}/>,
-        <EllipsisOutlined key="ellipsis" />,
+        <Popover
+          trigger="click"
+          content={
+            <div>
+              {
+                me && (me.email === data.user.email) && <Button>수정</Button>
+              }
+              <Button type="primary" danger>신고</Button>
+            </div>
+          }
+        >
+          <EllipsisOutlined key="ellipsis" />
+        </Popover>
       ]}
     >
       <Card.Meta
@@ -25,6 +41,9 @@ const PostCard = ({ data }) => {
         title={data.title}
         description={data.user.nickname}
       />
+      <PostCardContentContainer>
+        <p>{data.content}</p>
+      </PostCardContentContainer>
     </Card>
   );
 };
