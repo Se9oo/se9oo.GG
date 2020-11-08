@@ -34,7 +34,7 @@ const PostForm = () => {
     }
 
     setModalContent({
-      title: "글 등록",
+      title: "게시글 등록",
       onOk: onOkAddModal,
       onCancel: onCancelAddModal,
       content: "등록 하시겠습니까?"
@@ -66,7 +66,7 @@ const PostForm = () => {
   // 게시글 등록 취소
   const onClickPostCancel = useCallback(() => {
     setModalContent({
-      title: "글 등록 - 취소",
+      title: "게시글 등록 - 취소",
       onOk: onOkCancelModal,
       onCancel: onCancelCancelModal,
       content: "작성중인 내용은 저장되지 않습니다.\n취소 하시겠습니까?"
@@ -133,11 +133,8 @@ const PostForm = () => {
         </PostButton>
       </Form>
       <CommonModal
-        title={modalContent.title}
+        modalContent={modalContent}
         visible={showModal}
-        onOk={modalContent.onOk}
-        onCancel={modalContent.onCancel}
-        content={modalContent.content}
       />
     </PostFormContainer>
   );

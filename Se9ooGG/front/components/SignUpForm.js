@@ -8,6 +8,7 @@ const SignUpForm = () => {
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [passwordError, setPasswordError] = useState(false);
+  const [modalContent, setModalContent] = useState('');
   // 회원가입 modal 노출 여부
   const [showModal, setShowModal] = useState(false);
 
@@ -27,7 +28,7 @@ const SignUpForm = () => {
   }, [password]);
 
   // 회원가입 버튼 클릭
-  const onClickSignupBtn = useCallback(() => {
+  const onSubmitForm = useCallback(() => {
     if (!email) {
       errorModal(`'이메일' 란을 채워주세요.`);
       return;
@@ -54,19 +55,21 @@ const SignUpForm = () => {
     }
 
     if (password && passwordCheck && (password === passwordCheck)) {
+      setModalContent({
+        title: '회원가입',
+        onOk: onOkModal,
+        onCancel: onCancelModal,
+        content:'가입 하시겠습니까?'
+      });
       setShowModal(true);
     }
   }, [email, nickname, password, passwordCheck]);
-  
-  const onSubmitForm = useCallback(() => {
-    console.log(`email: ${email} password: ${password} nickname: ${nickname}`)  
-  }, []);
 
   // 회원가입 모달 - ok버튼 클릭
   const onOkModal = useCallback(() => {
+    console.log(`email: ${email} password: ${password} nickname: ${nickname}`)  
     setShowModal(false);
-    onSubmitForm();
-  }, []);
+  }, [email, password, nickname]);
   // 회원가입 모달 - cancel 버튼 클릭
   const onCancelModal = useCallback(() => {
     setShowModal(false);
@@ -122,15 +125,12 @@ const SignUpForm = () => {
         </InputContainer>
         { passwordError && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage> }
         <ButtonContainer>
-          <Button type="primary" onClick={onClickSignupBtn}>가입하기</Button>
+          <Button type="primary" htmlType="submit">가입하기</Button>
         </ButtonContainer>
       </Form>
       <CommonModal
-        title="회원가입"
+        modalContent={modalContent}
         visible={showModal}
-        onOk={onOkModal}
-        onCancel={onCancelModal}
-        content="가입 하시겠습니까?"
       />
     </>
   );

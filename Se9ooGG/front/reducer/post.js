@@ -22,12 +22,18 @@ export const initialState = {
     }
   ],
   addPostLoading: false,
+  deletePostLoading: false,
 };
 
 // 글등록
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
 export const ADD_POST_SUCCESS = 'ADD_POST_SUCCESS';
 export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
+
+// 글삭제
+export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 
 export const addPostRequestAction = (data) => {
   return {
@@ -36,8 +42,16 @@ export const addPostRequestAction = (data) => {
   };
 };
 
+export const deletePostRequestAction = (data) => {
+  return {
+    type: DELETE_POST_REQUEST,
+    data
+  };
+};
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    // 글등록
     case ADD_POST_REQUEST:
       return {
         ...state,
@@ -53,6 +67,23 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addPostLoading: false,
+      }
+    // 글삭제
+    case DELETE_POST_REQUEST:
+      return {
+        ...state,
+        deletePostLoading: true,
+      }
+    case DELETE_POST_SUCCESS:
+      return {
+        ...state,
+        postList: [...state.postList].filter((v) => v.postId !== action.data.postId),
+        deletePostLoading: false,
+      }
+    case DELETE_POST_FAILURE:
+      return {
+        ...state,
+        deletePostLoading: false,
       }
     
     default:
