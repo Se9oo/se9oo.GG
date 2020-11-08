@@ -9,17 +9,23 @@ export function errorModal(msg) {
   })
 }
 
-const CommonModal = ({ title, visible, onOk, onCancel, okText, cancelText, content }) => {
+const CommonModal = ({ title, visible, onOk, onCancel, content }) => {
   return (
     <Modal
       title={title}
       visible={visible}
       onOk={onOk}
       onCancel={onCancel}
-      okText={okText}
-      cancelText={cancelText}
+      okText='예'
+      cancelText='아니요'
     >
-      <p>{content}</p>
+      <p>
+        {
+          content.split('\n').map((line) => {
+            return (<span>{line}<br/></span>)
+          })
+        }
+      </p>
     </Modal>
   );
 };

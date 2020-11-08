@@ -130,8 +130,6 @@ const SignUpForm = () => {
         visible={showModal}
         onOk={onOkModal}
         onCancel={onCancelModal}
-        okText="가입"
-        cancelText="취소"
         content="가입 하시겠습니까?"
       />
     </>
