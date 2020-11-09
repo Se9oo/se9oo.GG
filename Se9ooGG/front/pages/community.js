@@ -35,7 +35,7 @@ const Community = () => {
           : null
       }
       <div>
-        {postList.map((v, i) => <PostCard data={v} key={i} />)}
+        {postList.map((v) => <PostCard data={v} key={v.postId} />)}
       </div>
     </AppLayout>
   );
