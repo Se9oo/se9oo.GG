@@ -107,3 +107,9 @@ export const PostButton = styled(Button)`
 export const PostCardContentContainer = styled.div`
   margin-top: 2rem;
 `;
+
+export const PostCommentCount = styled.span`
+  display: block;
+  margin-top: 2rem;
+  color: #ced4da;
+`;

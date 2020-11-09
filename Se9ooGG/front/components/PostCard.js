@@ -1,9 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import router from 'next/router';
 import { deletePostRequestAction } from '../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
-import { PostCardContentContainer } from '../styles/components/Components';
+import { PostCardContentContainer, PostCommentCount } from '../styles/components/Components';
 import CommonModal from './CommonModal';
 
 const PostCard = ({ data }) => {
@@ -17,6 +18,13 @@ const PostCard = ({ data }) => {
   // popover 노출 여부
   const [showPopOver, setShowPopOver] = useState(false);
   const [liked, setLiked] = useState(false);
+
+  const onClickComment = useCallback(() => {
+    router.push({
+      pathname: '/comment',
+      query: { postId: data.postId }
+    });
+  }, []);
 
   const onToggleSmile = useCallback(() => {
     setLiked((prevLiked) => !prevLiked);
@@ -54,7 +62,7 @@ const PostCard = ({ data }) => {
       <Card 
         style={{ marginBottom: '1rem' }}
         actions={[
-          <CommentOutlined key="comment"/>,
+          <CommentOutlined key="comment" onClick={onClickComment}/>,
           liked
           ? <SmileTwoTone twoToneColor="#eb2f96" key="heartTwo" onClick={onToggleSmile}/>
           : <SmileOutlined key="like" onClick={onToggleSmile}/>,
@@ -94,6 +102,9 @@ const PostCard = ({ data }) => {
               return (<span key={i}>{list}<br /></span>)
             })
           }
+          <PostCommentCount>
+            {`댓글 ${data.comments.length}개`}
+          </PostCommentCount>
         </PostCardContentContainer>
       </Card>
       <CommonModal
