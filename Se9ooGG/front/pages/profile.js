@@ -11,7 +11,6 @@ const Profile = () => {
       <Head>
         <title>se9oo.GG | 프로필</title>
       </Head>
-      <PageTitle>프로필</PageTitle>
       <UserProfile />
     </AppLayout>
   );

@@ -19,7 +19,6 @@ const Community = () => {
       <Head>
         <title>se9oo | 커뮤니티</title>
       </Head>
-      <PageTitle>커뮤니티</PageTitle>
       <PostSearchInput
         placeholder="제목 검색"
         enterButton
