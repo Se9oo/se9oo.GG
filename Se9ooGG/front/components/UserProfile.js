@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutRequestAction } from '../reducer/user';
-import { UserInfo, UserNickname, UserProfileContainer } from '../styles/components/Components';
+import { ProfileButtonGroup, UserInfo, UserNickname, UserProfileContainer } from '../styles/components/Components';
 import { Button } from 'antd';
 
 const UserProfile = () => {
@@ -37,8 +37,10 @@ const UserProfile = () => {
           <dd>{me && me.signupDate}</dd>
         </div>
       </UserInfo>
-      <Button type="primary">비밀번호 변경하기</Button>
-      <Button onClick={onClickLogoutBtn} loading={isLogoutLoading}>로그아웃</Button>
+      <ProfileButtonGroup>
+        <Button type="primary">비밀번호 변경하기</Button>
+        <Button onClick={onClickLogoutBtn} loading={isLogoutLoading}>로그아웃</Button>
+      </ProfileButtonGroup>
     </UserProfileContainer>
   );
 };

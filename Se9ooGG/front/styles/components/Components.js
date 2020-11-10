@@ -83,6 +83,15 @@ export const UserInfo = styled.dl`
   }
 `;
 
+export const ProfileButtonGroup = styled.div`
+  display: block;
+  width: 100%;
+
+  @media ${props => props.theme.tablet} {
+    display: flex;
+  }
+`;
+
 // PostForm
 export const PostFormContainer = styled.div`
   width: 100%;
