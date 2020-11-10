@@ -25,7 +25,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body {
-    background-color: #e5e5e5;
+    background-color: #fafafa;
   }
 
   body, input, a, ol, ul, li, button {
@@ -64,6 +64,19 @@ const GlobalStyles = createGlobalStyle`
 
   .ant-menu-horizontal > .ant-menu-item a {
     color: #ffffff;
+  }
+
+  // antd comment inner padding
+  .ant-comment-inner {
+    padding: 1rem 0;
+  }
+
+  .ant-comment-content-detail {
+
+    & span {
+      display: block;
+      margin-bottom: .5rem;
+    }
   }
 `;
 

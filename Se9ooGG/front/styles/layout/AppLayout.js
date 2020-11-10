@@ -5,7 +5,7 @@ export const Container = styled.div`
   height: 100%;
 
   @media ${props => props.theme.laptop} {
-    max-width: 1024px;
+    max-width: 980px;
     margin: 0 auto;
   }
 `;

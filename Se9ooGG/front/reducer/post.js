@@ -16,13 +16,23 @@ export const initialState = {
             email: 'hong@kakao.com',
             nickname: '홍구'
           },
+          commentId: shortId.generate(),
           content: '재밌어'
+        },
+        {
+          user: {
+            email: 'hing@kakao.com',
+            nickname: '힝구'
+          },
+          commentId: shortId.generate(),
+          content: '댓글은 두개여야지'
         }
       ]
     }
   ],
   addPostLoading: false,
   deletePostLoading: false,
+  addCommentLoading: false,
 };
 
 // 글등록
@@ -35,6 +45,11 @@ export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 
+// 댓글 등록
+export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
+export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
+export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
 export const addPostRequestAction = (data) => {
   return {
     type: ADD_POST_REQUEST,
@@ -46,6 +61,16 @@ export const deletePostRequestAction = (data) => {
   return {
     type: DELETE_POST_REQUEST,
     data
+  };
+};
+
+export const addCommentRequestAction = (data, postId) => {
+  console.log(JSON.stringify(data));
+  console.log(JSON.stringify(postId));
+  return {
+    type: ADD_COMMENT_REQUEST,
+    data,
+    postId
   };
 };
 
@@ -84,6 +109,34 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deletePostLoading: false,
+      }
+    case ADD_COMMENT_REQUEST:
+      return {
+        ...state,
+        addCommentLoading: true,
+      }
+    case ADD_COMMENT_SUCCESS:
+      // const postList = [...state.postList];
+      // const post = postList.filter((v) => v.postId === action.data.postId)[0].comments;
+      // const commentList = [...post[0].comments, action.data];
+      // postList.comments = [...commentList];
+      console.log(`힝 : ${JSON.stringify(action.data)}`);
+      console.log(`힝 : ${JSON.stringify(action.postId)}`);
+
+      const postIndex = state.postList.findIndex((v) => v.postId === action.postId);
+      const post = { ...state.postList[postIndex] };
+      post.comments = [...post.comments, action.data];
+      const postList = [...state.postList];
+      postList[postIndex] = post;
+
+      return {
+        ...state,
+        postList,
+        addCommentLoading: false,
+      }
+    case ADD_COMMENT_FAILURE:
+      return {
+        addCommentLoading: false,
       }
     
     default:

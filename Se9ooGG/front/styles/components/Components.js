@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { Button, Form, Input } from 'antd';
+import { Button, Comment, Form } from 'antd';
 
 // common
 export const ErrorMessage = styled.div`
@@ -34,7 +34,7 @@ export const UserProfileContainer = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
-  border-radius: 1rem;
+  border: 1px solid rgba(206, 212, 218, .5);
 
   & img {
     display: block;
@@ -121,4 +121,21 @@ export const PostCommentCount = styled.span`
   display: block;
   margin-top: 2rem;
   color: #ced4da;
+`;
+
+// CommentCard
+export const CommentContainer = styled(Comment)`
+  padding: 1rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(206, 212, 218, .5);
+  border-top: none;
+`;
+
+export const CommentForm = styled(Form)`
+  padding: 1rem 0;
+`;
+
+export const CommentBtn = styled(Button)`
+  float: right;
+  margin-top: 1rem;
 `;

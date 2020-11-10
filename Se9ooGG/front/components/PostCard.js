@@ -6,7 +6,7 @@ import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
 import { PostCardContentContainer, PostCommentCount } from '../styles/components/Components';
 import CommonModal from './CommonModal';
-import Comment from './Comment';
+import CommentCard from './CommentCard';
 
 const PostCard = ({ data }) => {
   //console.log(JSON.stringify(data));
@@ -68,8 +68,8 @@ const PostCard = ({ data }) => {
   
   return (
     <>
-      <Card 
-        style={{ marginBottom: '1rem' }}
+      <Card
+        style={{ border: '1px solid rgba(206, 212, 218, .5)' }}
         actions={[
           <CommentOutlined key="comment" onClick={onClickComment}/>,
           liked
@@ -116,7 +116,11 @@ const PostCard = ({ data }) => {
           </PostCommentCount>
         </PostCardContentContainer>
       </Card>
-      { showComment && <Comment /> }
+      {
+        showComment 
+        && data.comments 
+        && <CommentCard commentList={data.comments} postId={data.postId} />
+      }
       <CommonModal
         modalContent={modalContent}
         visible={showModal}
