@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
 const ChampionImg = styled.img`
   display: block;
@@ -14,7 +15,17 @@ const ChampionList = ({ data }) => {
       <ul style={{ display: 'flex', flexWrap: 'wrap'}}>
         {
           data.map((v) => {
-            return <li key={v}><ChampionImg src={`/img/champion/${v}.png`} alt={ `${v}` }/></li>
+            return (
+              <li key={v}>
+                <motion.div
+                  key={v}
+                  style={{ cursor: 'pointer'}}
+                  whileTap={{ scale: 1.2 }}
+                >
+                  <ChampionImg src={`/img/champion/${v}.png`} alt={ `${v}` }/>
+                </motion.div>
+              </li>
+            )
           })
         }
       </ul>
