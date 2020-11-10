@@ -6,6 +6,7 @@ import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
 import { PostCardContentContainer, PostCommentCount } from '../styles/components/Components';
 import CommonModal from './CommonModal';
+import Comment from './Comment';
 
 const PostCard = ({ data }) => {
   //console.log(JSON.stringify(data));
@@ -17,13 +18,21 @@ const PostCard = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
   // popover 노출 여부
   const [showPopOver, setShowPopOver] = useState(false);
+  // tablet 이상 comment component 노출 여부
+  const [showComment, setShowComment] = useState(false);
+  // 좋아요 버튼
   const [liked, setLiked] = useState(false);
 
   const onClickComment = useCallback(() => {
-    router.push({
-      pathname: '/comment',
-      query: { postId: data.postId }
-    });
+    // 500px 이하에서는 comment 페이지로 이동
+    if (window.innerWidth < 500) {
+      router.push({
+        pathname: '/comment',
+        query: { postId: data.postId }
+      });
+    } else {
+      setShowComment((prevShowComment) => !prevShowComment);
+    }
   }, []);
 
   const onToggleSmile = useCallback(() => {
@@ -107,6 +116,7 @@ const PostCard = ({ data }) => {
           </PostCommentCount>
         </PostCardContentContainer>
       </Card>
+      { showComment && <Comment /> }
       <CommonModal
         modalContent={modalContent}
         visible={showModal}
