@@ -7,9 +7,8 @@ import theme from '../styles/layout/theme';
 import wrapper from '../store/configureStore';
 import withReduxSaga from 'next-redux-saga';
 import 'antd/dist/antd.css';
-import { motion } from 'framer-motion';
 
-const Se9oogg = ({ Component, router }) => {
+const Se9oogg = ({ Component }) => {
   return (
     <>
       <ThemeProvider theme={theme}>
@@ -21,16 +20,7 @@ const Se9oogg = ({ Component, router }) => {
           <title>se9oo.GG</title>
         </Head>
         <GlobalStyles />
-        <motion.div key={router.route} initial="pageInitial" animate="pageAnimate" variants={{
-          pageInitial: {
-            opacity: 0
-          },
-          pageAnimate: {
-            opacity: 1
-          }
-        }}>
-          <Component />
-        </motion.div>
+        <Component />
       </ThemeProvider>
     </>
   );

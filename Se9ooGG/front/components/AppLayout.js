@@ -3,6 +3,8 @@ import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { Container, ContentContainer, DesktopNav, MobileFooter } from '../styles/layout/AppLayout';
 import { BarChartOutlined, CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
+import { motion } from 'framer-motion';
+import { Router } from 'next/dist/client/router';
 
 const AppLayout = ({ children }) => {
   const { isLogin } = useSelector((state) => state.user);
@@ -24,9 +26,23 @@ const AppLayout = ({ children }) => {
         </ul>
       </DesktopNav>
       {/* content */}
-      <ContentContainer>
-        {children}
-      </ContentContainer>
+      <motion.div key={Router.route} 
+          initial="pageInitial"
+          animate="pageAnimate"
+          transition={{ type: 'spring', bounce: 0.25 }}
+          variants={{
+            pageInitial: {
+              opacity: 0
+            },
+            pageAnimate: {
+              opacity: 1,
+            }
+          }}>
+          <ContentContainer>
+            {children}
+          </ContentContainer>
+        </motion.div>
+     
       {/* mobile nav */}
       <MobileFooter>
         <ul>
