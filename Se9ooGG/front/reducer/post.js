@@ -116,13 +116,6 @@ const reducer = (state = initialState, action) => {
         addCommentLoading: true,
       }
     case ADD_COMMENT_SUCCESS:
-      // const postList = [...state.postList];
-      // const post = postList.filter((v) => v.postId === action.data.postId)[0].comments;
-      // const commentList = [...post[0].comments, action.data];
-      // postList.comments = [...commentList];
-      console.log(`힝 : ${JSON.stringify(action.data)}`);
-      console.log(`힝 : ${JSON.stringify(action.postId)}`);
-
       const postIndex = state.postList.findIndex((v) => v.postId === action.postId);
       const post = { ...state.postList[postIndex] };
       post.comments = [...post.comments, action.data];
