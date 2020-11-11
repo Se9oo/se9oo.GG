@@ -27,10 +27,6 @@ export const ButtonContainer = styled.div`
 
 // UserProfile
 export const UserProfileContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
@@ -50,7 +46,26 @@ export const UserProfileContainer = styled.div`
   }
 `;
 
+export const UserProfileContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  @media ${props => props.theme.tablet} {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const UserDetail = styled.div`
+  width: 100%;
+`;
+
 export const UserNickname = styled.strong`
+  display: block;
+  text-align: center;
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 1rem;
