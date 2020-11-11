@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 import { Button, Comment, Form } from 'antd';
+import { CloseOutlined } from '@ant-design/icons';
 
 // common
 export const ErrorMessage = styled.div`
@@ -146,9 +147,24 @@ export const CommentContainer = styled.div`
   border-top: none;
 `;
 
-export const CommentItem = styled(Comment)`
-  .ant-comment-inner:hover {
-    background-color: rgba(206, 212, 218, .2);
+export const CommentItemContainer = styled.div`
+  position: relative;
+`;
+
+export const CommentDeleteBtn = styled(CloseOutlined)`
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translate(0, -50%);
+  cursor: pointer;
+
+  & svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  & svg:hover {
+    color: #ff7875;
   }
 `;
 

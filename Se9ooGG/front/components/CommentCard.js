@@ -1,10 +1,11 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Comment, Input } from 'antd';
-import { CommentBtn, CommentContainer, CommentForm, CommentItem } from '../styles/components/Components';
+import { CommentBtn, CommentContainer, CommentDeleteBtn, CommentForm } from '../styles/components/Components';
 import { addCommentRequestAction } from '../reducer/post';
 import shortId from 'shortid';
 import { errorModal } from './CommonModal';
+import CommentItem from '../components/CommentItem';
 
 const CommentCard = ({ commentList, postId }) => {
   const dispatch = useDispatch('');
@@ -39,21 +40,7 @@ const CommentCard = ({ commentList, postId }) => {
   return (
     <CommentContainer>
       {        
-        commentList.map((comment) => {
-          return (
-            <CommentItem
-              key={comment.commentId} 
-              author={comment.user.nickname}
-              avatar={<Avatar>{comment.user.nickname.slice(0, 1)}</Avatar>}
-              content={
-                comment.content && 
-                comment.content.split('\n').map((list, i) => {
-                  return (<span key={i}>{list}<br /></span>)
-                })
-              }
-            />
-          )
-        })
+       commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} />) 
       }
       {
         isLogin && 
