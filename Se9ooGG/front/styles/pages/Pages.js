@@ -17,7 +17,7 @@ export const HomeContainer = styled.div`
 export const MainLogoImg = styled.img`
   max-width: 100%;
   height: auto;
-  padding: 70px 10%;
+  padding: 70px 20%;
 `;
 
 export const UserSearchInput = styled(Input.Search)`

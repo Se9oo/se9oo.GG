@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback } from 'react';
 import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import AppLayout from '../components/AppLayout';

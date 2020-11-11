@@ -13,7 +13,7 @@ const AppLayout = ({ children }) => {
     <Container>
       {/* desktop nav */}
       <DesktopNav>
-        <h1><Link href="/"><a>se9oo.GG</a></Link></h1>
+        <h1><Link href="/"><img src="/riot-logo.png" alt="logo"/></Link></h1>
         <ul>
             {
               isLogin

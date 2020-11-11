@@ -28,6 +28,12 @@ export const DesktopNav = styled.nav`
     font-size: 2rem;
   }
 
+  & img {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+  }
+
   & button {
     justify-content: flex-end;
   }
