@@ -150,7 +150,13 @@ export const CommentForm = styled(Form)`
   padding: 1rem 0;
 `;
 
-export const CommentBtn = styled(Button)`
-  float: right;
+export const CommentBtn = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
   margin-top: 1rem;
+
+  & button {
+    display: flex;
+  }
 `;

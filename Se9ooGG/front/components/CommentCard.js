@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Comment, Input } from 'antd';
+import { Avatar, Button, Comment, Input } from 'antd';
 import { CommentBtn, CommentContainer, CommentForm } from '../styles/components/Components';
 import { addCommentRequestAction } from '../reducer/post';
 import shortId from 'shortid';
@@ -8,6 +8,7 @@ import shortId from 'shortid';
 const CommentCard = ({ commentList, postId }) => {
   const dispatch = useDispatch('');
   const { isLogin, me } = useSelector((state) => (state.user));
+  const { addCommentLoading } = useSelector((state) => (state.post));
   
   // comment form
   const [commentText, setCommentText] = useState('');
@@ -61,7 +62,9 @@ const CommentCard = ({ commentList, postId }) => {
                   value={commentText}
                   onChange={onChangeCommentText}
                 />
-                <CommentBtn type="primary" htmlType="submit">게시</CommentBtn>
+                <CommentBtn>
+                  <Button type="primary" htmlType="submit" loading={addCommentLoading}>게시</Button>
+                </CommentBtn>
               </CommentForm>
             </>
           }
