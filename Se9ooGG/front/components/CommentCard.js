@@ -4,6 +4,7 @@ import { Avatar, Button, Comment, Input } from 'antd';
 import { CommentBtn, CommentContainer, CommentForm } from '../styles/components/Components';
 import { addCommentRequestAction } from '../reducer/post';
 import shortId from 'shortid';
+import { errorModal } from './CommonModal';
 
 const CommentCard = ({ commentList, postId }) => {
   const dispatch = useDispatch('');
@@ -17,6 +18,13 @@ const CommentCard = ({ commentList, postId }) => {
   }, []);
 
   const onSubmitComment = useCallback(() => {
+    // 댓글 등록시 null check
+    if (!commentText) {
+      errorModal('댓글을 입력 해주세요.');
+      return;
+    }
+
+    // 댓글 등록
     dispatch(addCommentRequestAction({
       user: {
         email: me.email,
