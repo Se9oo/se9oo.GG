@@ -139,11 +139,17 @@ export const PostCommentCount = styled.span`
 `;
 
 // CommentCard
-export const CommentContainer = styled(Comment)`
-  padding: 1rem;
+export const CommentContainer = styled.div`
+  padding: 2rem;
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
   border-top: none;
+`;
+
+export const CommentItem = styled(Comment)`
+  .ant-comment-inner:hover {
+    background-color: rgba(206, 212, 218, .2);
+  }
 `;
 
 export const CommentForm = styled(Form)`

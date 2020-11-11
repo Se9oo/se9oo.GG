@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Comment, Input } from 'antd';
-import { CommentBtn, CommentContainer, CommentForm } from '../styles/components/Components';
+import { CommentBtn, CommentContainer, CommentForm, CommentItem } from '../styles/components/Components';
 import { addCommentRequestAction } from '../reducer/post';
 import shortId from 'shortid';
 import { errorModal } from './CommonModal';
@@ -41,7 +41,7 @@ const CommentCard = ({ commentList, postId }) => {
       {        
         commentList.map((comment) => {
           return (
-            <Comment
+            <CommentItem
               key={comment.commentId} 
               author={comment.user.nickname}
               avatar={<Avatar>{comment.user.nickname.slice(0, 1)}</Avatar>}
