@@ -50,6 +50,11 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
+// 댓글 삭제
+export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
+export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
+export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
 export const addPostRequestAction = (data) => {
   return {
     type: ADD_POST_REQUEST,
@@ -65,14 +70,20 @@ export const deletePostRequestAction = (data) => {
 };
 
 export const addCommentRequestAction = (data, postId) => {
-  console.log(JSON.stringify(data));
-  console.log(JSON.stringify(postId));
   return {
     type: ADD_COMMENT_REQUEST,
     data,
-    postId
+    postId,
   };
 };
+
+export const deleteCommentRequestAction = (data, postId) => {
+  return {
+    type: DELETE_COMMENT_REQUEST,
+    data,
+    postId,
+  }
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -116,22 +127,40 @@ const reducer = (state = initialState, action) => {
         addCommentLoading: true,
       }
     case ADD_COMMENT_SUCCESS:
-      const postIndex = state.postList.findIndex((v) => v.postId === action.postId);
-      const post = { ...state.postList[postIndex] };
-      post.comments = [...post.comments, action.data];
-      const postList = [...state.postList];
-      postList[postIndex] = post;
+      const addPostIndex = state.postList.findIndex((v) => v.postId === action.postId);
+      const addPost = { ...state.postList[addPostIndex] };
+      addPost.comments = [...addPost.comments, action.data];
+      const addPostList = [...state.postList];
+      addPostList[addPostIndex] = addPost;
 
       return {
         ...state,
-        postList,
+        postList: addPostList,
         addCommentLoading: false,
       }
     case ADD_COMMENT_FAILURE:
       return {
         addCommentLoading: false,
       }
-    
+    case DELETE_COMMENT_REQUEST:
+      return {
+        ...state, 
+      }
+    case DELETE_COMMENT_SUCCESS:
+      const deletePostIndex = state.postList.findIndex((v) => v.postId === action.postId);
+      const deletePost = { ...state.postList[deletePostIndex] };
+      deletePost.comments = [...deletePost.comments].filter((comment) => comment.commentId !== action.data.commentId);
+      const deletePostList = [...state.postList];
+      deletePostList[deletePostIndex] = deletePost;
+
+      return {
+        ...state,
+        postList: deletePostList,
+      }
+    case DELETE_COMMENT_FAILURE:
+      return {
+        ...state,
+      }
     default:
       return state;
   }

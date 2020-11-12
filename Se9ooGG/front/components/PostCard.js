@@ -69,7 +69,7 @@ const PostCard = ({ data }) => {
   return (
     <>
       <Card
-        style={{ border: '1px solid rgba(206, 212, 218, .5)' }}
+        style={{ marginTop: '1rem', border: '1px solid rgba(206, 212, 218, .5)' }}
         actions={[
           <CommentOutlined key="comment" onClick={onClickComment}/>,
           liked

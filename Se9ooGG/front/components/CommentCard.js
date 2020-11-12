@@ -40,13 +40,14 @@ const CommentCard = ({ commentList, postId }) => {
   return (
     <CommentContainer>
       {        
-       commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} />) 
+       commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />) 
       }
       {
         isLogin && 
         me &&
         <Comment 
           avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}
+          author={me.nickname}
           content={
             <>
               <CommentForm onFinish={onSubmitComment}>
