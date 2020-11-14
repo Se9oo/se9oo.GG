@@ -8,21 +8,21 @@ import championData from '../json/champion.json';
 function getChampionList() {
   const arr = [];
   for (let i in championData.data) {
-    arr.push(i);
+    arr.push(championData.data[i]);
   }
-  
+  //console.log(JSON.stringify(arr));
   return arr;
 };
 
 const Champion = () => {
   const champList = getChampionList();
+  //console.log(champList[0].name);
   
   return (
     <AppLayout>
       <Head>
         <title>se9oo.GG | 챔피언</title>
       </Head>
-      <PageTitle>챔피언</PageTitle>
       <ChampionList data={champList}/>
     </AppLayout>
   )

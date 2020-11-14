@@ -182,3 +182,23 @@ export const CommentBtn = styled.div`
     display: flex;
   }
 `;
+
+// championList
+export const ChampList = styled.ul`
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 27rem;
+  padding: 1rem;
+  overflow-y: scroll;
+`;
+
+export const ChampionName = styled.span`
+  display: block;
+  width: 5rem;
+  padding: .5rem 0;
+  font-size: .8rem;
+  text-align: center;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+`;

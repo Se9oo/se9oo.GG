@@ -26,7 +26,7 @@ const AppLayout = ({ children }) => {
         </ul>
       </DesktopNav>
       {/* content */}
-      <motion.div key={Router.route} 
+      <motion.div key={Router.route}
           initial="pageInitial"
           animate="pageAnimate"
           transition={{ type: 'spring', bounce: 0.25 }}
