@@ -1,15 +1,7 @@
 import React from 'react';
-import styled from 'styled-components';
 import { motion } from 'framer-motion';
 import { Router } from 'next/dist/client/router';
-import { ChampionName, ChampList } from '../styles/components/Components';
-
-const ChampionImg = styled.img`
-  display: block;
-  width: 7rem;
-  height: 7rem;
-  padding: .2rem;
-`;
+import { ChampionImg, ChampionName, ChampList, ChampListItem } from '../styles/components/Components';
 
 const ChampionList = ({ data }) => {
 
@@ -22,7 +14,7 @@ const ChampionList = ({ data }) => {
         {
           data.map((v) => {
             return (
-              <li style={{ display: 'flex', flexDirection:'column', alignItems: 'center'}} key={v.name}>
+              <ChampListItem key={v.name}>
                 <motion.div
                   key={v.name}
                   style={{ cursor: 'pointer'}}
@@ -31,7 +23,7 @@ const ChampionList = ({ data }) => {
                   <ChampionImg src={`/img/champion/${v.id}.png`} alt={ `${v.id}` }/>
                 </motion.div>
                 <ChampionName>{v.name}</ChampionName>
-              </li>
+              </ChampListItem>
             )
           })
         }
