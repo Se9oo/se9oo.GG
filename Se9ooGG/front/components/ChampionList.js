@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Router } from 'next/dist/client/router';
+import { useRouter } from 'next/router';
 import { ChampionImg, ChampionName, ChampList, ChampListItem } from '../styles/components/Components';
 
 const ChampionList = ({ data }) => {
+  const router = useRouter();
 
-  // const onClickChampionImg = useCallback(() => {
-  //   Router.push('/')
-  // }, []);
+  const onClickChampionItem = useCallback((id) => {
+    router.push({
+      pathname: '/champion/[championName]',
+      query: { championName: `${id}`}
+    });
+  }, []);
+  
   return (
     <>
       <ChampList>
         {
           data.map((v) => {
             return (
-              <ChampListItem key={v.name}>
+              <ChampListItem 
+                key={v.name}
+                onClick={() => onClickChampionItem(v.id)}
+              >
                 <motion.div
                   key={v.name}
                   style={{ cursor: 'pointer'}}

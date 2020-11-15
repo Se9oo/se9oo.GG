@@ -66,3 +66,19 @@ export const CommentHeader = styled.div`
     font-size: 2rem;
   }
 `;
+
+// championInfo
+export const ChampionInfoContainer = styled.section`
+  display: flex;
+
+  & h2 {
+    font-size: 2rem;
+    order: 1;
+  }
+
+  & img {
+    width: 30%;
+    height: 30%;
+    margin-right: 1rem;
+  }
+`;

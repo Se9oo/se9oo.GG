@@ -21,7 +21,7 @@ const AppLayout = ({ children }) => {
               : <li><Link href="/login"><a>로그인</a></Link></li>
             }
             <li><Link href="/community"><a>커뮤니티</a></Link></li>
-            <li><Link href="/champion"><a>챔피언</a></Link></li>
+            <li><Link href="/champion/"><a>챔피언</a></Link></li>
             <li><Link href="/statistic"><a>전적</a></Link></li>
         </ul>
       </DesktopNav>
