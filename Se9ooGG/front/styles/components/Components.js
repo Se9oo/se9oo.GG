@@ -222,11 +222,7 @@ export const ChampionName = styled.span`
   overflow: hidden;
 `;
 
-export const ChampionSkillImg = styled.div`
-  width: ${props => props.img.w}px;
-  height: ${props => props.img.h}px;
-  background-image: url('/img/sprite/${props => props.img.sprite}');
-  background-position: -${props => props.img.x}px -${props => props.img.y}px;
-  background-repeat: no-repeat;
-  transform: scale(.5);
+export const ChampionSkillImg = styled.img`
+  width: 4rem;
+  height: 4rem;
 `;

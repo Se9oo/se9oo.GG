@@ -5,7 +5,7 @@ const ChampionSkillsItem = ({ skill }) => {
   return (
     <>
       <li>
-        <ChampionSkillImg img={skill.image} />
+        <ChampionSkillImg src={`/img/spell/${skill.image.full}`} img={skill.image}/>
       </li>
     </>
   );

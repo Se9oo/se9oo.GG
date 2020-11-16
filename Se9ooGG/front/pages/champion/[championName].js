@@ -1,7 +1,7 @@
 import React from 'react';
 import { useRouter } from 'next/router';
 import AppLayout from '../../components/AppLayout';
-import { ChampionDetail, ChampionInfoContainer, ChampionSkills, ChampionTitle } from '../../styles/pages/Pages';
+import { ChampionDetail, ChampionInfoContainer, ChampionInfoImg, ChampionSkills, ChampionTitle } from '../../styles/pages/Pages';
 import champInfo from '../../json/champion/Ahri.json';
 import ChampionSkillsItem from '../../components/ChampionSkillsItem';
 
@@ -11,7 +11,7 @@ const ChampionInfo = () => {
   return (
     <AppLayout>
       <ChampionInfoContainer>
-        <img src={`/img/champion/${router.query.championName}.png`} />
+        <ChampionInfoImg src={`/img/champion/${router.query.championName}.png`} />
         <ChampionDetail>
           <ChampionTitle>
             <h2>아리</h2>

@@ -74,16 +74,17 @@ export const ChampionInfoContainer = styled.section`
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
   padding: 1rem;
+`;
 
-  & img {
-    width: 30%;
-    height: 30%;
-    margin-right: 1rem;
-  }
+export const ChampionInfoImg = styled.img`
+  width: 30%;
+  height: 30%;
+  margin-right: 1rem;
 `;
 
 export const ChampionDetail = styled.div`
   display: block;
+  width: 100%;
 `;
 
 export const ChampionTitle = styled.div`
@@ -105,7 +106,8 @@ export const ChampionTitle = styled.div`
 `;
 
 export const ChampionSkills = styled.ul`
+  width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
 `;
