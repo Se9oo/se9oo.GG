@@ -70,15 +70,42 @@ export const CommentHeader = styled.div`
 // championInfo
 export const ChampionInfoContainer = styled.section`
   display: flex;
-
-  & h2 {
-    font-size: 2rem;
-    order: 1;
-  }
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid rgba(206, 212, 218, .5);
+  padding: 1rem;
 
   & img {
     width: 30%;
     height: 30%;
     margin-right: 1rem;
   }
+`;
+
+export const ChampionDetail = styled.div`
+  display: block;
+`;
+
+export const ChampionTitle = styled.div`
+  order: 1;
+  
+  & h2 {
+    font-size: 2.5rem;
+    font-weight: 600;
+    line-height: 1.5;
+    order: 2;
+  }
+
+  & strong {
+    font-size: .8rem;
+    color: #868E96;
+    line-height: 1.5;
+    order: 1;
+  }
+`;
+
+export const ChampionSkills = styled.ul`
+  display: flex;
+  justify-content: center;
+  align-items: center;
 `;
