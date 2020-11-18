@@ -14,8 +14,8 @@ const ChampionInfo = () => {
         <ChampionInfoImg src={`/img/champion/${router.query.championName}.png`} />
         <ChampionDetail>
           <ChampionTitle>
-            <h2>아리</h2>
-            <strong>구미호</strong>
+            <h2>{champInfoObj.name}</h2>
+            <strong>{champInfoObj.title}</strong>
           </ChampionTitle>
           <ChampionSkills>
             {
