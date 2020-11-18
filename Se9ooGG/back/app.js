@@ -4,6 +4,11 @@ const userRouter = require('./routes/user');
 
 const app = express();
 
+// json post 방식
+app.use(express.json());
+// form submit -> url encoded 방식
+app.use(express.urlencoded({ extended: true }));
+
 // 게시글
 app.use(postRouter);
 // 사용자
