@@ -1,9 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 
 const app = express();
 
+app.use(cors({
+  origin: '*',
+  credentials: false,
+}));
 // json post 방식
 app.use(express.json());
 // form submit -> url encoded 방식

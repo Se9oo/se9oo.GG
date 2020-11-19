@@ -9,6 +9,14 @@ export function errorModal(msg) {
   })
 }
 
+export function infoModal(msg) {
+  Modal.info({
+    title: 'INFO',
+    content: `${msg}`,
+    okText: '닫기',
+  })
+}
+
 const CommonModal = ({ modalContent, visible }) => {
   return (
     <Modal

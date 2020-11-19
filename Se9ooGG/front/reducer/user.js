@@ -2,6 +2,9 @@ export const initialState = {
   isLogin: false,
   isLoginLoading: false,
   isLogoutLoading: false,
+  signUpLoading: false,
+  signUpDone: false,
+  signUpError: false,
   me: null,
   loginData: {},
   signUpData: {},
@@ -15,6 +18,11 @@ export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
 export const LOG_OUT_FAILURE = 'LOG_OUT_FAILURE';
+// 회원가입
+export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
+export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
+export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
+export const SIGN_UP_DONE_CLEAR = 'SIGN_UP_DONE_CLEAR';
 
 export const LoginRequsetAction = (data) => {
   return {
@@ -28,6 +36,19 @@ export const LogoutRequestAction = () => {
     type: LOG_OUT_REQUEST,
   };
 };
+
+export const SignUpRequestAction = (data) => {
+  return {
+    type: SIGN_UP_REQUEST,
+    data
+  };
+};
+
+export const SignUpDoneClearRequestAction = () => {
+  return {
+    type: SIGN_UP_DONE_CLEAR,
+  }
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -67,6 +88,29 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLogoutLoading: false,
       };
+    case SIGN_UP_REQUEST:
+      return {
+        ...state,
+        signUpLoading: true,
+      }
+    case SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        signUpLoading: false,
+        signUpDone: true,
+        signUpError: false,
+      }
+    case SIGN_UP_FAILURE:
+      return {
+        ...state,
+        signUpLoading: false,
+        signUpError: true,
+      }
+    case SIGN_UP_DONE_CLEAR:
+      return {
+        ...state,
+        signUpDone: false,
+      }
     default:
       return state;
   }
