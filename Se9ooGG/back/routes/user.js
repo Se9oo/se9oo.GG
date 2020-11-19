@@ -1,44 +1,46 @@
 const express = require('express');
-const mysql = require('mysql');
-const config = require('../config/config.json');
-const conn = mysql.createConnection(config);
+const pool = require('../config/pool');
+const queryModule = require('./query/query');
+const selectCountIsExUserByEmail = queryModule.selectCountIsExUserByEmail;
+const insertUser = queryModule.insertUser;
 
 const router = express.Router();
 
-// example
-router.get('/user', (req, res) => {
-  conn.query('SELECT * FROM user', (error, rows) => {
-    if (error) throw error;
-    console.log('query result : ', rows);
-    res.json({ data: rows });
-  });
-});
-
 // 회원가입
-router.post('/user/signup', (req, res, next) => {
-  try {
-    const selectIsExUser = `SELECT COUNT(*) AS cnt FROM user where ${req.body.email}`;
-    const isExUser = conn.query(selectIsExUser, (err, rows) => {
-      return rows[0].cnt;
-    });
+router.post('/user/signup', async (req, res, next) => {
+  // 회원가입 이메일
+  const { user_email, user_password, user_nickname } = req.body;
+  console.log(`[parameter] : ${JSON.stringify(req.body)}`);
+  
+  // connection
+  const conn = pool.getConnection((err, con));
 
-    if (isExUser > 0) {
-      return res.status(403).send('이미 사용중인 email 입니다.');
+  try {
+    (await conn).beginTransaction();
+    // 이메일 중복 체크
+    
+    let [result] = (await conn).execute(selectCountIsExUserByEmail, [user_email]);
+
+    if (result[0].cnt > 0) {
+      return res.status(403).json('존재하는 회원 email 입니다.');
     }
 
-    const insertUser = `
-      INSERT INTO user (user_email, user_password, user_nickname, reg_dt)
-      VALUES (${req.body.email}, ${req.body.password}, ${req.body.user_nickname})
-    `;
-    conn.query(insertUser, (err, rows) => {
-      console.log("record inserted");
-    });
+    [result] = (await conn).execute(insertUser, [user_email, user_password, user_nickname]);
+    console.log(result.affectedRows);
 
-    res.status(200).send('signup success');
+    // commit
+    (await conn).commit();
+
   } catch (err) {
-    console.err(error);
-    next(error);
-  };
+    // rollback
+    (await conn).rollback();
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (!conn) {
+      (await conn).release();
+    }
+  }
 });
 
 module.exports = router;
