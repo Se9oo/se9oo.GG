@@ -5,19 +5,25 @@ import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS,
 } from '../reducer/user';
 import axios from 'axios';
 
+function loginAPI(data) {
+  return axios.post('/user/login', data);
+}
+
 function* login(action) {
   try {
-    yield delay(1000);
+    const result = loginAPI(action.data);
+    console.log(`result : ${JSON.stringify(result)}`);
     yield put({
       type: LOG_IN_SUCCESS,
+      data: result,
       //data: action.data,
-      data: {
-        email: 'se9oo@kakao.com',
-        nickname: '세구',
-        userPostCount: 10,
-        level: 20,
-        signupDate: '2020.11.02',
-      }
+      // data: {
+      //   email: 'se9oo@kakao.com',
+      //   nickname: '세구',
+      //   userPostCount: 10,
+      //   level: 20,
+      //   signupDate: '2020.11.02',
+      // }
     });
   } catch (err) {
     yield put({

@@ -1,10 +1,35 @@
 const express = require('express');
 const pool = require('../config/pool');
+const bcrypt = require('bcrypt');
 const queryModule = require('./query/query');
+const passport = require('passport');
 const selectCountIsExUserByEmail = queryModule.selectCountIsExUserByEmail;
 const insertUser = queryModule.insertUser;
 
 const router = express.Router();
+
+// 로그인
+router.post('/user/login', (req, res, next) => {
+  passport.authenticate('local', (err, user, info) => {
+    if (err) {
+      console.err(err);
+      return next(err);
+    }
+
+    if (info) {
+      return res.status(401).send(info.reason);
+    }
+
+    return req.login(user, async (loginErr) => {
+      if (loginErr) {
+        console.error(loginErr);
+        return next(loginErr);
+      }
+
+      return res.json(user);
+    });
+  }) (req, res, next);
+});
 
 // 회원가입
 router.post('/user/signup', async (req, res, next) => {
@@ -27,8 +52,9 @@ router.post('/user/signup', async (req, res, next) => {
         return res.status(403).json('존재하는 회원 email 입니다.');
       }
   
+      const hashedPassword = await bcrypt.hash(password, 12);
       // 회원가입
-      [result] = await connection.execute(insertUser, [email, password, nickname]);
+      [result] = await connection.execute(insertUser, [email, hashedPassword, nickname]);
   
       // commit
       await connection.commit();
