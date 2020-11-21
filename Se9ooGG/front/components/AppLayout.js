@@ -7,7 +7,7 @@ import { motion } from 'framer-motion';
 import { Router } from 'next/dist/client/router';
 
 const AppLayout = ({ children }) => {
-  const { isLogin } = useSelector((state) => state.user);
+  const { loginDone } = useSelector((state) => state.user);
 
   return (
     <Container>
@@ -16,7 +16,7 @@ const AppLayout = ({ children }) => {
         <h1><Link href="/"><img src="/riot-logo.png" alt="logo"/></Link></h1>
         <ul>
             {
-              isLogin
+              loginDone
               ? <li><Link href="/profile"><a>프로필</a></Link></li>
               : <li><Link href="/login"><a>로그인</a></Link></li>
             }
@@ -48,7 +48,7 @@ const AppLayout = ({ children }) => {
         <ul>
           <li><Link href="/"><a><HomeOutlined /></a></Link></li>
           {
-            isLogin
+            loginDone
             ? <li><Link href="/profile"><a><UserOutlined /></a></Link></li>
             : <li><Link href="/login"><a><UserOutlined /></a></Link></li>
           }

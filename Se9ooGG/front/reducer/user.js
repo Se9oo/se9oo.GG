@@ -1,13 +1,12 @@
 export const initialState = {
-  isLogin: false,
-  isLoginLoading: false,
   isLogoutLoading: false,
+  loginLoading: false,
+  loginDone: false,
+  loginError: false,
   signUpLoading: false,
   signUpDone: false,
   signUpError: false,
   me: null,
-  loginData: {},
-  signUpData: {},
 }
 
 // 로그인
@@ -55,21 +54,23 @@ const reducer = (state = initialState, action) => {
     case LOG_IN_REQUEST:
       return {
         ...state,
-        isLoginLoading: true,
+        loginLoading: true,
+        loginError: false,
       };
     case LOG_IN_SUCCESS:
       return {
         ...state,
-        isLogin: true,
-        isLoginLoading: false,
+        loginDone: true,
+        loginLoading: false,
         me: action.data,
       };
     case LOG_IN_FAILURE:
       return {
         ...state,
-        isLogin: false,
-        isLoginLoading: false,
+        loginDone: false,
+        loginLoading: false,
         me: null,
+        loginError: action.data,
       };
     case LOG_OUT_REQUEST:
       return {
@@ -79,7 +80,7 @@ const reducer = (state = initialState, action) => {
     case LOG_OUT_SUCCESS:
       return {
         ...state,
-        isLogin: false,
+        loginDone: false,
         isLogoutLoading: false,
         me: null,
       };

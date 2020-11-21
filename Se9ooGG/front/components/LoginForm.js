@@ -11,7 +11,7 @@ import { errorModal } from './CommonModal';
 const LoginForm = () => {
   const dispatch = useDispatch('');
   // 로그인 성공 여부
-  const { isLogin, isLoginLoading } = useSelector((state) => (state.user));
+  const { loginDone, loginLoading, loginError } = useSelector((state) => (state.user));
 
   // email
   const [email, setEmail] = useState('');
@@ -43,10 +43,17 @@ const LoginForm = () => {
   // isLoginSuccess state 값이 변할 경우
   // profile page로 이동
   useEffect(() => {
-    if (isLogin) {
+    if (loginDone) {
       Router.push('/profile');
     }
-  }, [isLogin]);
+  }, [loginDone]);
+
+  useEffect(() => {
+    if (loginError) {
+      errorModal(loginError);
+      return;
+    }
+  }, [loginError]);
 
   return (
     <>
@@ -79,7 +86,7 @@ const LoginForm = () => {
         {/* button */}
         <ButtonContainer>
           <Button><Link href="/signup"><a>회원가입</a></Link></Button>
-          <Button type="primary" htmlType="submit" loading={isLoginLoading}>로그인</Button>
+          <Button type="primary" htmlType="submit" loading={loginLoading}>로그인</Button>
         </ButtonContainer>
       </FormContainer>
     </>

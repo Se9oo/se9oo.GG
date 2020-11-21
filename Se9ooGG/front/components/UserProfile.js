@@ -7,17 +7,17 @@ import { Button } from 'antd';
 
 const UserProfile = () => {
   const dispatch = useDispatch('');
-  const { isLogin, isLogoutLoading, me } = useSelector((state) => (state.user));
+  const { loginDone, isLogoutLoading, me } = useSelector((state) => (state.user));
 
   const onClickLogoutBtn = useCallback(() => {
     dispatch(LogoutRequestAction());
   }, []);
 
   useEffect(() => {
-    if (!isLogin) {
+    if (!loginDone) {
       Router.push('/login');
     }
-  }, [isLogin]);
+  }, [loginDone]);
 
   return (
     <UserProfileContainer>
