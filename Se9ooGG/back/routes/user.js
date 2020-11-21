@@ -1,8 +1,8 @@
 const express = require('express');
 const pool = require('../config/pool');
 const bcrypt = require('bcrypt');
-const queryModule = require('./query/query');
 const passport = require('passport');
+const queryModule = require('./query/query');
 const selectCountIsExUserByEmail = queryModule.selectCountIsExUserByEmail;
 const insertUser = queryModule.insertUser;
 

@@ -1,7 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const session = require('express-session');
-const cookie = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportConfig = require('./passport');
 const dotenv = require('dotenv');
@@ -22,7 +22,6 @@ app.use(express.json());
 // form submit -> url encoded 방식
 app.use(express.urlencoded({ extended: true }));
 
-app.use(session());
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(session({
   saveUninitialized: false,
