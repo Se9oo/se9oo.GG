@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Button, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/Components';
-import { LoginRequsetAction } from '../reducer/user';
+import { LoginErrorClearRequestAction, LoginRequsetAction } from '../reducer/user';
 import { errorModal } from './CommonModal';
 
 const LoginForm = () => {
@@ -51,6 +51,7 @@ const LoginForm = () => {
   useEffect(() => {
     if (loginError) {
       errorModal(loginError);
+      dispatch(LoginErrorClearRequestAction());
       return;
     }
   }, [loginError]);

@@ -2,7 +2,7 @@ export const initialState = {
   isLogoutLoading: false,
   loginLoading: false,
   loginDone: false,
-  loginError: false,
+  loginError: null,
   signUpLoading: false,
   signUpDone: false,
   signUpError: false,
@@ -13,6 +13,7 @@ export const initialState = {
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 export const LOG_IN_FAILURE = 'LOG_IN_FAILURE';
+export const LOG_IN_FAILURE_CLEAR = 'LOG_IN_FAILURE_CLEAR';
 // 로그아웃
 export const LOG_OUT_REQUEST = 'LOG_OUT_REQUEST';
 export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
@@ -29,6 +30,12 @@ export const LoginRequsetAction = (data) => {
     data
   };
 };
+
+export const LoginErrorClearRequestAction = () => {
+  return {
+    type: LOG_IN_FAILURE_CLEAR,
+  }
+}
 
 export const LogoutRequestAction = () => {
   return {
@@ -72,6 +79,11 @@ const reducer = (state = initialState, action) => {
         me: null,
         loginError: action.data,
       };
+    case LOG_IN_FAILURE_CLEAR:
+      return {
+        ...state,
+        loginError: null,
+      }
     case LOG_OUT_REQUEST:
       return {
         ...state,
