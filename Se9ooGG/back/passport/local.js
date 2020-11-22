@@ -2,7 +2,7 @@ const passport = require('passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 const bcrypt = require('bcrypt');
 const pool = require('../config/pool');
-const { selectUser } = require('../routes/query/query');
+const { selectUser, selectFullUserInfo } = require('../routes/query/query');
 
 module.exports = () => {
   passport.use(new LocalStrategy({
@@ -21,8 +21,10 @@ module.exports = () => {
 
       const result = await bcrypt.compare(password, user[0].user_password);
 
+      let [fullUserInfo] = await connection.query(selectFullUserInfo, [email]);
+
       if (result) {
-        return done(null, user);
+        return done(null, fullUserInfo);
       }
       return done(null, false, { reason: '비밀번호가 틀렸습니다. '});
     } catch (err) {

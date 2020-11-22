@@ -28,7 +28,7 @@ const UserProfile = () => {
           <UserInfo>
             <div>
               <dt>작성글 수</dt>
-              <dd>{me && me.userPostCount}</dd>
+              <dd>{me && me.user_post_count}개</dd>
             </div>
             <div>
               <dt>레벨</dt>

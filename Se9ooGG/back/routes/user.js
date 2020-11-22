@@ -31,6 +31,13 @@ router.post('/user/login', (req, res, next) => {
   }) (req, res, next);
 });
 
+// 로그아웃
+router.post('/user/logout', (req, res) => {
+  req.logout();
+  req.session.destroy();
+  res.send('logout success');
+});
+
 // 회원가입
 router.post('/user/signup', async (req, res, next) => {
   // 회원가입 이메일
