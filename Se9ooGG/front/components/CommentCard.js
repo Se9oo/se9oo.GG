@@ -28,8 +28,8 @@ const CommentCard = ({ commentList, postId }) => {
     // 댓글 등록
     dispatch(addCommentRequestAction({
       user: {
-        email: me.email,
-        nickname: me.nickname,
+        email: me.user_email,
+        nickname: me.user_nickname,
       },
       commentId: shortId.generate(),
       content: commentText,
@@ -46,8 +46,8 @@ const CommentCard = ({ commentList, postId }) => {
         loginDone && 
         me &&
         <Comment 
-          avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}
-          author={me.nickname}
+          avatar={<Avatar>{me.user_nickname.slice(0, 1)}</Avatar>}
+          author={me.user_nickname}
           content={
             <>
               <CommentForm onFinish={onSubmitComment}>

@@ -47,8 +47,8 @@ const PostForm = () => {
     dispatch(addPostRequestAction({
       postId: shortId.generate(),
       user: {
-        email: me.email,
-        nickname: me.nickname,
+        email: me.user_email,
+        nickname: me.user_nickname,
       },
       title: postTitle,
       content: postContent,
@@ -91,7 +91,7 @@ const PostForm = () => {
         {/* 작성자 */}
         <PostContentContainer>
           <label htmlFor="post-writer">작성자</label>
-          <strong>{me && me.nickname}</strong>
+          <strong>{me && me.user_nickname}</strong>
         </PostContentContainer>
         {/* 제목 */}
         <PostContentContainer>

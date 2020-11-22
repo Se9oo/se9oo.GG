@@ -7,7 +7,7 @@ import { PageTitle, PostAddBtn, PostSearchInput } from '../styles/pages/Pages';
 import { useSelector } from 'react-redux';
 
 const Community = () => {
-  const { isLogin } = useSelector((state) => (state.user));
+  const { loginDone } = useSelector((state) => (state.user));
   const { postList } = useSelector((state) => (state.post));
 
   const onClickAddPostBtn = useCallback(() => {
@@ -24,7 +24,7 @@ const Community = () => {
         enterButton
       />
       {
-          isLogin 
+          loginDone 
           ? <PostAddBtn 
             type="primary"
             onClick={onClickAddPostBtn}
