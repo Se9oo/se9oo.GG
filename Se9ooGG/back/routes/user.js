@@ -3,13 +3,14 @@ const pool = require('../config/pool');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const queryModule = require('./query/query');
+const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 const selectCountIsExUserByEmail = queryModule.selectCountIsExUserByEmail;
 const insertUser = queryModule.insertUser;
 
 const router = express.Router();
 
 // 로그인
-router.post('/user/login', (req, res, next) => {
+router.post('/user/login', isNotLoggedIn, (req, res, next) => {
   passport.authenticate('local', (err, user, info) => {
     if (err) {
       console.err(err);
@@ -32,14 +33,14 @@ router.post('/user/login', (req, res, next) => {
 });
 
 // 로그아웃
-router.post('/user/logout', (req, res) => {
+router.post('/user/logout', isLoggedIn, (req, res) => {
   req.logout();
   req.session.destroy();
   res.send('logout success');
 });
 
 // 회원가입
-router.post('/user/signup', async (req, res, next) => {
+router.post('/user/signup', isNotLoggedIn, async (req, res, next) => {
   // 회원가입 이메일
   const { email, password, nickname } = req.body;
   console.log(`[parameter] : ${JSON.stringify(req.body)}`);
