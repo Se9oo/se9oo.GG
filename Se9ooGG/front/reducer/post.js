@@ -2,38 +2,45 @@ import shortId from 'shortid';
 
 export const initialState = {
   postList: [
-    {
-      postId: shortId.generate(),
-      user: {
-        email: 'se9oo@kakao.com',
-        nickname: '세구'
-      },
-      title: '여기는 제목이다',
-      content: '내용이야!',
-      comments: [
-        {
-          user: {
-            email: 'hong@kakao.com',
-            nickname: '홍구'
-          },
-          commentId: shortId.generate(),
-          content: '재밌어'
-        },
-        {
-          user: {
-            email: 'hing@kakao.com',
-            nickname: '힝구'
-          },
-          commentId: shortId.generate(),
-          content: '댓글은 두개여야지'
-        }
-      ]
-    }
+    // {
+    //   postId: shortId.generate(),
+    //   user: {
+    //     email: 'se9oo@kakao.com',
+    //     nickname: '세구'
+    //   },
+    //   title: '여기는 제목이다',
+    //   content: '내용이야!',
+    //   comments: [
+    //     {
+    //       user: {
+    //         email: 'hong@kakao.com',
+    //         nickname: '홍구'
+    //       },
+    //       commentId: shortId.generate(),
+    //       content: '재밌어'
+    //     },
+    //     {
+    //       user: {
+    //         email: 'hing@kakao.com',
+    //         nickname: '힝구'
+    //       },
+    //       commentId: shortId.generate(),
+    //       content: '댓글은 두개여야지'
+    //     }
+    //   ]
+    // }
   ],
+  loadPostDone: false,
+  loadPostError: false,
   addPostLoading: false,
   deletePostLoading: false,
   addCommentLoading: false,
 };
+
+// 글목록 불러오기
+export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
+export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
+export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
 
 // 글등록
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -54,6 +61,12 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
+export const loadPostRequestAction = () => {
+  return {
+    type: LOAD_POST_REQUEST,
+  }
+}
 
 export const addPostRequestAction = (data) => {
   return {
@@ -87,6 +100,23 @@ export const deleteCommentRequestAction = (data, postId) => {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case LOAD_POST_REQUEST:
+      return {
+        ...state,
+        laodPostError: false,
+      }
+    case LOAD_POST_SUCCESS:
+      return {
+        ...state,
+        loadPostDone: true,
+        postList: action.data,
+      }
+    case LOAD_POST_FAILURE:
+      return {
+        ...state,
+        loadPostDone: false,
+        loadPostError: true,
+      }
     // 글등록
     case ADD_POST_REQUEST:
       return {

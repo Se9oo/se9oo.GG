@@ -9,7 +9,7 @@ import CommonModal from './CommonModal';
 import CommentCard from './CommentCard';
 
 const PostCard = ({ data }) => {
-  //console.log(JSON.stringify(data));
+  console.log(JSON.stringify(data));
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => (state.user));
   // modal content
@@ -101,13 +101,13 @@ const PostCard = ({ data }) => {
         ]}
       >
         <Card.Meta
-          avatar={<Avatar>{data.user.nickname.slice(0, 1)}</Avatar>}
+          avatar={<Avatar>{data.user_nickname.slice(0, 1)}</Avatar>}
           title={data.title}
-          description={data.user.nickname}
+          description={data.user_nickname}
         />
         <PostCardContentContainer>
           {
-            data && data.content.split('\n').map((list, i) => {
+            data && data.post_content.split('\n').map((list, i) => {
               return (<span key={i}>{list}<br /></span>)
             })
           }

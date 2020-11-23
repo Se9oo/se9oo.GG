@@ -31,6 +31,15 @@ exports.insertUser = `
     (?, ?, ?, NOW())`;
 
 // post
+exports.selectPostList = `
+  SELECT 
+    pst.post_id, pst.post_title, pst.post_content,
+    usr.user_nickname
+  FROM post pst
+  INNER JOIN user usr on pst.user_email = usr.user_email
+  ORDER BY pst.reg_dt ASC
+`;
+
 exports.insertPost = `
   INSERT INTO post
     (post_title, post_content, user_email, reg_dt)

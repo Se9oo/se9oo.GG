@@ -1,17 +1,23 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
 import PostCard from '../components/PostCard';
 import { PageTitle, PostAddBtn, PostSearchInput } from '../styles/pages/Pages';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadPostRequestAction } from '../reducer/post';
 
 const Community = () => {
+  const dispatch = useDispatch('');
   const { loginDone } = useSelector((state) => (state.user));
   const { postList } = useSelector((state) => (state.post));
 
   const onClickAddPostBtn = useCallback(() => {
     Router.push('/editPost');
+  }, []);
+
+  useEffect(() => {
+    dispatch(loadPostRequestAction());
   }, []);
   
   return (
