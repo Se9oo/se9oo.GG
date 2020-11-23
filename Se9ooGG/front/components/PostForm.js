@@ -5,7 +5,6 @@ import { addPostRequestAction } from '../reducer/post';
 import useInput from '../hooks/useInput';
 import { PostFormContainer, PostContentContainer, PostButton } from '../styles/components/Components';
 import { Form, Input, } from 'antd';
-import shortId from 'shortid';
 import CommonModal, { errorModal } from './CommonModal';
 
 const PostForm = () => {
@@ -45,7 +44,6 @@ const PostForm = () => {
   // 게시글 등록 modal ok
   const onOkAddModal = useCallback(() => {
     dispatch(addPostRequestAction({
-      postId: shortId.generate(),
       user: {
         email: me.user_email,
         nickname: me.user_nickname,
