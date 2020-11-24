@@ -126,7 +126,7 @@ const reducer = (state = initialState, action) => {
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        postList: [action.data, ...state.postList],
+        postList: [...state.postList, action.data],
         addPostLoading: false,
       }
     case ADD_POST_FAILURE:

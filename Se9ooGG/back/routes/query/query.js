@@ -46,3 +46,15 @@ exports.insertPost = `
   VALUES
     (?, ?, ?, NOW())
 `;
+
+// comment
+exports.selectCommentInfoByPostId = `
+  SELECT
+    cmt.comment_id, cmt.user_email, usr.user_nickname,
+    cmt.comment_content, cmt.reg_dt
+  FROM
+    comment cmt
+  LEFT OUTER JOIN user usr ON cmt.user_email = usr.user_email
+  WHERE
+    cmt.post_id = ?
+`;

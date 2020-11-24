@@ -40,7 +40,7 @@ const Community = () => {
           : null
       }
       {
-        postList && postList.map((v) => <PostCard data={v} key={v.postId} />)
+        postList && postList.reverse().map((v) => <PostCard data={v} key={v.post_id} />)
       }
     </AppLayout>
   );

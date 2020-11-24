@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import { deletePostRequestAction } from '../reducer/post';
@@ -8,8 +8,8 @@ import { PostCardContentContainer, PostCommentCount } from '../styles/components
 import CommonModal from './CommonModal';
 import CommentCard from './CommentCard';
 
-const PostCard = ({ data }) => {
-  console.log(JSON.stringify(data));
+const PostCard = memo(({ data }) => {
+  //console.log(JSON.stringify(data));
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => (state.user));
   // modal content
@@ -57,7 +57,7 @@ const PostCard = ({ data }) => {
 
   // 게시글 삭제 modal ok
   const onOkDeletePost = useCallback(() => {
-    dispatch(deletePostRequestAction({ postId: data.postId }));
+    dispatch(deletePostRequestAction({ postId: data.post_id }));
     setShowModal(false);
   }, []);
 
@@ -82,7 +82,7 @@ const PostCard = ({ data }) => {
             content={
               <div>
                 {
-                  me && (me.email === data.user.email) &&
+                  me && (me.email === data.user_email) &&
                   <> 
                     <Button>수정</Button>
                     <Button 
@@ -102,7 +102,7 @@ const PostCard = ({ data }) => {
       >
         <Card.Meta
           avatar={<Avatar>{data.user_nickname.slice(0, 1)}</Avatar>}
-          title={data.title}
+          title={data.post_title}
           description={data.user_nickname}
         />
         <PostCardContentContainer>
@@ -112,14 +112,14 @@ const PostCard = ({ data }) => {
             })
           }
           <PostCommentCount>
-            {`댓글 ${data.comments.length}개`}
+            {`댓글 ${data.comment.length}개`}
           </PostCommentCount>
         </PostCardContentContainer>
       </Card>
       {
         showComment 
-        && data.comments 
-        && <CommentCard commentList={data.comments} postId={data.postId} />
+        && data.comment
+        && <CommentCard commentList={data.comment} postId={data.postId} />
       }
       <CommonModal
         modalContent={modalContent}
@@ -127,6 +127,6 @@ const PostCard = ({ data }) => {
       />
     </>
   );
-};
+});
 
 export default PostCard;

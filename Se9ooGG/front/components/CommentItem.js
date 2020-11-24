@@ -1,11 +1,11 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { Avatar, Comment } from 'antd';
 import { CommentDeleteBtn, CommentItemContainer } from '../styles/components/Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCommentRequestAction } from '../reducer/post';
 import CommonModal from './CommonModal';
 
-const CommentItem = ({ comment, postId }) => {
+const CommentItem = memo(({ comment, postId }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => (state.user));
 
@@ -16,7 +16,7 @@ const CommentItem = ({ comment, postId }) => {
 
   const onOkDeleteCommentModal = useCallback(() => {
     dispatch(deleteCommentRequestAction({
-      commentId: comment.commentId,
+      commentId: comment.comment_Id,
     }, postId));
     setShowModal(false);
   }, []);
@@ -39,24 +39,24 @@ const CommentItem = ({ comment, postId }) => {
     <>
       <CommentItemContainer>
         <Comment
-          author={comment.user.nickname}
-          avatar={<Avatar>{comment.user.nickname.slice(0, 1)}</Avatar>}
+          author={comment.user_nickname}
+          avatar={<Avatar>{comment.user_nickname.slice(0, 1)}</Avatar>}
           content={
-            comment.content && 
-            comment.content.split('\n').map((list, i) => {
+            comment.comment_content && 
+            comment.comment_content.split('\n').map((list, i) => {
               return (<span key={i}>{list}<br /></span>)
             })
           }
         />
         {
           me && 
-          me.email === comment.user.email ? <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
+          me.email === comment.user_email ? <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
           : null
         }
       </CommentItemContainer>
       <CommonModal modalContent={modalContent} visible={showModal} />
     </>
   );
-};
+});
 
 export default CommentItem;

@@ -18,7 +18,6 @@ function addPostAPI(data) {
 function* loadPost() {
   try {
     const result = yield call(loadPostAPI);
-    console.log(`result: ${JSON.stringify(result)}`);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
