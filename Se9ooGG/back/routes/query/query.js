@@ -1,16 +1,16 @@
 // user
 exports.selectUser = `
 SELECT
-  user_id, user_email, user_password,
-  user_nickname, DATE_FORMAT(reg_dt, '%Y.%m.%d') AS reg_dt
+  user_id AS id, user_email AS email, user_password AS password,
+  user_nickname AS nickname, DATE_FORMAT(reg_dt, '%Y.%m.%d') AS regDt
 FROM user WHERE user_email = ?
 `;
 
 exports.selectFullUserInfo = `
   SELECT
-    usr.user_id, usr.user_email, usr.user_nickname,
-    DATE_FORMAT(usr.reg_dt, '%Y.%m.%d') AS reg_dt,
-    COUNT(pst.post_id) AS user_post_count
+    usr.user_id AS id, usr.user_email AS email, usr.user_nickname AS nickname,
+    DATE_FORMAT(usr.reg_dt, '%Y.%m.%d') AS regDt,
+    COUNT(pst.post_id) AS postCount
   FROM user usr
   LEFT OUTER JOIN post pst ON usr.user_email = pst.user_email
   WHERE

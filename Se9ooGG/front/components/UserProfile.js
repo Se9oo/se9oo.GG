@@ -24,11 +24,11 @@ const UserProfile = () => {
       <UserProfileContent>
         <img src="/img/champion/Blitzcrank.png" alt="user-icon" />
         <UserDetail>
-          <UserNickname>{me && me.user_nickname}</UserNickname>
+          <UserNickname>{me && me.nickname}</UserNickname>
           <UserInfo>
             <div>
               <dt>작성글 수</dt>
-              <dd>{me && me.user_post_count}개</dd>
+              <dd>{me && me.postCount}개</dd>
             </div>
             <div>
               <dt>레벨</dt>
@@ -36,7 +36,7 @@ const UserProfile = () => {
             </div>
             <div>
               <dt>가입일</dt>
-              <dd>{me && me.reg_dt}</dd>
+              <dd>{me && me.regDt}</dd>
             </div>
           </UserInfo>
         </UserDetail>

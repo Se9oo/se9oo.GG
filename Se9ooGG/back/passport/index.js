@@ -5,7 +5,7 @@ const { selectUser } = require('../routes/query/query');
 
 module.exports = () => {
   passport.serializeUser((user, done) => {
-    done(null, user[0].user_email);
+    done(null, user[0].email);
   });
 
   passport.deserializeUser(async (email, done) => {

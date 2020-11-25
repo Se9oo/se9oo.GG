@@ -19,7 +19,7 @@ module.exports = () => {
         return done(null, false, { reason: '존재하지 않는 사용자입니다.' });
       }
 
-      const result = await bcrypt.compare(password, user[0].user_password);
+      const result = await bcrypt.compare(password, user[0].password);
 
       let [fullUserInfo] = await connection.query(selectFullUserInfo, [email]);
 
