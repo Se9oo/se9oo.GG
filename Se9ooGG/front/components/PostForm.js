@@ -45,8 +45,8 @@ const PostForm = () => {
   const onOkAddModal = useCallback(() => {
     dispatch(addPostRequestAction({
       user: {
-        email: me.user_email,
-        nickname: me.user_nickname,
+        email: me.email,
+        nickname: me.nickname,
       },
       title: postTitle,
       content: postContent,
@@ -89,7 +89,7 @@ const PostForm = () => {
         {/* 작성자 */}
         <PostContentContainer>
           <label htmlFor="post-writer">작성자</label>
-          <strong>{me && me.user_nickname}</strong>
+          <strong>{me && me.nickname}</strong>
         </PostContentContainer>
         {/* 제목 */}
         <PostContentContainer>

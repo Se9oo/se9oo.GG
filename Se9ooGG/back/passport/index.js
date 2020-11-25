@@ -1,7 +1,7 @@
 const passport = require('passport');
 const local = require('./local');
 const pool = require('../config/pool');
-const { selectUser } = require('../routes/query/query');
+const { selectUser } = require('../routes/query/user');
 
 module.exports = () => {
   passport.serializeUser((user, done) => {

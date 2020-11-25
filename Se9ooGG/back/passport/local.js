@@ -2,7 +2,7 @@ const passport = require('passport');
 const { Strategy: LocalStrategy } = require('passport-local');
 const bcrypt = require('bcrypt');
 const pool = require('../config/pool');
-const { selectUser, selectFullUserInfo } = require('../routes/query/query');
+const { selectUser, selectFullUserInfo } = require('../routes/query/user');
 
 module.exports = () => {
   passport.use(new LocalStrategy({

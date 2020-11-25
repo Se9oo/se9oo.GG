@@ -10,7 +10,6 @@ const Comment = () => {
   const router = useRouter();
   const { postList } = useSelector((state) => (state.post));
   const commentList = postList.filter((v) => v.postId === router.query.postId)[0].comments;
-  console.log(JSON.stringify(commentList));
 
   const onClickBackBtn = useCallback(() => {
     router.back();

@@ -3,27 +3,21 @@ import shortId from 'shortid';
 export const initialState = {
   postList: [
     // {
+    //   email: 'se9oo@kakao.com',
+    //   nickname: '세구'
     //   postId: shortId.generate(),
-    //   user: {
-    //     email: 'se9oo@kakao.com',
-    //     nickname: '세구'
-    //   },
     //   title: '여기는 제목이다',
     //   content: '내용이야!',
     //   comments: [
-    //     {
-    //       user: {
-    //         email: 'hong@kakao.com',
-    //         nickname: '홍구'
-    //       },
+    //      {
+    //       email: 'hong@kakao.com',
+    //       nickname: '홍구'
     //       commentId: shortId.generate(),
     //       content: '재밌어'
     //     },
     //     {
-    //       user: {
-    //         email: 'hing@kakao.com',
-    //         nickname: '힝구'
-    //       },
+    //       email: 'hing@kakao.com',
+    //       nickname: '힝구'
     //       commentId: shortId.generate(),
     //       content: '댓글은 두개여야지'
     //     }
@@ -82,11 +76,10 @@ export const deletePostRequestAction = (data) => {
   };
 };
 
-export const addCommentRequestAction = (data, postId) => {
+export const addCommentRequestAction = (data) => {
   return {
     type: ADD_COMMENT_REQUEST,
     data,
-    postId,
   };
 };
 
@@ -157,7 +150,7 @@ const reducer = (state = initialState, action) => {
         addCommentLoading: true,
       }
     case ADD_COMMENT_SUCCESS:
-      const addPostIndex = state.postList.findIndex((v) => v.postId === action.postId);
+      const addPostIndex = state.postList.findIndex((v) => v.postId === action.data.postId);
       const addPost = { ...state.postList[addPostIndex] };
       addPost.comments = [...addPost.comments, action.data];
       const addPostList = [...state.postList];

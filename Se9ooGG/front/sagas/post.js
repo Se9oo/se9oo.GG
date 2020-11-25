@@ -15,6 +15,10 @@ function addPostAPI(data) {
   return axios.post('/post/addPost', data);
 }
 
+function addCommentAPI(data) {
+  return axios.post(`/post/${data.postId}/addComment`, data);
+}
+
 function* loadPost() {
   try {
     const result = yield call(loadPostAPI);
@@ -62,16 +66,16 @@ function* deletePost(action) {
 
 function* addComment(action) {
   try {
-    yield delay(1000);
+    yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
       data: action.data,
-      postId: action.postId,
     });
   } catch (err) {
+    console.log(err);
     yield put({
       type: ADD_COMMENT_FAILURE,
-      // data: err.response.data,
+      data: err.response,
     });
   }
 }

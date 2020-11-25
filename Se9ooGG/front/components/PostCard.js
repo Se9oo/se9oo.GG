@@ -9,7 +9,6 @@ import CommonModal from './CommonModal';
 import CommentCard from './CommentCard';
 
 const PostCard = memo(({ data }) => {
-  //console.log(JSON.stringify(data));
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => (state.user));
   // modal content
@@ -57,7 +56,7 @@ const PostCard = memo(({ data }) => {
 
   // 게시글 삭제 modal ok
   const onOkDeletePost = useCallback(() => {
-    dispatch(deletePostRequestAction({ postId: data.post_id }));
+    dispatch(deletePostRequestAction({ postId: data.postId }));
     setShowModal(false);
   }, []);
 
@@ -101,25 +100,25 @@ const PostCard = memo(({ data }) => {
         ]}
       >
         <Card.Meta
-          avatar={<Avatar>{data.user_nickname.slice(0, 1)}</Avatar>}
-          title={data.post_title}
-          description={data.user_nickname}
+          avatar={<Avatar>{data.nickname.slice(0, 1)}</Avatar>}
+          title={data.title}
+          description={data.nickname}
         />
         <PostCardContentContainer>
           {
-            data && data.post_content.split('\n').map((list, i) => {
+            data && data.content.split('\n').map((list, i) => {
               return (<span key={i}>{list}<br /></span>)
             })
           }
           <PostCommentCount>
-            {`댓글 ${data.comment.length}개`}
+            {`댓글 ${data.comments.length}개`}
           </PostCommentCount>
         </PostCardContentContainer>
       </Card>
       {
         showComment 
-        && data.comment
-        && <CommentCard commentList={data.comment} postId={data.postId} />
+        && data.comments
+        && <CommentCard commentList={data.comments} postId={data.postId} />
       }
       <CommonModal
         modalContent={modalContent}

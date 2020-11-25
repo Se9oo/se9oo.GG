@@ -1,4 +1,4 @@
-// user
+// 사용자 조회
 exports.selectUser = `
 SELECT
   user_id AS id, user_email AS email, user_password AS password,
@@ -6,6 +6,7 @@ SELECT
 FROM user WHERE user_email = ?
 `;
 
+// me 데이터 조회
 exports.selectFullUserInfo = `
   SELECT
     usr.user_id AS id, usr.user_email AS email, usr.user_nickname AS nickname,
@@ -17,6 +18,7 @@ exports.selectFullUserInfo = `
     usr.user_email = ?
 `;
 
+// 사용자 존재 여부 체크
 exports.selectCountIsExUserByEmail = `
   SELECT 
     COUNT(*) AS cnt 
@@ -24,37 +26,10 @@ exports.selectCountIsExUserByEmail = `
   WHERE 
     user_email = ?`;
 
+// 사용자 등록
 exports.insertUser = `
   INSERT INTO user 
     (user_email, user_password, user_nickname, reg_dt)
   VALUES 
     (?, ?, ?, NOW())`;
 
-// post
-exports.selectPostList = `
-  SELECT 
-    pst.post_id, pst.post_title, pst.post_content,
-    usr.user_nickname
-  FROM post pst
-  INNER JOIN user usr on pst.user_email = usr.user_email
-  ORDER BY pst.reg_dt ASC
-`;
-
-exports.insertPost = `
-  INSERT INTO post
-    (post_title, post_content, user_email, reg_dt)
-  VALUES
-    (?, ?, ?, NOW())
-`;
-
-// comment
-exports.selectCommentInfoByPostId = `
-  SELECT
-    cmt.comment_id, cmt.user_email, usr.user_nickname,
-    cmt.comment_content, cmt.reg_dt
-  FROM
-    comment cmt
-  LEFT OUTER JOIN user usr ON cmt.user_email = usr.user_email
-  WHERE
-    cmt.post_id = ?
-`;

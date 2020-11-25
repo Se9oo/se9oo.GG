@@ -1,13 +1,12 @@
-import React, { useCallback, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Comment, Input } from 'antd';
 import { CommentBtn, CommentContainer, CommentDeleteBtn, CommentForm } from '../styles/components/Components';
 import { addCommentRequestAction } from '../reducer/post';
-import shortId from 'shortid';
 import { errorModal } from './CommonModal';
 import CommentItem from '../components/CommentItem';
 
-const CommentCard = ({ commentList, postId }) => {
+const CommentCard = memo(({ commentList, postId }) => {
   const dispatch = useDispatch('');
   const { loginDone, me } = useSelector((state) => (state.user));
   const { addCommentLoading } = useSelector((state) => (state.post));
@@ -27,13 +26,11 @@ const CommentCard = ({ commentList, postId }) => {
 
     // 댓글 등록
     dispatch(addCommentRequestAction({
-      user: {
-        email: me.user_email,
-        nickname: me.user_nickname,
-      },
-      commentId: shortId.generate(),
+      email: me.email,
+      nickname: me.nickname,
       content: commentText,
-    }, postId));
+      postId: postId,
+    }));
     setCommentText('');
   }, [postId, commentText]);
 
@@ -46,8 +43,8 @@ const CommentCard = ({ commentList, postId }) => {
         loginDone && 
         me &&
         <Comment 
-          avatar={<Avatar>{me.user_nickname.slice(0, 1)}</Avatar>}
-          author={me.user_nickname}
+          avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}
+          author={me.nickname}
           content={
             <>
               <CommentForm onFinish={onSubmitComment}>
@@ -68,6 +65,6 @@ const CommentCard = ({ commentList, postId }) => {
       }
     </CommentContainer>
   );
-};
+});
 
 export default CommentCard;

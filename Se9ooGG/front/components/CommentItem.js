@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteCommentRequestAction } from '../reducer/post';
 import CommonModal from './CommonModal';
 
-const CommentItem = memo(({ comment, postId }) => {
+const CommentItem = memo(({ comment, postId }) => {  
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => (state.user));
 
@@ -16,7 +16,7 @@ const CommentItem = memo(({ comment, postId }) => {
 
   const onOkDeleteCommentModal = useCallback(() => {
     dispatch(deleteCommentRequestAction({
-      commentId: comment.comment_Id,
+      commentId: comment.commentId,
     }, postId));
     setShowModal(false);
   }, []);
@@ -39,18 +39,18 @@ const CommentItem = memo(({ comment, postId }) => {
     <>
       <CommentItemContainer>
         <Comment
-          author={comment.user_nickname}
-          avatar={<Avatar>{comment.user_nickname.slice(0, 1)}</Avatar>}
+          author={comment.nickname}
+          avatar={<Avatar>{comment.nickname.slice(0, 1)}</Avatar>}
           content={
-            comment.comment_content && 
-            comment.comment_content.split('\n').map((list, i) => {
+            comment.content && 
+            comment.content.split('\n').map((list, i) => {
               return (<span key={i}>{list}<br /></span>)
             })
           }
         />
         {
           me && 
-          me.email === comment.user_email ? <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
+          me.email === comment.email ? <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
           : null
         }
       </CommentItemContainer>
