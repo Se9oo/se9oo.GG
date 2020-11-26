@@ -15,6 +15,12 @@ function addPostAPI(data) {
   return axios.post('/post/addPost', data);
 }
 
+function deletePostAPI(data) {
+  return axios.delete('/post/deletePost/:postId', {
+    data: data,
+  });
+}
+
 function addCommentAPI(data) {
   return axios.post(`/post/${data.postId}/addComment`, data);
 }
@@ -57,7 +63,7 @@ function* addPost(action) {
 
 function* deletePost(action) {
   try {
-    yield delay(1000);
+    yield call(deletePostAPI, action.data);
     yield put({
       type: DELETE_POST_SUCCESS,
       data: action.data,

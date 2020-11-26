@@ -81,7 +81,7 @@ const PostCard = memo(({ data }) => {
             content={
               <div>
                 {
-                  me && (me.email === data.user_email) &&
+                  me && (me.email === data.email) &&
                   <> 
                     <Button>수정</Button>
                     <Button 

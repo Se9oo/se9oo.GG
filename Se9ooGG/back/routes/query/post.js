@@ -2,6 +2,7 @@
 exports.selectPostList = `
   SELECT 
     pst.post_id AS postId, pst.post_title AS title, pst.post_content AS content,
+    usr.user_email AS email,
     usr.user_nickname AS nickname
   FROM post pst
   INNER JOIN user usr on pst.user_email = usr.user_email
@@ -26,6 +27,12 @@ exports.selectCommentInfoByPostId = `
   LEFT OUTER JOIN user usr ON cmt.user_email = usr.user_email
   WHERE
     cmt.post_id = ?
+`;
+
+// 게시글 삭제
+exports.deletePost = `
+  DELETE FROM post
+  WHERE post_id = ?
 `;
 
 // 댓글 등록
