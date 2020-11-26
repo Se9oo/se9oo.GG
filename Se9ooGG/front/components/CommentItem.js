@@ -17,7 +17,8 @@ const CommentItem = memo(({ comment, postId }) => {
   const onOkDeleteCommentModal = useCallback(() => {
     dispatch(deleteCommentRequestAction({
       commentId: comment.commentId,
-    }, postId));
+      postId: postId,
+    }));
     setShowModal(false);
   }, []);
 

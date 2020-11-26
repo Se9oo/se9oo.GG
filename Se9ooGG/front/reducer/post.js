@@ -83,11 +83,10 @@ export const addCommentRequestAction = (data) => {
   };
 };
 
-export const deleteCommentRequestAction = (data, postId) => {
+export const deleteCommentRequestAction = (data) => {
   return {
     type: DELETE_COMMENT_REQUEST,
     data,
-    postId,
   }
 }
 
@@ -170,7 +169,7 @@ const reducer = (state = initialState, action) => {
         ...state, 
       }
     case DELETE_COMMENT_SUCCESS:
-      const deletePostIndex = state.postList.findIndex((v) => v.postId === action.postId);
+      const deletePostIndex = state.postList.findIndex((v) => v.postId === action.data.postId);
       const deletePost = { ...state.postList[deletePostIndex] };
       deletePost.comments = [...deletePost.comments].filter((comment) => comment.commentId !== action.data.commentId);
       const deletePostList = [...state.postList];

@@ -1,6 +1,6 @@
 const express = require('express');
 const pool = require('../config/pool');
-const { insertPost, selectPostList, selectCommentInfoByPostId, insertComment } = require('./query/post');
+const { insertPost, selectPostList, selectCommentInfoByPostId, insertComment, deleteComment } = require('./query/post');
 
 const router = express.Router();
 
@@ -80,6 +80,36 @@ router.post('/post/:postId/addComment', async (req, res, next) => {
     } else {
       return res.status(401).json('입력값을 확인해주세요.');
     }
+  } catch (err) {
+    await connection.rollback();
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (!connection) {
+      connection.release();
+    }
+  }
+});
+
+// 댓글 삭제
+router.delete('/post/:postId/deleteComment/:commentId', async (req, res, next) => {
+  const { commentId, postId } = req.body;
+
+  const connection = await pool.getConnection();
+
+  try {
+    await connection.beginTransaction();
+
+    if (commentId) {
+      await connection.execute(deleteComment, [commentId]);
+
+      await connection.commit();
+
+      return res.status(200).json('deleteComment Success');
+    } else {
+      return res.status(401).json('에러');
+    }
+
   } catch (err) {
     await connection.rollback();
     next(err);

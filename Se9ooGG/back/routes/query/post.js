@@ -28,10 +28,16 @@ exports.selectCommentInfoByPostId = `
     cmt.post_id = ?
 `;
 
-// 게시글 등록
+// 댓글 등록
 exports.insertComment = `
   INSERT INTO comment
     (user_email, comment_content, reg_dt, post_id)
   VALUES
     (?, ?, NOW(), ?);
+`;
+
+// 댓글 삭제
+exports.deleteComment = `
+  DELETE FROM comment
+  WHERE comment_id = ?
 `;

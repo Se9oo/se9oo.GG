@@ -19,6 +19,12 @@ function addCommentAPI(data) {
   return axios.post(`/post/${data.postId}/addComment`, data);
 }
 
+function deleteCommentAPI(data) {
+  return axios.delete(`/post/${data.postId}/deleteComment/${data.commentId}`, {
+    data: data,
+  });
+}
+
 function* loadPost() {
   try {
     const result = yield call(loadPostAPI);
@@ -82,15 +88,15 @@ function* addComment(action) {
 
 function* deleteComment(action) {
   try {
-    yield delay(1000);
+    yield call(deleteCommentAPI, action.data);
     yield put({
       type: DELETE_COMMENT_SUCCESS,
       data: action.data,
-      postId: action.postId,
     });
   } catch (err) {
     yield put({
       type: DELETE_COMMENT_FAILURE,
+      data: err.response,
     });
   }
 }
