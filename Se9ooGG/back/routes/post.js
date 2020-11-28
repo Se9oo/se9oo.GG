@@ -35,15 +35,15 @@ router.get('/post/loadPost', async (req, res, next) => {
 
 // 게시글 등록
 router.post('/post/addPost', async (req, res, next) => {
-  const { user, title, content } = req.body;
+  const { email, title, content } = req.body;
 
   const connection = await pool.getConnection();
 
   try {
     await connection.beginTransaction();
 
-    if (user.email && title && content) {
-      await connection.execute(insertPost, [title, content, user.email]);
+    if (email && title && content) {
+      await connection.execute(insertPost, [title, content, email]);
     } else {
       return res.status(401).json('입력값을 확인해주세요.');
     }
@@ -74,6 +74,7 @@ router.delete('/post/deletePost/:postId', async (req, res, next) => {
     if (postId) {
       
       // 게시글을 지우면 cascade로 댓글도 다 삭제됨
+      console.log(`postId : ${postId}`);
       await connection.execute(deletePost, [postId]);
 
       await connection.commit();

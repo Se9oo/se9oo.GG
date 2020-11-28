@@ -44,10 +44,8 @@ const PostForm = () => {
   // 게시글 등록 modal ok
   const onOkAddModal = useCallback(() => {
     dispatch(addPostRequestAction({
-      user: {
-        email: me.email,
-        nickname: me.nickname,
-      },
+      email: me.email,
+      nickname: me.nickname,
       title: postTitle,
       content: postContent,
       comments: [],
