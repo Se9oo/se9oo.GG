@@ -58,7 +58,7 @@ const PostCard = memo(({ data }) => {
   const onOkDeletePost = useCallback(() => {
     dispatch(deletePostRequestAction({ postId: data.postId }));
     setShowModal(false);
-  }, []);
+  }, [data.postId]);
 
   // 게시글 삭제 modal cancel
   const onCancelDeletePost = useCallback(() => {

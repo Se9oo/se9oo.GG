@@ -30,6 +30,10 @@ module.exports = () => {
     } catch (err) {
       console.error(err);
       return done(true, false, { reason: ''})
+    } finally {
+      if (connection !== null) {
+        connection.release();
+      }
     }
   }))
 };

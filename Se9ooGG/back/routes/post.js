@@ -27,7 +27,7 @@ router.get('/post/loadPost', async (req, res, next) => {
     next(err);
     return res.status(500).json(err);
   } finally {
-    if (!connection) {
+    if (connection !== null) {
       connection.release();
     }
   }
@@ -43,20 +43,20 @@ router.post('/post/addPost', async (req, res, next) => {
     await connection.beginTransaction();
 
     if (email && title && content) {
-      await connection.execute(insertPost, [title, content, email]);
+      const [result] = await connection.execute(insertPost, [title, content, email]);
+        
+      await connection.commit();
+      
+      return res.status(200).json(result.insertId);
     } else {
       return res.status(401).json('입력값을 확인해주세요.');
     }
-
-    await connection.commit();
-    
-    return res.status(200).json('addPost Success');
   } catch (err) {
     await connection.rollback();
     next(err);
     return res.status(500).json(err);
   } finally {
-    if (!connection) {
+    if (connection !== null) {
       connection.release();
     }
   }
@@ -65,6 +65,7 @@ router.post('/post/addPost', async (req, res, next) => {
 // 게시글 삭제
 router.delete('/post/deletePost/:postId', async (req, res, next) => {
   const { postId } = req.body;
+  console.log(`req.body.json : ${JSON.stringify(req.body)}`);
 
   const connection = await pool.getConnection();
 
@@ -89,7 +90,7 @@ router.delete('/post/deletePost/:postId', async (req, res, next) => {
     next(err);
     return res.status(500).json(err);
   } finally {
-    if (!connection) {
+    if (connection !== null) {
       connection.release();
     }
   }
@@ -118,7 +119,7 @@ router.post('/post/:postId/addComment', async (req, res, next) => {
     next(err);
     return res.status(500).json(err);
   } finally {
-    if (!connection) {
+    if (connection !== null) {
       connection.release();
     }
   }
@@ -148,7 +149,7 @@ router.delete('/post/:postId/deleteComment/:commentId', async (req, res, next) =
     next(err);
     return res.status(500).json(err);
   } finally {
-    if (!connection) {
+    if (connection !== null) {
       connection.release();
     }
   }

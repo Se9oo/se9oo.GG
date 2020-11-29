@@ -6,7 +6,7 @@ exports.selectPostList = `
     usr.user_nickname AS nickname
   FROM post pst
   INNER JOIN user usr on pst.user_email = usr.user_email
-  ORDER BY pst.reg_dt ASC
+  ORDER BY pst.post_id DESC
 `;
 
 // 게시글 등록

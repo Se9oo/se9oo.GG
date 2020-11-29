@@ -48,7 +48,8 @@ function* loadPost() {
 
 function* addPost(action) {
   try {
-    yield call(addPostAPI, action.data);
+    const result = yield call(addPostAPI, action.data);
+    action.data.postId = result;
     yield put({
       type: ADD_POST_SUCCESS,
       data: action.data,
@@ -63,6 +64,7 @@ function* addPost(action) {
 
 function* deletePost(action) {
   try {
+    alert(action.data);
     yield call(deletePostAPI, action.data);
     yield put({
       type: DELETE_POST_SUCCESS,

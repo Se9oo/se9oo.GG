@@ -76,7 +76,7 @@ router.post('/user/signup', isNotLoggedIn, async (req, res, next) => {
       next(err);
       return res.status(500).json(err);
     } finally {
-      if (!connection) {
+      if (connection !== null) {
         connection.release();
       }
     }
