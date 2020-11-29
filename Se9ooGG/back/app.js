@@ -7,6 +7,7 @@ const passportConfig = require('./passport');
 const dotenv = require('dotenv');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
+const statisticRouter = require('./routes/statistic');
 
 const app = express();
 
@@ -35,6 +36,8 @@ app.use(passport.session());
 app.use(postRouter);
 // 사용자
 app.use(userRouter);
+// 전적
+app.use(statisticRouter);
 
 app.listen(3065, () => {
   console.log('se9oo.GG back start');

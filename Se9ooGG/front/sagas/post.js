@@ -64,7 +64,6 @@ function* addPost(action) {
 
 function* deletePost(action) {
   try {
-    alert(action.data);
     yield call(deletePostAPI, action.data);
     yield put({
       type: DELETE_POST_SUCCESS,

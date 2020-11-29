@@ -3,13 +3,19 @@ import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import AppLayout from '../components/AppLayout';
 import { HomeContainer, MainLogoImg, UserSearchInput } from '../styles/pages/Pages';
+import { useDispatch } from 'react-redux';
+import { loadSummonerRequestAction } from '../reducer/statistic';
 
 const Home = () => {
+  const dispatch = useDispatch('');
   const [search, onSearchInput] = useInput('');
 
   const onSubmitForm = useCallback(() => {
-    Router.push('/statistic');
-  }, []);
+    //Router.push('/statistic');
+    dispatch(loadSummonerRequestAction({
+      summonerName: search,
+    }));
+  }, [search]);
 
   return (
     <AppLayout>

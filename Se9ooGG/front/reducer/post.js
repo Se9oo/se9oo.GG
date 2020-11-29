@@ -1,5 +1,3 @@
-import shortId from 'shortid';
-
 export const initialState = {
   postList: [
     // {
