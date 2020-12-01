@@ -1,5 +1,6 @@
 const express = require('express');
 const pool = require('../config/pool');
+const { isLoggedIn } = require('./middlewares');
 const { insertPost, selectPostList, selectCommentInfoByPostId,
    insertComment, deleteComment, deletePost } = require('./query/post');
 
@@ -34,7 +35,7 @@ router.get('/post/loadPost', async (req, res, next) => {
 });
 
 // 게시글 등록
-router.post('/post/addPost', async (req, res, next) => {
+router.post('/post/addPost', isLoggedIn, async (req, res, next) => {
   const { email, title, content } = req.body;
 
   const connection = await pool.getConnection();
@@ -63,7 +64,7 @@ router.post('/post/addPost', async (req, res, next) => {
 });
 
 // 게시글 삭제
-router.delete('/post/deletePost/:postId', async (req, res, next) => {
+router.delete('/post/deletePost/:postId', isLoggedIn, async (req, res, next) => {
   const { postId } = req.body;
   console.log(`req.body.json : ${JSON.stringify(req.body)}`);
 
@@ -97,7 +98,7 @@ router.delete('/post/deletePost/:postId', async (req, res, next) => {
 });
 
 // 댓글 등록
-router.post('/post/:postId/addComment', async (req, res, next) => {
+router.post('/post/:postId/addComment', isLoggedIn, async (req, res, next) => {
   const { email, content, postId } = req.body;
 
   const connection = await pool.getConnection();
@@ -126,7 +127,7 @@ router.post('/post/:postId/addComment', async (req, res, next) => {
 });
 
 // 댓글 삭제
-router.delete('/post/:postId/deleteComment/:commentId', async (req, res, next) => {
+router.delete('/post/:postId/deleteComment/:commentId', isLoggedIn, async (req, res, next) => {
   const { commentId } = req.body;
 
   const connection = await pool.getConnection();

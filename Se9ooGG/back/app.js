@@ -15,8 +15,8 @@ dotenv.config();
 passportConfig();
 
 app.use(cors({
-  origin: '*',
-  credentials: false,
+  origin: 'http://localhost:3000',
+  credentials: true,
 }));
 // json post 방식
 app.use(express.json());
