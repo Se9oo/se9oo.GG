@@ -1,11 +1,16 @@
 export const initialState = {
-  isLogoutLoading: false,
   loginLoading: false,
   loginDone: false,
-  loginError: null,
+  loginError: false,
+  logoutLoading: false,
+  logoutDone: false,
+  logoutError: false,
   signUpLoading: false,
   signUpDone: false,
   signUpError: false,
+  loadMyInfoLoading: false,
+  loadMyInfoDone: false,
+  loadMyInfoError: false,
   me: null,
 }
 
@@ -23,6 +28,10 @@ export const SIGN_UP_REQUEST = 'SIGN_UP_REQUEST';
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 export const SIGN_UP_FAILURE = 'SIGN_UP_FAILURE';
 export const SIGN_UP_DONE_CLEAR = 'SIGN_UP_DONE_CLEAR';
+// 내정보 불러오기
+export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
+export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
+export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 
 export const LoginRequsetAction = (data) => {
   return {
@@ -35,7 +44,7 @@ export const LoginErrorClearRequestAction = () => {
   return {
     type: LOG_IN_FAILURE_CLEAR,
   }
-}
+};
 
 export const LogoutRequestAction = () => {
   return {
@@ -54,7 +63,13 @@ export const SignUpDoneClearRequestAction = () => {
   return {
     type: SIGN_UP_DONE_CLEAR,
   }
-}
+};
+
+export const LoadMyInfoRequestAction = () => {
+  return {
+    type: LOAD_MY_INFO_REQUEST,
+  }
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -87,19 +102,23 @@ const reducer = (state = initialState, action) => {
     case LOG_OUT_REQUEST:
       return {
         ...state,
-        isLogoutLoading: true,
+        logoutLoading: true,
       };
     case LOG_OUT_SUCCESS:
       return {
         ...state,
         loginDone: false,
-        isLogoutLoading: false,
+        logoutLoading: false,
+        logoutDone: true,
+        logoutError: false,
         me: null,
       };
     case LOG_OUT_FAILURE:
       return {
         ...state,
-        isLogoutLoading: false,
+        logoutLoading: false,
+        logoutDone: false,
+        logoutError: true,
       };
     case SIGN_UP_REQUEST:
       return {
@@ -123,6 +142,26 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         signUpDone: false,
+      }
+    case LOAD_MY_INFO_REQUEST:
+      return {
+        ...state,
+        loadMyInfoLoading: true,
+      }
+    case LOAD_MY_INFO_SUCCESS:
+      const me = action.data === null ? null : action.data[0];
+      return {
+        ...state,
+        loadMyInfoLoading: false,
+        loadMyInfoDone: true,
+        me: me,
+      }
+    case LOAD_MY_INFO_FAILURE:
+      return {
+        ...state,
+        loadMyInfoLoading: false,
+        loadMyInfoDone: false,
+        loadMyInfoError: true,
       }
     default:
       return state;

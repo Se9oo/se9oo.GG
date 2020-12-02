@@ -12,7 +12,7 @@ module.exports = () => {
     const connection = await pool.getConnection();
 
     try {
-      let [user] = await connection.query(selectUser, [email]);
+      const [user] = await connection.query(selectUser, [email]);
 
       // 사용자 존재여부 체크
       if (user.length == 0) {
@@ -21,7 +21,7 @@ module.exports = () => {
 
       const result = await bcrypt.compare(password, user[0].password);
 
-      let [fullUserInfo] = await connection.query(selectFullUserInfo, [email]);
+      const [fullUserInfo] = await connection.query(selectFullUserInfo, [email]);
 
       if (result) {
         return done(null, fullUserInfo);

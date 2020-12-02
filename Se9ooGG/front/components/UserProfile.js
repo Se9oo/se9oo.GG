@@ -7,17 +7,18 @@ import { Button } from 'antd';
 
 const UserProfile = () => {
   const dispatch = useDispatch('');
-  const { loginDone, isLogoutLoading, me } = useSelector((state) => (state.user));
+  const { logoutLoading, logoutDone, me } = useSelector((state) => (state.user));
 
   const onClickLogoutBtn = useCallback(() => {
     dispatch(LogoutRequestAction());
   }, []);
 
+  // 로그아웃
   useEffect(() => {
-    if (!loginDone) {
+    if (!me && logoutDone) {
       Router.push('/login');
     }
-  }, [loginDone]);
+  }, [me, logoutDone]);
 
   return (
     <UserProfileContainer>
@@ -43,7 +44,7 @@ const UserProfile = () => {
       </UserProfileContent>
       <ProfileButtonGroup>
         <Button type="primary">비밀번호 변경하기</Button>
-        <Button onClick={onClickLogoutBtn} loading={isLogoutLoading}>로그아웃</Button>
+        <Button onClick={onClickLogoutBtn} loading={logoutLoading}>로그아웃</Button>
       </ProfileButtonGroup>
     </UserProfileContainer>
   );

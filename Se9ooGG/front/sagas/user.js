@@ -1,5 +1,5 @@
 import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
-import { LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS,
+import { LOAD_MY_INFO_FAILURE, LOAD_MY_INFO_REQUEST, LOAD_MY_INFO_SUCCESS, LOG_IN_FAILURE, LOG_IN_REQUEST, LOG_IN_SUCCESS,
   LOG_OUT_FAILURE, LOG_OUT_REQUEST, LOG_OUT_SUCCESS, 
   SIGN_UP_FAILURE, SIGN_UP_REQUEST, SIGN_UP_SUCCESS,
 } from '../reducer/user';
@@ -7,10 +7,6 @@ import axios from 'axios';
 
 function loginAPI(data) {
   return axios.post('/user/login', data);
-}
-
-function logoutAPI() {
-  return axios.post('/user/logout');
 }
 
 function* login(action) {
@@ -26,6 +22,10 @@ function* login(action) {
       data: err.response.data,
     });
   }
+}
+
+function logoutAPI() {
+  return axios.post('/user/logout');
 }
 
 function* logout() {
@@ -55,11 +55,30 @@ function* signUp(action) {
       data: result,
     })
   } catch (err) {
-    console.log(err);
     yield put({
       type: SIGN_UP_FAILURE,
       data: err.response,
     })
+  }
+}
+
+// 내 정보 가져오기
+function loadMyInfoAPI() {
+  return axios.get('/user/loadMyInfo');
+}
+
+function* loadMyInfo() {
+  try {
+    const result = yield call(loadMyInfoAPI);
+    yield put({
+      type: LOAD_MY_INFO_SUCCESS,
+      data: result.data,
+    })
+  } catch (err) {
+    yield put({
+      type: LOAD_MY_INFO_FAILURE,
+      data: err.response.data,
+    });
   }
 }
 
@@ -75,10 +94,15 @@ function* watchSignUp() {
   yield takeLatest(SIGN_UP_REQUEST, signUp);
 }
 
+function* watchLoadMyInfo() {
+  yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
+}
+
 export default function* userSaga() {
   yield all([
     fork(watchLogin),
     fork(watchLogout),
     fork(watchSignUp),
+    fork(watchLoadMyInfo),
   ])
 }

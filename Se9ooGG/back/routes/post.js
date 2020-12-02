@@ -66,7 +66,6 @@ router.post('/post/addPost', isLoggedIn, async (req, res, next) => {
 // 게시글 삭제
 router.delete('/post/deletePost/:postId', isLoggedIn, async (req, res, next) => {
   const { postId } = req.body;
-  console.log(`req.body.json : ${JSON.stringify(req.body)}`);
 
   const connection = await pool.getConnection();
 
@@ -76,7 +75,6 @@ router.delete('/post/deletePost/:postId', isLoggedIn, async (req, res, next) => 
     if (postId) {
       
       // 게시글을 지우면 cascade로 댓글도 다 삭제됨
-      console.log(`postId : ${postId}`);
       await connection.execute(deletePost, [postId]);
 
       await connection.commit();

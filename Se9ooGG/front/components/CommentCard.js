@@ -8,7 +8,7 @@ import CommentItem from '../components/CommentItem';
 
 const CommentCard = memo(({ commentList, postId }) => {
   const dispatch = useDispatch('');
-  const { loginDone, me } = useSelector((state) => (state.user));
+  const { me } = useSelector((state) => (state.user));
   const { addCommentLoading } = useSelector((state) => (state.post));
   
   // comment form
@@ -40,7 +40,6 @@ const CommentCard = memo(({ commentList, postId }) => {
        commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />) 
       }
       {
-        loginDone && 
         me &&
         <Comment 
           avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}

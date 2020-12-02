@@ -89,7 +89,6 @@ const SignUpForm = () => {
 
   // 회원가입 모달 - ok버튼 클릭
   const onOkModal = useCallback(() => {
-    console.log(`email: ${email} password: ${password} nickname: ${nickname}`)  
     dispatch(SignUpRequestAction({ email, password, nickname }));
     setShowModal(false);
   }, [email, password, nickname]);

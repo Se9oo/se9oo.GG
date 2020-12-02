@@ -9,7 +9,7 @@ import { loadPostRequestAction } from '../reducer/post';
 
 const Community = () => {
   const dispatch = useDispatch('');
-  const { loginDone } = useSelector((state) => (state.user));
+  const { me } = useSelector((state) => (state.user));
   const { postList } = useSelector((state) => (state.post));
 
   const onClickAddPostBtn = useCallback(() => {
@@ -30,7 +30,7 @@ const Community = () => {
         enterButton
       />
       {
-          loginDone 
+          me 
           ? <PostAddBtn 
             type="primary"
             onClick={onClickAddPostBtn}

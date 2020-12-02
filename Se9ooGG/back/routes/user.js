@@ -2,12 +2,33 @@ const express = require('express');
 const pool = require('../config/pool');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const queryModule = require('./query/user');
+const { selectCountIsExUserByEmail, selectFullUserInfo, insertUser } = require('./query/user');
 const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
-const selectCountIsExUserByEmail = queryModule.selectCountIsExUserByEmail;
-const insertUser = queryModule.insertUser;
 
 const router = express.Router();
+
+// 내 정보 가져오기
+router.get('/user/loadMyInfo', async (req, res, next) => {
+  // connection pool;
+  const connection = await pool.getConnection();
+
+  try {
+    if (req.user) {
+      const [result] = await connection.query(selectFullUserInfo, [req.user[0].email])
+      
+      return res.status(200).json(result);
+    } else {
+      res.status(200).json(null);
+    }
+  } catch (err) {
+    console.error(err);
+    next(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
 
 // 로그인
 router.post('/user/login', isNotLoggedIn, (req, res, next) => {
@@ -43,7 +64,6 @@ router.post('/user/logout', isLoggedIn, (req, res) => {
 router.post('/user/signup', isNotLoggedIn, async (req, res, next) => {
   // 회원가입 이메일
   const { email, password, nickname } = req.body;
-  console.log(`[parameter] : ${JSON.stringify(req.body)}`);
   
     // connection pool;
     const connection = await pool.getConnection();

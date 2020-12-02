@@ -18,8 +18,6 @@ function* loadSummoner(action) {
       data: result,
     });
   } catch (err) {
-    console.log(`err: ${err}`);
-    console.log(`err.json: ${JSON.stringify(err)}`);
     yield put({
       type: LOAD_SUMMONER_FAILURE,
       data: err.response,
