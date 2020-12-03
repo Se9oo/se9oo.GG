@@ -2,14 +2,16 @@
 exports.selectUser = `
 SELECT
   user_id AS id, user_email AS email, user_password AS password,
-  user_nickname AS nickname, DATE_FORMAT(reg_dt, '%Y.%m.%d') AS regDt
+  user_nickname AS nickname, user_level AS level,
+  DATE_FORMAT(reg_dt, '%Y.%m.%d') AS regDt
 FROM user WHERE user_email = ?
 `;
 
 // me 데이터 조회
 exports.selectFullUserInfo = `
   SELECT
-    usr.user_id AS id, usr.user_email AS email, usr.user_nickname AS nickname,
+    usr.user_id AS id, usr.user_email AS email,
+    usr.user_nickname AS nickname, usr.user_level AS level,
     DATE_FORMAT(usr.reg_dt, '%Y.%m.%d') AS regDt,
     COUNT(pst.post_id) AS postCount
   FROM user usr
