@@ -19,6 +19,15 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
         return res.status(401).json('사용자 정보를 확인해주세요.');
       }
 
+      // 소환사 tier 정보
+      const tierInfo = await axios.get(`https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${process.env.API_KEY}`);
+      const tier = tierInfo.data;
+      tier.map((v) => (
+        delete v.leagueId,
+        delete v.summonerId,
+        delete v.summonerName
+      ));
+
       // 소환사 숙련도 top3 챔피언 정보
       const proficiencyLevelInfo = await axios.get(`https://kr.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${process.env.API_KEY}`);
       const proficiencyTop3Info = proficiencyLevelInfo.data.slice(0, 3);
@@ -30,7 +39,8 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
         profileIconId: profileIconId,
         summonerName: summonerName,
         summonerLevel: summonerLevel,
-        proficiencyLevelInfo: proficiencyTop3Info,
+        tier: tier,
+        proficiencyTop3: proficiencyTop3Info,
       }
 
       return res.status(200).json(summonerData);
