@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { Button, Comment, Form } from 'antd';
 import { CloseOutlined } from '@ant-design/icons';
+import SummonerRankItem from '../../components/SummonerRankItem';
 
 // common
 export const ErrorMessage = styled.div`
@@ -225,4 +226,37 @@ export const ChampionName = styled.span`
 export const ChampionSkillImg = styled.img`
   width: 4rem;
   height: 4rem;
+`;
+
+export const SummonerRankListItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  order: ${props => props.sort};
+
+  & img {
+    width: 40%;
+    height: 40%;
+  }
+
+  & span {
+    margin: .5rem 0;
+    font-size: 1.2rem;
+  }
+`;
+
+export const SummonerMostChampionListItem = styled.li`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 33%;
+
+  & img {
+    width: 40%;
+    height: 40%;
+    border-radius: 999px;
+  }
 `;

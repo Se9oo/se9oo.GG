@@ -22,11 +22,23 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
       // 소환사 tier 정보
       const tierInfo = await axios.get(`https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${process.env.API_KEY}`);
       const tier = tierInfo.data;
-      tier.map((v) => (
+      // tier.map((v) => (
+       
+      // ));
+
+      tier.map((v) => {
+        if (v.queueType === 'RANKED_SOLO_5x5') {
+          v.sort = 0;
+          v.queueType = '솔로랭크';
+        } else {
+          v.sort = 1;
+          v.queueType = '자유랭크';
+        }
+
         delete v.leagueId,
         delete v.summonerId,
         delete v.summonerName
-      ));
+      });
 
       // 소환사 숙련도 top3 챔피언 정보
       const proficiencyLevelInfo = await axios.get(`https://kr.api.riotgames.com/lol/champion-mastery/v4/champion-masteries/by-summoner/${id}?api_key=${process.env.API_KEY}`);

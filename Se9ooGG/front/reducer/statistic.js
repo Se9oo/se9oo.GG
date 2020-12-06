@@ -1,5 +1,5 @@
 export const initialState = {
-  data: [],
+  summoner: {},
 };
 
 // 사용자 정보
@@ -24,7 +24,7 @@ const reducer = (state = initialState, action) => {
     case LOAD_SUMMONER_SUCCESS:
       return {
         ...state,
-        data: action.data,
+        summoner: action.data,
       };
     
     case LOAD_SUMMONER_FAILURE:
