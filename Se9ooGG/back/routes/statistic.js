@@ -46,13 +46,23 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
       
       // delete summonerId
       proficiencyTop3Info.map((v) =>  delete v.summonerId);
-      
+
+      // match 정보
+      const allMatchesInfo = await axios.get(`https://kr.api.riotgames.com/lol/match/v4/matchlists/by-account/${accountId}?endIndex=1&beginIndex=0&api_key=${process.env.API_KEY}`);
+
+      const matchData = await Promise.all(allMatchesInfo.data.matches.map(async (match) => {
+        const matchInfo = await axios.get(`https://kr.api.riotgames.com/lol/match/v4/matches/${match.gameId}?api_key=${process.env.API_KEY}`);
+
+        return matchInfo.data;
+      }));
+
       const summonerData = {
         profileIconId: profileIconId,
         summonerName: summonerName,
         summonerLevel: summonerLevel,
         tier: tier,
         proficiencyTop3: proficiencyTop3Info,
+        match: matchData,
       }
 
       return res.status(200).json(summonerData);

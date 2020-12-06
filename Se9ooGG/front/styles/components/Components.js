@@ -271,3 +271,41 @@ export const SummonerMostChampionListItem = styled.li`
     color: #333333;
   }
 `;
+
+export const SummonerMatchListItem = styled.li`
+  display: flex;
+  background-color: #ffffff;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(206, 212, 218, .5);
+`;
+
+export const SummonerChampion = styled.div`
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-basis: 1;
+
+  & img {
+    width: 100%;
+    margin: 0;
+    padding: .5rem;
+    border-radius: 999px;
+  }
+
+  & span {
+    font-size: 1.2rem;
+  }
+`;
+
+export const SummonerSpell = styled.div`
+  width: 20%;
+  padding: .5rem;
+  flex-basis: 1;
+  
+  & img {
+    width: 45%;
+    margin: 0;
+  }
+`;

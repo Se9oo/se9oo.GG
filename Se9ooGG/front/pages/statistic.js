@@ -5,6 +5,7 @@ import { Summoner, SummonerMostChampion, SummonerRank } from '../styles/pages/Pa
 import { Button } from 'antd';
 import SummonerRankItem from '../components/SummonerRankItem';
 import SummonerMostChampionItem from '../components/SummonerMostChampionItem';
+import SummonerMatchItem from '../components/SummonerMatchItem';
 
 const Statistic = () => {
   const { summoner } = useSelector((state) => state.statistic);
@@ -30,6 +31,11 @@ const Statistic = () => {
           }
         </ul>
       </SummonerMostChampion>
+      <ul>
+        {
+          summoner.match.map((match) => <SummonerMatchItem match={match} />)
+        }
+      </ul>
     </AppLayout>
   );
 };

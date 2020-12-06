@@ -1,4 +1,5 @@
 import champion from '../json/champion.json';
+import spell from '../json/summoner.json';
 
 export function getChampionInfoById(id) {
   const data = champion.data;
@@ -9,7 +10,7 @@ export function getChampionInfoById(id) {
     }
   }
   return null;
-}
+};
 
 export function getChampionNameById(id) {
   const data = champion.data;
@@ -24,4 +25,19 @@ export function getChampionNameById(id) {
     }
   }
   return null;
+};
+
+export function getSpellNameById(spell1, spell2) {
+  const data = spell.data;
+  const spellName = [];
+
+  for (let i in data) {
+    if (data[i].key == spell1 || data[i].key == spell2) {
+      spellName.push({
+        kor: data[i].name,
+        eng: data[i].id
+      });
+    }
+  }
+  return spellName;
 }
