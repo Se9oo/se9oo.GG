@@ -147,6 +147,7 @@ export const SummonerRank = styled.div`
 
   & ul {
     display: flex;
+    justify-content: center;
     align-items: center;
   }
 `;

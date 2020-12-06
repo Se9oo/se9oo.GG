@@ -241,9 +241,14 @@ export const SummonerRankListItem = styled.li`
     height: 40%;
   }
 
+  & h3 {
+    font-size: 1.4rem;
+  }
+
   & span {
     margin: .5rem 0;
     font-size: 1.2rem;
+    color: #333333;
   }
 `;
 
@@ -258,5 +263,11 @@ export const SummonerMostChampionListItem = styled.li`
     width: 40%;
     height: 40%;
     border-radius: 999px;
+  }
+
+  & strong, span {
+    margin-top: .5rem;
+    font-size: 1.2rem;
+    color: #333333;
   }
 `;
