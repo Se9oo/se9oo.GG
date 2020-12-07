@@ -1,5 +1,6 @@
 import champion from '../json/champion.json';
 import spell from '../json/summoner.json';
+import rune from '../json/runesReforged.json';
 
 export function getChampionInfoById(id) {
   const data = champion.data;
@@ -40,4 +41,18 @@ export function getSpellNameById(spell1, spell2) {
     }
   }
   return spellName;
+};
+
+export function getRuneImgUrl(perkInfo) {
+  const runeImgUrl = {};
+
+  const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
+  const perk0 = primaryPerk.slots[0].runes.find((perk) => perk.id === perkInfo.perk0);
+
+  const subPerk = rune.find((perk) => perk.id === perkInfo.perkSubStyle);
+
+  runeImgUrl.perk0 = perk0.icon;
+  runeImgUrl.subPerk = subPerk.icon;
+
+  return runeImgUrl;
 }

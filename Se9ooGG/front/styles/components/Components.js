@@ -273,7 +273,9 @@ export const SummonerMostChampionListItem = styled.li`
 `;
 
 export const SummonerMatchListItem = styled.li`
+  width: 100%;
   display: flex;
+  align-items: center;
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
@@ -281,11 +283,10 @@ export const SummonerMatchListItem = styled.li`
 `;
 
 export const SummonerChampion = styled.div`
-  width: 20%;
+  width: 18%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-basis: 1;
 
   & img {
     width: 100%;
@@ -293,19 +294,50 @@ export const SummonerChampion = styled.div`
     padding: .5rem;
     border-radius: 999px;
   }
-
-  & span {
-    font-size: 1.2rem;
-  }
 `;
 
 export const SummonerSpell = styled.div`
-  width: 20%;
-  padding: .5rem;
-  flex-basis: 1;
-  
+  width: 7.5%;
+
   & img {
-    width: 45%;
-    margin: 0;
+    width: 100%;
+  }
+`;
+
+export const SummonerRune = styled.div`
+  width: 7.5%;
+
+  & img {
+    width: 100%;
+  }
+`;
+
+export const SummonerKDA = styled.div`
+  width: 18%;
+  text-align: center;
+`;
+
+export const SummonerScore = styled.div`
+  margin-bottom: .7rem;
+
+  & span:nth-child(-n+2):after {
+    diplay: block;
+    content: ' / ';
+  }
+`;
+
+export const SummonerKDARate = styled.div`
+  font-size: .5rem;
+  color: #ced4da;
+`;
+
+export const SummonerStats = styled.div`
+  display: flex;
+  flex-direction: column;
+  font-size: .5rem;
+  text-align: center;
+
+  & span:first-child {
+    margin-bottom: .5rem;
   }
 `;

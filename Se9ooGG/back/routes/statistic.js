@@ -13,7 +13,8 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
      if (summonerName) {
       // 소환사 이름으로 정보 찾기
       const summonerBaseInfo = await axios.get(encodeURI(`https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.API_KEY}`));
-      const { id, profileIconId, summonerLevel, accountId } = summonerBaseInfo.data;
+
+      const { id, profileIconId, summonerLevel, accountId, name } = summonerBaseInfo.data;
 
       if (!summonerBaseInfo) {
         return res.status(401).json('사용자 정보를 확인해주세요.');
@@ -22,9 +23,6 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
       // 소환사 tier 정보
       const tierInfo = await axios.get(`https://kr.api.riotgames.com/lol/league/v4/entries/by-summoner/${id}?api_key=${process.env.API_KEY}`);
       const tier = tierInfo.data;
-      // tier.map((v) => (
-       
-      // ));
 
       tier.map((v) => {
         if (v.queueType === 'RANKED_SOLO_5x5') {
@@ -58,7 +56,7 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
 
       const summonerData = {
         profileIconId: profileIconId,
-        summonerName: summonerName,
+        summonerName: name,
         summonerLevel: summonerLevel,
         tier: tier,
         proficiencyTop3: proficiencyTop3Info,
