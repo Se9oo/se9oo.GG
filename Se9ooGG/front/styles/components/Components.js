@@ -273,13 +273,31 @@ export const SummonerMostChampionListItem = styled.li`
 `;
 
 export const SummonerMatchListItem = styled.li`
+  display: flex;
+  background-color: #ffffff;
+  margin-top: 1rem;
+  border: 1px solid rgba(206, 212, 218, .5);
+`;
+
+export const SummonerWinOrLose = styled.div`
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: ${props => (props.winOrLose ? '#339af0' : '#e03131')};
+  color: #ffffff;
+  font-size: 1.2rem;
+`;
+
+export const SummonerInfo = styled.div`
+  padding: .5rem;
+`;
+
+export const SummonerStatInfo = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
-  background-color: #ffffff;
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 1px solid rgba(206, 212, 218, .5);
 `;
 
 export const SummonerChampion = styled.div`
@@ -301,19 +319,34 @@ export const SummonerSpell = styled.div`
 
   & img {
     width: 100%;
+    margin: 10%;
+    border-radius: 20%;
   }
 `;
 
 export const SummonerRune = styled.div`
   width: 7.5%;
+  margin-right: .5rem;
 
   & img {
     width: 100%;
+    margin: 10%;
+    padding: 10%;
+    background-color: #000000;
+    border-radius: 999px;
   }
 `;
 
+export const SummonerText = styled.div`
+  width: 70%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+`
+
 export const SummonerKDA = styled.div`
-  width: 18%;
+  width: 20%;
+  flex-grow: 1.2;
   text-align: center;
 `;
 
@@ -326,18 +359,54 @@ export const SummonerScore = styled.div`
   }
 `;
 
-export const SummonerKDARate = styled.div`
-  font-size: .5rem;
+export const SummonerKDARate = styled.span`
   color: #ced4da;
 `;
 
 export const SummonerStats = styled.div`
   display: flex;
   flex-direction: column;
-  font-size: .5rem;
-  text-align: center;
+  align-items: center;
+  margin: 0 .5rem;
 
   & span:first-child {
-    margin-bottom: .5rem;
+    margin-bottom: .7rem;
+  }
+`;
+
+export const SummonerMatch = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0 .5rem;
+
+  & span:first-child {
+    margin-bottom: .7rem;
+  }
+`;
+
+export const SummonerItems = styled.div`
+  width: 100%;
+  padding: 0 .5rem;
+  display: flex;
+
+  & div {
+    width: 12%;
+    padding: .1rem;
+    border-radius: 20%;
+    border: 1px solid #ced4da;
+    background-image: url('./img/bg/opacity.png');
+    background-size: 100%;
+  }
+
+  & img {
+    width: 12%;
+    height: 12%;
+    padding: .1rem;
+    border-radius: 20%;
+  }
+
+  & img:last-child {
+    border-radius: 999px;
   }
 `;

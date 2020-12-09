@@ -4,7 +4,7 @@ import { getChampionNameById, getRuneImgUrl, getSpellNameById } from './JsonUtil
 import { 
   SummonerChampion, SummonerKDARate, SummonerMatchListItem, 
   SummonerRune, SummonerScore, SummonerSpell, 
-  SummonerKDA, SummonerStats 
+  SummonerKDA, SummonerStats, SummonerInfo, SummonerItems, SummonerWinOrLose, SummonerStatInfo, SummonerMatch, SummonerText 
 } from '../styles/components/Components';
 
 function getKDA(kill, death, assist) {
@@ -36,34 +36,58 @@ const SummonerMatchItem = ({ match }) => {
   const summonerRune = getRuneImgUrl(runeInfo);
   // 소환사 KDA
   const summonerKDA = getKDA(summonerStats.kills, summonerStats.deaths, summonerStats.assists);
-  
+  // 소환사 item
+  const summonerItemsArr = [];
+  for (let i = 0; i < 7; i++) {
+    summonerItemsArr.push(summonerStats[`item${i}`]);
+  }
   return (
     <SummonerMatchListItem>
-      <SummonerChampion>
-        <img src={`./img/champion/${championName.eng}.png`} alt="summoner-champion-image"/>
-      </SummonerChampion>
-      <SummonerSpell>
-        <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell"/>
-        <img src={`./img/spell/${summonerSpell[1].eng}.png`} alt="summoner-second-spell"/>
-      </SummonerSpell>
-      <SummonerRune>
-        <img src={`./img/${summonerRune.perk0}`} alt="summoner-primary-rune"/>
-        <img src={`./img/${summonerRune.subPerk}`} alt="summoner-sub-rune"/>
-      </SummonerRune>
-      <SummonerKDA>
-        <SummonerScore>
-          <span>{summonerStats.kills}</span>
-          <span>{summonerStats.deaths}</span>
-          <span>{summonerStats.assists}</span>
-        </SummonerScore>
-        <SummonerKDARate>
-          <span>{`${summonerKDA} : 1`}</span>
-        </SummonerKDARate>
-      </SummonerKDA>
-      <SummonerStats>
-        <span>{`레벨 ${summonerStats.champLevel}`}</span>
-        <span>{`${summonerStats.totalMinionsKilled} CS`}</span>
-      </SummonerStats>
+      <SummonerWinOrLose winOrLose={summonerStats.win}>
+        <span>{summonerStats.win ? '승' : '패'}</span>
+      </SummonerWinOrLose>
+      <SummonerInfo>
+        <SummonerStatInfo>
+          <SummonerChampion>
+            <img src={`./img/champion/${championName.eng}.png`} alt="summoner-champion-image"/>
+          </SummonerChampion>
+          <SummonerSpell>
+            <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell"/>
+            <img src={`./img/spell/${summonerSpell[1].eng}.png`} alt="summoner-second-spell"/>
+          </SummonerSpell>
+          <SummonerRune>
+            <img src={`./img/${summonerRune.perk0}`} alt="summoner-primary-rune"/>
+            <img src={`./img/${summonerRune.subPerk}`} alt="summoner-sub-rune"/>
+          </SummonerRune>
+          <SummonerText>
+            <SummonerKDA>
+              <SummonerScore>
+                <span>{summonerStats.kills}</span>
+                <span>{summonerStats.deaths}</span>
+                <span>{summonerStats.assists}</span>
+              </SummonerScore>
+              <SummonerKDARate>
+                {`${summonerKDA} : 1`}
+              </SummonerKDARate>
+            </SummonerKDA>
+            <SummonerStats>
+              <span>{`레벨 ${summonerStats.champLevel}`}</span>
+              <span>{`${summonerStats.totalMinionsKilled} CS`}</span>
+            </SummonerStats>
+            <SummonerMatch>
+              <span>솔랭</span>
+              <span>{`${parseInt(match.gameDuration / 60)}:${match.gameDuration % 60}`}</span>
+            </SummonerMatch>
+          </SummonerText>
+        </SummonerStatInfo>
+        <SummonerItems>
+          {
+            summonerItemsArr.map((v) => {
+              return v == 0 ? <div></div> : <img src={`/img/item/${v}.png`} alt="summoner-item" />
+            })
+          }
+        </SummonerItems>
+      </SummonerInfo>
     </SummonerMatchListItem>
   )
 };
