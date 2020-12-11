@@ -2,8 +2,6 @@ import React from 'react';
 import Head from 'next/head';
 import UserProfile from '../components/UserProfile';
 import AppLayout from '../components/AppLayout';
-import { ProfileHeader } from '../styles/pages/Pages';
-import { PageTitle } from '../styles/pages/Pages';
 
 const Profile = () => {
   return (

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { addPostRequestAction } from '../reducer/post';
 import useInput from '../hooks/useInput';
-import { PostFormContainer, PostContentContainer, PostButton } from '../styles/components/Components';
-import { Form, Input, } from 'antd';
 import CommonModal, { errorModal } from './CommonModal';
+import { Button, Form, Input, } from 'antd';
+import styled from 'styled-components';
 
 const PostForm = () => {
   const dispatch = useDispatch('');
@@ -135,5 +135,24 @@ const PostForm = () => {
     </PostFormContainer>
   );
 };
+
+export const PostFormContainer = styled.div`
+  width: 100%;
+  padding: 1rem;
+  background-color: #ffffff;
+`;
+
+export const PostContentContainer = styled.div`
+  margin-bottom: 1rem;
+
+  & strong {
+    display: block;
+    opacity: .5;
+  }
+`;
+
+export const PostButton = styled(Button)`
+  width: 100%;
+`;
 
 export default PostForm;

@@ -2,11 +2,11 @@ import React, { useCallback, useEffect, useState } from 'react';
 import Link from 'next/link';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Input } from 'antd';
+import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { ButtonContainer, FormContainer, InputContainer } from '../styles/components/Components';
 import { LoginErrorClearRequestAction, LoginRequsetAction } from '../reducer/user';
 import { errorModal } from './CommonModal';
+import styled from 'styled-components';
 
 const LoginForm = () => {
   const dispatch = useDispatch('');
@@ -93,5 +93,23 @@ const LoginForm = () => {
     </>
   );
 };
+
+export const FormContainer = styled(Form)`
+  padding: 3rem 0;
+`;
+
+export const InputContainer = styled.div`
+  margin-bottom: 1rem;
+
+  & label {
+    display: block;
+    padding-bottom: .5rem;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
 
 export default LoginForm;

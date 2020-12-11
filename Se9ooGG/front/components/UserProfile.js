@@ -2,8 +2,8 @@ import React, { useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutRequestAction } from '../reducer/user';
-import { ProfileButtonGroup, UserDetail, UserInfo, UserNickname, UserProfileContainer, UserProfileContent } from '../styles/components/Components';
 import { Button } from 'antd';
+import styled from 'styled-components';
 
 const UserProfile = () => {
   const dispatch = useDispatch('');
@@ -49,5 +49,86 @@ const UserProfile = () => {
     </UserProfileContainer>
   );
 };
+
+export const UserProfileContainer = styled.div`
+  background-color: #ffffff;
+  margin-top: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(206, 212, 218, .5);
+
+  & img {
+    display: block;
+    width: 30%;
+    height: 30%;
+    margin-bottom: 1rem;
+    border-radius: 999px;
+    padding: 1rem;
+  }
+
+  & button {
+    width: 100%;
+  }
+`;
+
+export const UserProfileContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
+  @media ${props => props.theme.tablet} {
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+`;
+
+export const UserDetail = styled.div`
+  width: 100%;
+`;
+
+export const UserNickname = styled.strong`
+  display: block;
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+`;
+
+export const UserInfo = styled.dl`
+  display: flex;
+  width: 100%;
+  font-size: 1.3rem;
+  margin-bottom: 3rem;
+  
+  & div {
+    flex-grow: 1;
+    flex-basis: 30%;
+    padding: 0 1rem;
+    border-right: 1px solid #e5e5e5;
+  }
+
+  & div:last-child {
+    border-right: none;
+  }
+
+  & dt {
+    text-align: center;
+    margin-bottom: 1rem;
+  }
+
+  & dd {
+    text-align: center;
+  }
+`;
+
+export const ProfileButtonGroup = styled.div`
+  display: block;
+  width: 100%;
+
+  @media ${props => props.theme.tablet} {
+    display: flex;
+  }
+`;
 
 export default UserProfile;

@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import CommonModal, { errorModal, infoModal } from './CommonModal';
-import { ButtonContainer, ErrorMessage, InputContainer } from '../styles/components/Components';
 import { Button, Form, Input } from 'antd';
 import { SignUpDoneClearRequestAction, SignUpRequestAction } from '../reducer/user';
+import styled from 'styled-components';
 
 const SignUpForm = () => {
   const dispatch = useDispatch('');
@@ -153,5 +153,23 @@ const SignUpForm = () => {
     </>
   );
 };
+
+export const InputContainer = styled.div`
+  margin-bottom: 1rem;
+
+  & label {
+    display: block;
+    padding-bottom: .5rem;
+  }
+`;
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  justify-content: flex-end;
+`;
+
+export const ErrorMessage = styled.div`
+  color: #e03131;
+`;
 
 export default SignUpForm;

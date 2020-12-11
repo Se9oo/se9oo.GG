@@ -1,9 +1,10 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Avatar, Comment } from 'antd';
-import { CommentDeleteBtn, CommentItemContainer } from '../styles/components/Components';
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteCommentRequestAction } from '../reducer/post';
 import CommonModal from './CommonModal';
+import { CloseOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 const CommentItem = memo(({ comment, postId }) => {  
   const dispatch = useDispatch('');
@@ -59,5 +60,26 @@ const CommentItem = memo(({ comment, postId }) => {
     </>
   );
 });
+
+export const CommentItemContainer = styled.div`
+  position: relative;
+`;
+
+export const CommentDeleteBtn = styled(CloseOutlined)`
+  position: absolute;
+  top: 50%;
+  right: 5%;
+  transform: translate(0, -50%);
+  cursor: pointer;
+
+  & svg {
+    width: 1.6rem;
+    height: 1.6rem;
+  }
+
+  & svg:hover {
+    color: #ff7875;
+  }
+`;
 
 export default CommentItem;

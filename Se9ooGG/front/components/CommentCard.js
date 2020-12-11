@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Button, Comment, Input } from 'antd';
-import { CommentBtn, CommentContainer, CommentDeleteBtn, CommentForm } from '../styles/components/Components';
+import { Avatar, Button, Comment, Form, Input } from 'antd';
 import { addCommentRequestAction } from '../reducer/post';
 import { errorModal } from './CommonModal';
 import CommentItem from '../components/CommentItem';
+import styled from 'styled-components';
 
 const CommentCard = memo(({ commentList, postId }) => {
   const dispatch = useDispatch('');
@@ -65,5 +65,27 @@ const CommentCard = memo(({ commentList, postId }) => {
     </CommentContainer>
   );
 });
+
+export const CommentContainer = styled.div`
+  padding: 2rem;
+  background-color: #ffffff;
+  border: 1px solid rgba(206, 212, 218, .5);
+  border-top: none;
+`;
+
+export const CommentForm = styled(Form)`
+  padding: 1rem 0;
+`;
+
+export const CommentBtn = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  margin-top: 1rem;
+
+  & button {
+    display: flex;
+  }
+`;
 
 export default CommentCard;

@@ -3,9 +3,10 @@ import Head from 'next/head';
 import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
 import PostCard from '../components/PostCard';
-import { PageTitle, PostAddBtn, PostSearchInput } from '../styles/pages/Pages';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadPostRequestAction } from '../reducer/post';
+import { Button, Input } from 'antd';
+import styled from 'styled-components';
 
 const Community = () => {
   const dispatch = useDispatch('');
@@ -45,5 +46,18 @@ const Community = () => {
     </AppLayout>
   );
 };
+
+export const PostSearchInput = styled(Input.Search)`
+  margin: 1rem 0;
+
+  & ::placeholder {
+    font-size: 1.2rem;
+  }
+`;
+
+export const PostAddBtn = styled(Button)`
+  width: 100%;
+  margin-bottom: 1rem;
+`;
 
 export default Community;

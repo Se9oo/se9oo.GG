@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChampionSkillImg } from '../styles/components/Components';
+import styled from 'styled-components';
 
 const ChampionSkillsItem = ({ skill }) => {
   return (
@@ -10,5 +10,10 @@ const ChampionSkillsItem = ({ skill }) => {
     </>
   );
 };
+
+export const ChampionSkillImg = styled.img`
+  width: 4rem;
+  height: 4rem;
+`;
 
 export default ChampionSkillsItem;

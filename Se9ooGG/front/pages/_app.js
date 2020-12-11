@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useDispatch } from 'react-redux';
-import GlobalStyles from '../styles/layout/GlobalStyles';
+import { createGlobalStyle } from 'styled-components';
+import reset from 'styled-reset';
 import { ThemeProvider } from 'styled-components';
-import theme from '../styles/layout/theme';
 import wrapper from '../store/configureStore';
 import withReduxSaga from 'next-redux-saga';
 import 'antd/dist/antd.css';
@@ -38,5 +38,102 @@ const Se9oogg = ({ Component }) => {
 Se9oogg.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
+
+const GlobalStyles = createGlobalStyle`
+  ${reset}
+  * { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  @font-face {
+    font-family: 'GmarketSansMedium';
+    src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+  }
+
+  html {
+    font-size: 10px;
+
+    @media ${props => props.theme.tablet} {
+      font-size: 12px;
+    } 
+
+    @media ${props => props.theme.laptop} {
+      font-size: 16px;
+    } 
+  }
+
+  body {
+    background-color: #fafafa;
+  }
+
+  body, input, a, ol, ul, li, button {
+    font-family: 'GmarketSansMedium', 'Sans-serif' !important;
+  }
+
+  #__next {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+  a {
+    text-decoration:none;
+    color:inherit;
+    cursor: pointer;
+  }
+
+  ol, ul, li {
+    list-style: none;
+  }
+
+  img {
+    display: block;
+  }
+
+  input, button {
+    background-color: transparent;
+  }
+
+  .ant-menu-item {
+    font-weight: 600;
+  }
+
+  .ant-menu-horizontal > .ant-menu-item a {
+    color: #ffffff;
+  }
+
+  // antd comment inner padding
+  .ant-comment-inner {
+    padding: 1rem 0;
+  }
+
+  .ant-comment-content-detail {
+
+    & span {
+      display: block;
+      margin-bottom: .5rem;
+    }
+  }
+`;
+
+const size = {
+  mobile: '479px',
+  tablet: '767px',
+  laptop: '980px',
+  desktop: '1024px',
+}
+
+const theme = {
+  mobile: `(min-width: ${size.mobile})`,
+  tablet: `(min-width: ${size.tablet})`,
+  laptop: `(min-width: ${size.laptop})`,
+  desktop: `(min-width: ${size.desktop})`,
+}
 
 export default wrapper.withRedux(withReduxSaga(Se9oogg));

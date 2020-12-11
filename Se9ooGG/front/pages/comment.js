@@ -2,9 +2,9 @@ import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import AppLayout from '../components/AppLayout';
-import { CommentHeader } from '../styles/pages/Pages';
-import { LeftOutlined } from '@ant-design/icons';
 import CommentCard from '../components/CommentCard';
+import { LeftOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 const Comment = () => {
   const router = useRouter();
@@ -25,5 +25,28 @@ const Comment = () => {
     </AppLayout>
   );
 };
+
+export const CommentHeader = styled.div`
+  position: relative;
+  width: 100%;
+  margin-bottom: 30px;
+
+  & svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 2rem;
+    height: 2rem;
+    cursor: pointer;
+  }
+
+  & h2 {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, 20%);
+    font-size: 2rem;
+  }
+`;
 
 export default Comment;

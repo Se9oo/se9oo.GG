@@ -4,9 +4,9 @@ import router from 'next/router';
 import { deletePostRequestAction } from '../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
-import { PostCardContentContainer, PostCommentCount } from '../styles/components/Components';
 import CommonModal from './CommonModal';
 import CommentCard from './CommentCard';
+import styled from 'styled-components';
 
 const PostCard = memo(({ data }) => {
   const dispatch = useDispatch('');
@@ -127,5 +127,15 @@ const PostCard = memo(({ data }) => {
     </>
   );
 });
+
+export const PostCardContentContainer = styled.div`
+  margin-top: 2rem;
+`;
+
+export const PostCommentCount = styled.span`
+  display: block;
+  margin-top: 2rem;
+  color: #ced4da;
+`;
 
 export default PostCard;
