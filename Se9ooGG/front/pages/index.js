@@ -1,22 +1,29 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import AppLayout from '../components/AppLayout';
-import { useDispatch } from 'react-redux';
-import { loadSummonerRequestAction } from '../reducer/statistic';
+import { useDispatch, useSelector } from 'react-redux';
+import { loadSummonerDoneClearAction, loadSummonerRequestAction } from '../reducer/statistic';
 import { Input } from 'antd';
 import styled from 'styled-components';
 
 const Home = () => {
   const dispatch = useDispatch('');
+  const { summoner, loadSummonerDone } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
 
   const onSubmitForm = useCallback(() => {
-    //Router.push('/statistic');
     dispatch(loadSummonerRequestAction({
       summonerName: search,
     }));
   }, [search]);
+
+  useEffect(() => {
+    if (summoner && loadSummonerDone) {
+      dispatch(loadSummonerDoneClearAction());
+      Router.push('/statistic');
+    }
+  }, [summoner, loadSummonerDone]);
 
   return (
     <AppLayout>
