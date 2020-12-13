@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { BarChartOutlined, CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
+import { CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
 import { motion } from 'framer-motion';
 import { Router } from 'next/dist/client/router';
 import styled from 'styled-components';
@@ -22,7 +22,6 @@ const AppLayout = ({ children }) => {
             }
             <li><Link href="/community"><a>커뮤니티</a></Link></li>
             <li><Link href="/champion/"><a>챔피언</a></Link></li>
-            <li><Link href="/statistic"><a>전적</a></Link></li>
         </ul>
       </DesktopNav>
       {/* content */}
@@ -54,7 +53,6 @@ const AppLayout = ({ children }) => {
           }
           <li><Link href="/community"><a><MessageOutlined /></a></Link></li>
           <li><Link href="/champion"><a><CrownOutlined /></a></Link></li>
-          <li><Link href="/statistic"><a><BarChartOutlined /></a></Link></li>
         </ul>
       </MobileFooter>
     </Container>
