@@ -3,8 +3,24 @@ import { useSelector } from 'react-redux';
 import { getChampionNameById, getRuneImgUrl, getSpellNameById } from './JsonUtil';
 import styled from 'styled-components';
 
+// KDA 계산
 function getKDA(kill, death, assist) {
   return ((kill + assist) / death).toFixed(2);
+}
+// 게임 진행 시간
+function getGameDuration(duration) {
+  let minutes = parseInt(duration / 60);
+  let seconds = duration % 60;
+
+  if (minutes.toString().length === 1) {
+    minutes = '0' + minutes;
+  }
+
+  if (seconds.toString().length === 1) {
+    seconds = '0' + seconds;
+  }
+
+  return `${minutes}:${seconds}`;
 }
 
 const SummonerMatchItem = ({ match }) => {
@@ -37,6 +53,9 @@ const SummonerMatchItem = ({ match }) => {
   for (let i = 0; i < 7; i++) {
     summonerItemsArr.push(summonerStats[`item${i}`]);
   }
+  // 게임 진행 시간
+  const gameDuration = getGameDuration(match.gameDuration);
+
   return (
     <SummonerMatchListItem>
       <SummonerWinOrLose winOrLose={summonerStats.win}>
@@ -72,7 +91,7 @@ const SummonerMatchItem = ({ match }) => {
             </SummonerStats>
             <SummonerMatch>
               <span>솔랭</span>
-              <span>{`${parseInt(match.gameDuration / 60)}:${match.gameDuration % 60}`}</span>
+              <span>{gameDuration}</span>
             </SummonerMatch>
           </SummonerText>
         </SummonerStatInfo>
