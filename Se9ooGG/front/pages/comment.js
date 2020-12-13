@@ -9,7 +9,8 @@ import styled from 'styled-components';
 const Comment = () => {
   const router = useRouter();
   const { postList } = useSelector((state) => (state.post));
-  const commentList = postList.filter((v) => v.postId === router.query.postId)[0].comments;
+  let commentList = [];
+  commentList = postList.filter((v) => v.postId === parseInt(router.query.postId))[0].comments;
 
   const onClickBackBtn = useCallback(() => {
     router.back();

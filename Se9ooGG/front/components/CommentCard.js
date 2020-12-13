@@ -70,7 +70,9 @@ export const CommentContainer = styled.div`
   padding: 2rem;
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
-  border-top: none;
+  @media ${props => props.theme.laptop} {
+    border-top: none;
+  }
 `;
 
 export const CommentForm = styled(Form)`
