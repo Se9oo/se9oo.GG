@@ -29,6 +29,33 @@ function getGameDuration(duration) {
 
   return gameDuration;
 }
+// 게임 생성 시간
+function getGameCreation(creation) {
+  const now = new Date();
+  const gameCreation = new Date(creation);
+  const diffSecond = (now.getTime() - gameCreation.getTime()) / 1000;
+  const diffMinute = diffSecond / 60;
+  const diffHour = diffMinute / 60;
+  const diffDate = diffHour / 24;
+  const diffMonth = diffDate / 30;
+  
+  if (Math.round(diffMonth) > 0) {
+    return `${Math.round(diffMonth)}달전`;
+  }
+  if (Math.round(diffDate) > 0) {
+    return `${Math.round(diffDate)}일전`;
+  }
+  if (Math.round(diffHour) > 0) {
+    return `${Math.round(diffHour)}시간전`;
+  }
+  if (Math.round(diffMinute) > 0) {
+    return `${Math.round(diffMinute)}분전`;
+  }
+  if (Math.round(diffSecond) > 0) {
+    return `${Math.round(diffSecond)}초전`;
+  }
+  return '-';
+}
 
 const SummonerMatchItem = ({ match }) => {
   // 소환사 이름
@@ -62,6 +89,8 @@ const SummonerMatchItem = ({ match }) => {
   }
   // 게임 진행 시간
   const gameDuration = getGameDuration(match.gameDuration);
+  // 게임 생성 시간
+  const gameCreateion = getGameCreation(match.gameCreation);
   // match detail toggle
   const [showDetail, setShowDetail] = useState(false);
   const onToggleDetailBtn = useCallback(() => {
@@ -72,7 +101,10 @@ const SummonerMatchItem = ({ match }) => {
     <SummonerMatchListItem>
       <SummonerMatchListItemHeader>
         <SummonerMatch>
-          <span>솔랭</span>
+          <SummonerMatchInfo>
+            <span>솔랭</span>
+            <span>{gameCreateion}</span>
+          </SummonerMatchInfo>
           <span>{`${gameDuration.minutes}분${gameDuration.seconds}초`}</span>
         </SummonerMatch>
         {
@@ -172,6 +204,17 @@ const SummonerMatch = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+`;
+
+const SummonerMatchInfo = styled.div`
+  & span {
+    margin-right: 1rem;
+  }
+
+  & span:last-child {
+    font-size: .8rem;
+    color: rgba(51, 51, 51, .5);
+  }
 `;
 
 const SummonerMatchListItemContent = styled.div`
