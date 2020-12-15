@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getChampionNameById, getRuneImgUrl, getSpellNameById } from './JsonUtil';
+import { getChampionNameById, getQueueType, getRuneImgUrl, getSpellNameById } from './JsonUtil';
 import styled from 'styled-components';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import SummonerMatchDetail from './SummonerMatchDetail';
@@ -91,18 +91,24 @@ const SummonerMatchItem = ({ match }) => {
   const gameDuration = getGameDuration(match.gameDuration);
   // 게임 생성 시간
   const gameCreateion = getGameCreation(match.gameCreation);
+  // Queue 타입
+  const queueType = getQueueType(match.queueId);
   // match detail toggle
   const [showDetail, setShowDetail] = useState(false);
   const onToggleDetailBtn = useCallback(() => {
     setShowDetail(!showDetail);
   }, [showDetail]);
 
+  const onErrorItemImg = useCallback((e) => {
+    e.target.src = "/img/bg/opacity.png";
+  }, []);
+
   return (
     <SummonerMatchListItem>
       <SummonerMatchListItemHeader>
         <SummonerMatch>
           <SummonerMatchInfo>
-            <span>솔랭</span>
+            <span>{queueType}</span>
             <span>{gameCreateion}</span>
           </SummonerMatchInfo>
           <span>{`${gameDuration.minutes}분${gameDuration.seconds}초`}</span>
@@ -159,7 +165,7 @@ const SummonerMatchItem = ({ match }) => {
             <SummonerItems>
               {
                 summonerItemsArr.map((v) => {
-                  return v == 0 ? <div></div> : <img src={`/img/item/${v}.png`} alt="summoner-item" />
+                  return <img src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
                 })
               }
             </SummonerItems>
@@ -321,19 +327,11 @@ export const SummonerItems = styled.div`
   padding: 0 .5rem;
   display: flex;
 
-  & div {
-    width: 12%;
-    padding: .1rem;
-    border-radius: 20%;
-    border: 1px solid #ced4da;
-    background-image: url('./img/bg/opacity.png');
-    background-size: 100%;
-  }
-
   & img {
     width: 12%;
     height: 12%;
     padding: .1rem;
+    border: 1px solid #ced4da;
     border-radius: 20%;
   }
 
