@@ -1,6 +1,7 @@
 import champion from '../json/champion.json';
 import spell from '../json/summoner.json';
 import rune from '../json/runesReforged.json';
+import queue from '../json/queues.json';
 
 export function getChampionInfoById(id) {
   const data = champion.data;
@@ -55,4 +56,21 @@ export function getRuneImgUrl(perkInfo) {
   runeImgUrl.subPerk = subPerk.icon;
 
   return runeImgUrl;
+}
+
+export function getQueueType(queueId) {
+  const queueType = queue.find((v) => v.queueId === queueId);
+  
+  switch (queueType.queueId) {
+    case 420:
+      return '솔랭';
+    case 430:
+      return '일반';
+    case 440:
+      return '자유 5:5 랭크';
+    case 450:
+      return '무작위 총력전';
+    default:
+      return '-';
+  }
 }
