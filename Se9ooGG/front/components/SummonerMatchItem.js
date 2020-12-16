@@ -190,6 +190,8 @@ const SummonerMatchListItemHeader = styled.div`
   margin-top: 1rem;
   padding: .5rem;
   border: 1px solid rgba(206, 212, 218, .5);
+  border-left: none;
+  border-right: none;
 
   & span {
     font-size: 1.2rem;
