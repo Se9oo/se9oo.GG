@@ -4,7 +4,16 @@ import { Modal } from 'antd';
 export function errorModal(msg) {
   Modal.error({
     title: 'ERROR',
-    content: `${msg}`,
+    content: (
+      <p>
+        {
+          msg 
+          && msg.split('\n').map((line, i) => {
+            return (<span key={i}>{line}<br/></span>)
+          })
+        }
+      </p>
+    ),
     okText: '닫기',
   })
 }
@@ -12,7 +21,16 @@ export function errorModal(msg) {
 export function infoModal(msg) {
   Modal.info({
     title: 'INFO',
-    content: `${msg}`,
+    content: (
+      <p>
+        {
+          msg 
+          && msg.split('\n').map((line, i) => {
+            return (<span key={i}>{line}<br/></span>)
+          })
+        }
+      </p>
+    ),
     okText: '닫기',
   })
 }
