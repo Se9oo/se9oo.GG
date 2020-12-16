@@ -90,7 +90,7 @@ const SummonerMatchItem = ({ match }) => {
   // 게임 진행 시간
   const gameDuration = getGameDuration(match.gameDuration);
   // 게임 생성 시간
-  const gameCreateion = getGameCreation(match.gameCreation);
+  const gameCreateion = getGameCreation(match.gameCreation + match.gameDuration * 1000);
   // Queue 타입
   const queueType = getQueueType(match.queueId);
   // match detail toggle
