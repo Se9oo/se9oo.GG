@@ -68,6 +68,15 @@ const SummonerMatchItem = ({ match }) => {
   const summonerInfo = match.participants.find((info) => info.participantId === parseInt(findSummoner.participantId, 10));
   // 소환사 게임 stat
   const summonerStats = summonerInfo.stats;
+  // 소환사 게임 timeline
+  const summonerTimeLine = summonerInfo.timeline;
+  // 소환사 승패 여부
+  let summonerWinOrLose = '';
+  if (Object.keys(summonerTimeLine).length < 4) {
+    summonerWinOrLose = '무';
+  } else {
+    summonerWinOrLose = summonerStats.win ? '승' : '패';
+  }
   // 소환사 챔피언 이름
   const championName = getChampionNameById(summonerInfo.championId);
   // 소환사 spell
@@ -100,7 +109,7 @@ const SummonerMatchItem = ({ match }) => {
   }, [showDetail]);
 
   const onErrorItemImg = useCallback((e) => {
-    e.target.src = "/img/bg/opacity.png";
+    e.target.src = "/img/item/0.png";
   }, []);
 
   return (
@@ -111,7 +120,7 @@ const SummonerMatchItem = ({ match }) => {
             <span>{queueType}</span>
             <span>{gameCreateion}</span>
           </SummonerMatchInfo>
-          <span>{`${gameDuration.minutes}분${gameDuration.seconds}초`}</span>
+          <span>{`${gameDuration.minutes}분 ${gameDuration.seconds}초`}</span>
         </SummonerMatch>
         {
           showDetail 
@@ -125,8 +134,8 @@ const SummonerMatchItem = ({ match }) => {
         ? <SummonerMatchDetail match={match} />
         : 
         <>
-          <SummonerWinOrLose winOrLose={summonerStats.win}>
-            <span>{summonerStats.win ? '승' : '패'}</span>
+          <SummonerWinOrLose winOrLose={summonerWinOrLose}>
+            <span>{summonerWinOrLose}</span>
           </SummonerWinOrLose>
           <SummonerInfo>
             <SummonerStatInfo>
@@ -156,10 +165,6 @@ const SummonerMatchItem = ({ match }) => {
                   <span>{`레벨 ${summonerStats.champLevel}`}</span>
                   <span>{`${summonerStats.totalMinionsKilled} CS`}</span>
                 </SummonerStats>
-                {/* <SummonerMatch>
-                  <span>솔랭</span>
-                  <span>{gameDuration}</span>
-                </SummonerMatch> */}
               </SummonerText>
             </SummonerStatInfo>
             <SummonerItems>
@@ -235,7 +240,13 @@ export const SummonerWinOrLose = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-color: ${props => (props.winOrLose ? '#339af0' : '#e03131')};
+  ${props => {
+    if (props.winOrLose == '무') {
+      return `background-color: #adb5bd;`;
+    } else {
+      return `background-color: ${props.winOrLose == '승' ? '#339af0' : '#e03131'};`;
+    }
+  }}
   color: #ffffff;
   font-size: 1.2rem;
 `;
