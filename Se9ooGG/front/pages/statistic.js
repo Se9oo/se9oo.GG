@@ -51,7 +51,7 @@ const Statistic = () => {
           <ul>
             {
               summoner.match
-              ? summoner.match.map((match) => <SummonerMatchItem match={match} />)
+              ? summoner.match.map((match) => <SummonerMatchItem key={match.gameId} match={match} />)
               : null
             }
           </ul>
