@@ -169,8 +169,8 @@ const SummonerMatchItem = ({ match }) => {
             </SummonerStatInfo>
             <SummonerItems>
               {
-                summonerItemsArr.map((v) => {
-                  return <img src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
+                summonerItemsArr.map((v, i) => {
+                  return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
                 })
               }
             </SummonerItems>
