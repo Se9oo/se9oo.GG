@@ -16,9 +16,7 @@ function addPostAPI(data) {
 }
 
 function deletePostAPI(data) {
-  return axios.delete('/post/deletePost/:postId', {
-    data: data,
-  });
+  return axios.delete(`/post/deletePost/${data.postId}`);
 }
 
 function addCommentAPI(data) {
@@ -26,9 +24,7 @@ function addCommentAPI(data) {
 }
 
 function deleteCommentAPI(data) {
-  return axios.delete(`/post/${data.postId}/deleteComment/${data.commentId}`, {
-    data: data,
-  });
+  return axios.delete(`/post/${data.postId}/deleteComment/${data.commentId}`);
 }
 
 function* loadPost() {

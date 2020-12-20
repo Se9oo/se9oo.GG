@@ -65,7 +65,7 @@ router.post('/post/addPost', isLoggedIn, async (req, res, next) => {
 
 // 게시글 삭제
 router.delete('/post/deletePost/:postId', isLoggedIn, async (req, res, next) => {
-  const { postId } = req.body;
+  const { postId } = req.params;
 
   const connection = await pool.getConnection();
 
@@ -126,7 +126,7 @@ router.post('/post/:postId/addComment', isLoggedIn, async (req, res, next) => {
 
 // 댓글 삭제
 router.delete('/post/:postId/deleteComment/:commentId', isLoggedIn, async (req, res, next) => {
-  const { commentId } = req.body;
+  const { commentId } = req.params;
 
   const connection = await pool.getConnection();
 
