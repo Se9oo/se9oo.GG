@@ -1,6 +1,6 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Avatar, Button, Comment, Form, Input } from 'antd';
+import { Avatar, Button, Comment, Empty, Form, Input } from 'antd';
 import { addCommentRequestAction } from '../reducer/post';
 import { errorModal } from './CommonModal';
 import CommentItem from '../components/CommentItem';
@@ -36,8 +36,11 @@ const CommentCard = memo(({ commentList, postId }) => {
 
   return (
     <CommentContainer>
+      {
+        commentList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 댓글이 없습니다.</Empty>
+      }
       {        
-       commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />) 
+       commentList.length > 0 && commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />) 
       }
       {
         me &&
@@ -70,7 +73,7 @@ export const CommentContainer = styled.div`
   padding: 2rem;
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
-  @media ${props => props.theme.laptop} {
+  @media ${props => props.theme.tablet} {
     border-top: none;
   }
 `;
