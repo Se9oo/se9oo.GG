@@ -93,7 +93,7 @@ const reducer = (state = initialState, action) => {
     case LOAD_POST_REQUEST:
       return {
         ...state,
-        laodPostError: false,
+        loadPostError: false,
       }
     case LOAD_POST_SUCCESS:
       return {
@@ -147,7 +147,7 @@ const reducer = (state = initialState, action) => {
         addCommentLoading: true,
       }
     case ADD_COMMENT_SUCCESS:
-      const addPostIndex = state.postList.findIndex((v) => v.postId === action.data.postId);
+      const addPostIndex = state.postList.findIndex((v) => v.postId === parseInt(action.data.postId));
       const addPost = { ...state.postList[addPostIndex] };
       addPost.comments = [...addPost.comments, action.data];
       const addPostList = [...state.postList];
@@ -167,7 +167,7 @@ const reducer = (state = initialState, action) => {
         ...state, 
       }
     case DELETE_COMMENT_SUCCESS:
-      const deletePostIndex = state.postList.findIndex((v) => v.postId === action.data.postId);
+      const deletePostIndex = state.postList.findIndex((v) => v.postId === parseInt(action.data.postId));
       const deletePost = { ...state.postList[deletePostIndex] };
       deletePost.comments = [...deletePost.comments].filter((comment) => comment.commentId !== action.data.commentId);
       const deletePostList = [...state.postList];
