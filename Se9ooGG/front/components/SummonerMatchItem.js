@@ -128,12 +128,11 @@ const SummonerMatchItem = ({ match }) => {
           : <DownOutlined onClick={onToggleDetailBtn} />
         }
       </SummonerMatchListItemHeader>
-      <SummonerMatchListItemContent>
       {
         showDetail 
         ? <SummonerMatchDetail match={match} />
         : 
-        <>
+        <SummonerMatchListItemContent>
           <SummonerWinOrLose winOrLose={summonerWinOrLose}>
             <span>{summonerWinOrLose}</span>
           </SummonerWinOrLose>
@@ -175,9 +174,8 @@ const SummonerMatchItem = ({ match }) => {
               }
             </SummonerItems>
           </SummonerInfo>
-        </>
+        </SummonerMatchListItemContent>
       }
-      </SummonerMatchListItemContent>
     </SummonerMatchListItem>
   )
 };
