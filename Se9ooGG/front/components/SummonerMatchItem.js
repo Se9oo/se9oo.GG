@@ -130,7 +130,7 @@ const SummonerMatchItem = ({ match }) => {
       </SummonerMatchListItemHeader>
       {
         showDetail 
-        ? <SummonerMatchDetail match={match} />
+        ? <SummonerMatchDetail match={match} winOrLose={summonerWinOrLose} />
         : 
         <SummonerMatchListItemContent>
           <SummonerWinOrLose winOrLose={summonerWinOrLose}>
