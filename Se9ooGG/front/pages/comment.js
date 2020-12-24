@@ -27,7 +27,7 @@ const Comment = () => {
   );
 };
 
-export const CommentHeader = styled.div`
+const CommentHeader = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 30px;

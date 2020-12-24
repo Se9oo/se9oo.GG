@@ -69,7 +69,7 @@ const CommentCard = memo(({ commentList, postId }) => {
   );
 });
 
-export const CommentContainer = styled.div`
+const CommentContainer = styled.div`
   padding: 2rem;
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
@@ -78,11 +78,11 @@ export const CommentContainer = styled.div`
   }
 `;
 
-export const CommentForm = styled(Form)`
+const CommentForm = styled(Form)`
   padding: 1rem 0;
 `;
 
-export const CommentBtn = styled.div`
+const CommentBtn = styled.div`
   display: flex;
   justify-content: flex-end;
   width: 100%;

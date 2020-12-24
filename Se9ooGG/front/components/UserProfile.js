@@ -50,7 +50,7 @@ const UserProfile = () => {
   );
 };
 
-export const UserProfileContainer = styled.div`
+const UserProfileContainer = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
@@ -70,7 +70,7 @@ export const UserProfileContainer = styled.div`
   }
 `;
 
-export const UserProfileContent = styled.div`
+const UserProfileContent = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -83,11 +83,11 @@ export const UserProfileContent = styled.div`
   }
 `;
 
-export const UserDetail = styled.div`
+const UserDetail = styled.div`
   width: 100%;
 `;
 
-export const UserNickname = styled.strong`
+const UserNickname = styled.strong`
   display: block;
   text-align: center;
   font-size: 2rem;
@@ -95,7 +95,7 @@ export const UserNickname = styled.strong`
   margin-bottom: 1rem;
 `;
 
-export const UserInfo = styled.dl`
+const UserInfo = styled.dl`
   display: flex;
   width: 100%;
   font-size: 1.3rem;
@@ -122,7 +122,7 @@ export const UserInfo = styled.dl`
   }
 `;
 
-export const ProfileButtonGroup = styled.div`
+const ProfileButtonGroup = styled.div`
   display: block;
   width: 100%;
 

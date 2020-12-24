@@ -104,7 +104,7 @@ const UserSearchInput = styled(Input.Search)`
   }
 `;
 
-export const Summoner = styled.div`
+const Summoner = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -131,7 +131,7 @@ export const Summoner = styled.div`
   }
 `
 
-export const SummonerRank = styled.div`
+const SummonerRank = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
@@ -144,7 +144,7 @@ export const SummonerRank = styled.div`
   }
 `;
 
-export const SummonerMostChampion = styled.div`
+const SummonerMostChampion = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;

@@ -40,7 +40,7 @@ const ChampionList = ({ data }) => {
   );
 };
 
-export const ChampList = styled.ul`
+const ChampList = styled.ul`
   display: flex;
   flex-wrap: wrap;
   max-height: 27rem;
@@ -54,20 +54,20 @@ export const ChampList = styled.ul`
   }
 `;
 
-export const ChampListItem = styled.li`
+ const ChampListItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: .2rem;
 `;
 
-export const ChampionImg = styled.img`
+ const ChampionImg = styled.img`
   display: block;
   width: 4rem;
   height: 4rem;
 `;
 
-export const ChampionName = styled.span`
+ const ChampionName = styled.span`
   display: block;
   width: 3rem;
   padding: .5rem 0;

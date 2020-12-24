@@ -154,7 +154,7 @@ const SignUpForm = () => {
   );
 };
 
-export const InputContainer = styled.div`
+const InputContainer = styled.div`
   margin-bottom: 1rem;
 
   & label {
@@ -163,12 +163,12 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const ButtonContainer = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;
 
-export const ErrorMessage = styled.div`
+const ErrorMessage = styled.div`
   color: #e03131;
 `;
 

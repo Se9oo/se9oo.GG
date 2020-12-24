@@ -59,7 +59,7 @@ const AppLayout = ({ children }) => {
   );
 };
 
-export const Container = styled.div`
+const Container = styled.div`
   width: 100%;
   height: 100%;
 
@@ -69,7 +69,7 @@ export const Container = styled.div`
   }
 `;
 
-export const DesktopNav = styled.nav`
+const DesktopNav = styled.nav`
   display: none;
   align-items: center;
   position: fixed;
@@ -113,7 +113,7 @@ export const DesktopNav = styled.nav`
   }
 `;
 
-export const ContentContainer = styled.section`
+const ContentContainer = styled.section`
   display: block;
   padding: 1rem 1rem 71px;
 
@@ -122,7 +122,7 @@ export const ContentContainer = styled.section`
   }
 `;
 
-export const MobileFooter = styled.footer`
+const MobileFooter = styled.footer`
   display: block;
   position: fixed;
   bottom: 0;

@@ -136,13 +136,13 @@ const PostForm = () => {
   );
 };
 
-export const PostFormContainer = styled.div`
+const PostFormContainer = styled.div`
   width: 100%;
   padding: 1rem;
   background-color: #ffffff;
 `;
 
-export const PostContentContainer = styled.div`
+const PostContentContainer = styled.div`
   margin-bottom: 1rem;
 
   & strong {
@@ -151,7 +151,7 @@ export const PostContentContainer = styled.div`
   }
 `;
 
-export const PostButton = styled(Button)`
+const PostButton = styled(Button)`
   width: 100%;
 `;
 

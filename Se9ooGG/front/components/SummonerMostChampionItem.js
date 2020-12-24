@@ -13,7 +13,7 @@ const SummonerMostChampionItem = ({ most }) => {
   )
 };
 
-export const SummonerMostChampionListItem = styled.li`
+const SummonerMostChampionListItem = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: center;

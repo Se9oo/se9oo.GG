@@ -41,19 +41,19 @@ const Home = () => {
   );
 };
 
-export const HomeContainer = styled.div`
+const HomeContainer = styled.div`
   width: 100%;
   margin: 0;
   padding: 0;
 `;
 
-export const MainLogoImg = styled.img`
+const MainLogoImg = styled.img`
   max-width: 100%;
   height: auto;
   padding: 70px 20%;
 `;
 
-export const UserSearchInput = styled(Input.Search)`
+const UserSearchInput = styled(Input.Search)`
   max-width: 100%;
   padding: 0 10%;
 

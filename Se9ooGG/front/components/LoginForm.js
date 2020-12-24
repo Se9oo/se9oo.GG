@@ -94,11 +94,11 @@ const LoginForm = () => {
   );
 };
 
-export const FormContainer = styled(Form)`
+const FormContainer = styled(Form)`
   padding: 3rem 0;
 `;
 
-export const InputContainer = styled.div`
+const InputContainer = styled.div`
   margin-bottom: 1rem;
 
   & label {
@@ -107,7 +107,7 @@ export const InputContainer = styled.div`
   }
 `;
 
-export const ButtonContainer = styled.div`
+const ButtonContainer = styled.div`
   display: flex;
   justify-content: flex-end;
 `;

@@ -32,7 +32,7 @@ const ChampionInfo = () => {
   );
 };
 
-export const ChampionInfoContainer = styled.section`
+const ChampionInfoContainer = styled.section`
   display: flex;
   align-items: center;
   background-color: #ffffff;
@@ -40,18 +40,18 @@ export const ChampionInfoContainer = styled.section`
   padding: 1rem;
 `;
 
-export const ChampionInfoImg = styled.img`
+const ChampionInfoImg = styled.img`
   width: 30%;
   height: 30%;
   margin-right: 1rem;
 `;
 
-export const ChampionDetail = styled.div`
+const ChampionDetail = styled.div`
   display: block;
   width: 100%;
 `;
 
-export const ChampionTitle = styled.div`
+const ChampionTitle = styled.div`
   order: 1;
   
   & h2 {
@@ -69,7 +69,7 @@ export const ChampionTitle = styled.div`
   }
 `;
 
-export const ChampionSkills = styled.ul`
+const ChampionSkills = styled.ul`
   width: 100%;
   display: flex;
   justify-content: space-between;

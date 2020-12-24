@@ -180,7 +180,7 @@ const SummonerMatchItem = ({ match }) => {
   )
 };
 
-export const SummonerMatchListItem = styled.li`
+const SummonerMatchListItem = styled.li`
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
   border-top: none;
@@ -232,7 +232,7 @@ const SummonerMatchListItemContent = styled.div`
   display: flex;
 `;
 
-export const SummonerWinOrLose = styled.div`
+const SummonerWinOrLose = styled.div`
   width: 20%;
   display: flex;
   flex-direction: column;
@@ -249,17 +249,17 @@ export const SummonerWinOrLose = styled.div`
   font-size: 1.2rem;
 `;
 
-export const SummonerInfo = styled.div`
+const SummonerInfo = styled.div`
   padding: .5rem;
 `;
 
-export const SummonerStatInfo = styled.div`
+const SummonerStatInfo = styled.div`
   width: 100%;
   display: flex;
   align-items: center;
 `;
 
-export const SummonerChampion = styled.div`
+const SummonerChampion = styled.div`
   width: 18%;
   display: flex;
   flex-direction: column;
@@ -273,7 +273,7 @@ export const SummonerChampion = styled.div`
   }
 `;
 
-export const SummonerSpell = styled.div`
+const SummonerSpell = styled.div`
   width: 7.5%;
 
   & img {
@@ -283,7 +283,7 @@ export const SummonerSpell = styled.div`
   }
 `;
 
-export const SummonerRune = styled.div`
+const SummonerRune = styled.div`
   width: 7.5%;
   margin-right: .5rem;
 
@@ -296,20 +296,20 @@ export const SummonerRune = styled.div`
   }
 `;
 
-export const SummonerText = styled.div`
+const SummonerText = styled.div`
   width: 70%;
   display: flex;
   justify-content: space-around;
   align-items: center;
 `
 
-export const SummonerKDA = styled.div`
+const SummonerKDA = styled.div`
   width: 20%;
   flex-grow: 1.2;
   text-align: center;
 `;
 
-export const SummonerScore = styled.div`
+const SummonerScore = styled.div`
   margin-bottom: .7rem;
 
   & span:nth-child(-n+2):after {
@@ -318,11 +318,11 @@ export const SummonerScore = styled.div`
   }
 `;
 
-export const SummonerKDARate = styled.span`
+const SummonerKDARate = styled.span`
   color: #ced4da;
 `;
 
-export const SummonerStats = styled.div`
+const SummonerStats = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -333,7 +333,7 @@ export const SummonerStats = styled.div`
   }
 `;
 
-export const SummonerItems = styled.div`
+const SummonerItems = styled.div`
   width: 100%;
   padding: 0 .5rem;
   display: flex;

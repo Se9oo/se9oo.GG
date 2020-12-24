@@ -61,11 +61,11 @@ const CommentItem = memo(({ comment, postId }) => {
   );
 });
 
-export const CommentItemContainer = styled.div`
+const CommentItemContainer = styled.div`
   position: relative;
 `;
 
-export const CommentDeleteBtn = styled(CloseOutlined)`
+const CommentDeleteBtn = styled(CloseOutlined)`
   position: absolute;
   top: 50%;
   right: 5%;

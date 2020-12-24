@@ -16,7 +16,7 @@ const SummonerRankItem = ({rank}) => {
   );
 };
 
-export const SummonerRankListItem = styled.li`
+const SummonerRankListItem = styled.li`
   display: flex;
   flex-direction: column;
   justify-content: center;

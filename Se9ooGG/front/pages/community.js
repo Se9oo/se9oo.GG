@@ -47,7 +47,7 @@ const Community = () => {
   );
 };
 
-export const PostSearchInput = styled(Input.Search)`
+const PostSearchInput = styled(Input.Search)`
   margin: 1rem 0;
 
   & ::placeholder {
@@ -55,7 +55,7 @@ export const PostSearchInput = styled(Input.Search)`
   }
 `;
 
-export const PostAddBtn = styled(Button)`
+const PostAddBtn = styled(Button)`
   width: 100%;
   margin-bottom: 1rem;
 `;

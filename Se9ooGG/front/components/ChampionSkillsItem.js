@@ -11,7 +11,7 @@ const ChampionSkillsItem = ({ skill }) => {
   );
 };
 
-export const ChampionSkillImg = styled.img`
+const ChampionSkillImg = styled.img`
   width: 4rem;
   height: 4rem;
 `;
