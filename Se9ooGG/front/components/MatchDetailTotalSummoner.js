@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { getChampionNameById, getSpellNameById, getRuneImgUrl } from './JsonUtil';
 
@@ -41,8 +41,17 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
   }
   // 소환사 rune
   const rune = getRuneImgUrl(runeInfo);
-
+  // 소환사 kda
   const kda = getKDA(stats.kills, stats.deaths, stats.assists);
+  // 소환사 items
+  const summonerItemsArr = [];
+  for (let i = 0; i < 7; i++) {
+    summonerItemsArr.push(stats[`item${i}`]);
+  }
+  // item error alt img
+  const onErrorItemImg = useCallback((e) => {
+    e.target.src = "/img/item/0.png";
+  }, []);
   
   return (
     <SummonerListItem order={order}>
@@ -59,12 +68,19 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
         <img src={`./img/${rune.subPerk}`} alt="summoner-sub-rune"/>
       </Rune>
       <Info>
-        <span>{gameInfo.summonerName}</span>
+        <Nickname>{gameInfo.summonerName}</Nickname>
         <Stats>
           <span>{`${stats.kills}/${stats.deaths}/${stats.assists}`}</span>
           <span>{`${kda} : 1`}</span>
         </Stats>
       </Info>
+      <Items>
+        {
+          summonerItemsArr.map((v, i) => {
+            return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
+          })
+        }
+      </Items>
     </SummonerListItem>
   );
 };
@@ -75,13 +91,13 @@ const SummonerListItem = styled.li`
   display: flex;
   align-items: center;
   width: 100%;
-  padding: 1% 3% 3% 3%;
+  padding: 1% 2% 2% 2%;
   order: ${props => props.order};
 `;
 
 const ChampionImg = styled.div`
   position: relative;
-  width: 12%;
+  width: 10%;
   margin-right: 1%;
 
   & img {
@@ -101,7 +117,7 @@ const Level = styled.span`
 `;
 
 const Spell = styled.div`
-  width: 7.5%;
+  width: 6%;
 
   & img {
     width: 100%;
@@ -111,7 +127,7 @@ const Spell = styled.div`
 `;
 
 const Rune = styled.div`
-  width: 7.5%;
+  width: 6%;
   margin-right: 3%;
 
   & img {
@@ -126,10 +142,35 @@ const Rune = styled.div`
 const Info = styled.div`
   display: flex;
   flex-direction: column;
-  width: 28%;
+  width: 30%;
+  margin-right: 3%;
+  text-align: center;
+`;
+
+const Nickname = styled.span`
+  margin-bottom: 10%;
 `;
 
 const Stats = styled.div`
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
+
+  & span:last-child {
+    color: rgba(51, 51, 51, .5);
+  }
+`;
+
+const Items = styled.div`
+  display: flex;
+  width: 48%;
+
+  & img {
+    width: 14%;
+    border: 1px solid #ced4da;
+    border-radius: 20%;    
+  }
+
+  & img:last-child {
+    border-radius: 999px;
+  }
 `;
