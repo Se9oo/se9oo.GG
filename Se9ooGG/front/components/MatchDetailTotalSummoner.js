@@ -2,6 +2,11 @@ import React from 'react';
 import styled from 'styled-components';
 import { getChampionNameById, getSpellNameById, getRuneImgUrl } from './JsonUtil';
 
+// KDA 계산
+function getKDA(kill, death, assist) {
+  return ((kill + assist) / death).toFixed(2);
+}
+
 function getListOrder(lane, role) {
   switch (lane) {
     case 'TOP':
@@ -36,6 +41,8 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
   }
   // 소환사 rune
   const rune = getRuneImgUrl(runeInfo);
+
+  const kda = getKDA(stats.kills, stats.deaths, stats.assists);
   
   return (
     <SummonerListItem order={order}>
@@ -54,8 +61,8 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
       <Info>
         <span>{gameInfo.summonerName}</span>
         <Stats>
-          <span>1/2/3</span>
-          <span>5.50:1</span>
+          <span>{`${stats.kills}/${stats.deaths}/${stats.assists}`}</span>
+          <span>{`${kda} : 1`}</span>
         </Stats>
       </Info>
     </SummonerListItem>
@@ -117,6 +124,8 @@ const Rune = styled.div`
 `;
 
 const Info = styled.div`
+  display: flex;
+  flex-direction: column;
   width: 28%;
 `;
 
