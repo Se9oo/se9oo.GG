@@ -1,5 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import MatchDetailTotal from './MatchDetailTotal';
+import MatchDetailAnalysis from './MatchDetailAnalysis';
 import styled from 'styled-components';
 
 const SummonerMatchDetail = ({ match, winOrLose }) => {
@@ -21,7 +22,7 @@ const SummonerMatchDetail = ({ match, winOrLose }) => {
       </MatchDetailHeader>
       {
         (selectedMenu === 0 && <MatchDetailTotal match={match} />)
-        || (selectedMenu === 1 && '팀 분석')
+        || (selectedMenu === 1 && <MatchDetailAnalysis match={match} />)
         || (selectedMenu === 2 && '빌드')
         || (selectedMenu === 3 && 'etc')
       }
