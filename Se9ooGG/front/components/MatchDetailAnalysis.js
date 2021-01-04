@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import { getChampionNameById } from './JsonUtil';
@@ -19,6 +19,18 @@ function getListOrder(lane, role) {
       } else {
         return 4;
       }
+  }
+}
+
+// chart data 명 표시
+function getChartDataName(data) {
+  switch (data) {
+    case 'totalDamageDealtToChampions':
+      return '챔피언에게 가한 피해';
+    case 'goldEarned':
+      return '골드 획득량';
+    case 'kills':
+      return '챔피언 처치';
   }
 }
 
@@ -46,31 +58,64 @@ const MatchDetailAnalysis = ({ match }) => {
   });
   loseTeamInfo.sort((a, b) => a.order - b.order);
 
+  // chart에 꽂을 데이터명 state
+  const [chartData, setChartData] = useState('totalDamageDealtToChampions');
+  // chart data 종류
+  const chartDataArr = ['totalDamageDealtToChampions','goldEarned', 'kills'];
+  // chart data state change
+  const onClickChartNextData = useCallback(() => {
+    let nextIdx = chartDataArr.findIndex((e) => e === chartData) + 1;
+    if (nextIdx === chartDataArr.length) {
+      nextIdx = 0;
+    }
+    setChartData(chartDataArr[nextIdx]);
+  }, [chartData]);
+// chart data state change
+  const onClickChartPrevData = useCallback(() => {
+    let prevIdx = chartDataArr.findIndex((e) => e === chartData) - 1;
+    if (prevIdx === -1) {
+      prevIdx = chartDataArr.length - 1;
+    }
+    setChartData(chartDataArr[prevIdx]);
+  }, [chartData]);
+
   // 승리팀 chart data
-  let winTeamData = [];
+  let winTeamTotalDamageDealtToChampions = []; // 챔피언에게 가한 피해
+  let winTeamGoldEarned = []; // 골드 획득량
+  let winTeamKills = []; // 챔피언 처치
   winTeamInfo.map((summoner) => {
-    let summonerData = {};
     // champion name
     const championName = getChampionNameById(summoner.championId);
-    // data setting
-    summonerData.name = championName.eng;
-    summonerData.y = summoner.stats.totalDamageDealtToChampions;
     // data
-    winTeamData.push(summonerData);
+    winTeamTotalDamageDealtToChampions.push({ name: championName.eng, y: summoner.stats.totalDamageDealtToChampions });
+    winTeamGoldEarned.push({ name: championName.eng, y: summoner.stats.goldEarned });
+    winTeamKills.push({ name: championName.eng, y: summoner.stats.kills });
   });
 
   // 패배팀 chart data
-  let loseTeamData = [];
+  let loseTeamTotalDamageDealtToChampions = []; // 챔피언에게 가한 피해
+  let loseTeamGoldEarned = []; // 골드 획득량
+  let loseTeamKills = []; // 챔피언 처치
   loseTeamInfo.map((summoner) => {
-    let summonerData = {};
     // champion name
     const championName = getChampionNameById(summoner.championId);
-    // data setting
-    summonerData.name = championName.eng;
-    summonerData.y = summoner.stats.totalDamageDealtToChampions;
     // data
-    loseTeamData.push(summonerData);
+    loseTeamTotalDamageDealtToChampions.push({ name: championName.eng, y: summoner.stats.totalDamageDealtToChampions });
+    loseTeamGoldEarned.push({ name: championName.eng, y: summoner.stats.goldEarned });
+    loseTeamKills.push({ name: championName.eng, y: summoner.stats.kills });
   });
+
+  // 선택한 chart data chart에 꽂기
+  const getChartData = useCallback((winOrLose) => {
+    switch (chartData) {
+      case 'totalDamageDealtToChampions':
+        return winOrLose === 'win' ? winTeamTotalDamageDealtToChampions : loseTeamTotalDamageDealtToChampions;
+      case 'goldEarned':
+        return winOrLose === 'win' ? winTeamGoldEarned : loseTeamGoldEarned;
+      case 'kills':
+        return winOrLose === 'win' ? winTeamKills : loseTeamKills;
+    }
+  }, [chartData]);
   
   // chart options
   const options = {
@@ -120,11 +165,11 @@ const MatchDetailAnalysis = ({ match }) => {
     series: [
       {
         color: '#339af0',
-        data: winTeamData
+        data: getChartData('win')
       },
       {
         color: '#e03131',
-        data: loseTeamData
+        data: getChartData('lose')
       }
     ]
   }
@@ -132,10 +177,16 @@ const MatchDetailAnalysis = ({ match }) => {
   return (
     <>
       <ChartSelector>
-        <LeftSelectButton />
-        <span>챔피언에게 가한 피해</span>
-        <RightSelectButton />
+        <LeftSelectButton onClick={onClickChartPrevData} />
+        <span>{getChartDataName(chartData)}</span>
+        <RightSelectButton onClick={onClickChartNextData} />
       </ChartSelector>
+      <GraphInfo>
+        <WinLine></WinLine>
+        <span>승리</span>
+        <LoseLine></LoseLine>
+        <span>패배</span>
+      </GraphInfo>
       <ChartWrapper>
         <HighchartsReact highcharts={Highcharts} options={options} />
       </ChartWrapper>
@@ -163,6 +214,29 @@ const LeftSelectButton = styled(LeftOutlined)`
 
 const RightSelectButton = styled(RightOutlined)`
   cursor: pointer;
+`;
+
+const GraphInfo = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+  & span {
+    margin-right: 3%;
+  }
+`;
+
+const WinLine = styled.span`
+  width: 5%;
+  height: .5rem;
+  background-color: #339af0;
+`;
+
+const LoseLine = styled.span`
+  width: 5%;
+  height: .5rem;
+  background-color: #e03131;
 `;
 
 const ChartWrapper = styled.div`
