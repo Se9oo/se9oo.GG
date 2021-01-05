@@ -31,6 +31,10 @@ function getChartDataName(data) {
       return '골드 획득량';
     case 'kills':
       return '챔피언 처치';
+    case 'wardsPlaced':
+      return '와드 설치';
+    case 'totalDamageTaken':
+      return '받은 피해량';
   }
 }
 
@@ -61,7 +65,7 @@ const MatchDetailAnalysis = ({ match }) => {
   // chart에 꽂을 데이터명 state
   const [chartData, setChartData] = useState('totalDamageDealtToChampions');
   // chart data 종류
-  const chartDataArr = ['totalDamageDealtToChampions','goldEarned', 'kills'];
+  const chartDataArr = ['totalDamageDealtToChampions','goldEarned', 'kills', 'wardsPlaced', 'totalDamageTaken'];
   // chart data state change
   const onClickChartNextData = useCallback(() => {
     let nextIdx = chartDataArr.findIndex((e) => e === chartData) + 1;
@@ -83,6 +87,8 @@ const MatchDetailAnalysis = ({ match }) => {
   let winTeamTotalDamageDealtToChampions = []; // 챔피언에게 가한 피해
   let winTeamGoldEarned = []; // 골드 획득량
   let winTeamKills = []; // 챔피언 처치
+  let winWardsPlaced = []; // 와드 설치
+  let winTotalDamageTaken = []; // 받은 피해량
   winTeamInfo.map((summoner) => {
     // champion name
     const championName = getChampionNameById(summoner.championId);
@@ -90,12 +96,16 @@ const MatchDetailAnalysis = ({ match }) => {
     winTeamTotalDamageDealtToChampions.push({ name: championName.eng, y: summoner.stats.totalDamageDealtToChampions });
     winTeamGoldEarned.push({ name: championName.eng, y: summoner.stats.goldEarned });
     winTeamKills.push({ name: championName.eng, y: summoner.stats.kills });
+    winWardsPlaced.push({ name: championName.eng, y: summoner.stats.wardsPlaced });
+    winTotalDamageTaken.push({ name: championName.eng, y: summoner.stats.totalDamageTaken });
   });
 
   // 패배팀 chart data
   let loseTeamTotalDamageDealtToChampions = []; // 챔피언에게 가한 피해
   let loseTeamGoldEarned = []; // 골드 획득량
   let loseTeamKills = []; // 챔피언 처치
+  let loseWardsPlaced = []; // 와드 설치
+  let loseTotalDamageTaken = []; // 받은 피해량
   loseTeamInfo.map((summoner) => {
     // champion name
     const championName = getChampionNameById(summoner.championId);
@@ -103,6 +113,8 @@ const MatchDetailAnalysis = ({ match }) => {
     loseTeamTotalDamageDealtToChampions.push({ name: championName.eng, y: summoner.stats.totalDamageDealtToChampions });
     loseTeamGoldEarned.push({ name: championName.eng, y: summoner.stats.goldEarned });
     loseTeamKills.push({ name: championName.eng, y: summoner.stats.kills });
+    loseWardsPlaced.push({ name: championName.eng, y: summoner.stats.wardsPlaced });
+    loseTotalDamageTaken.push({ name: championName.eng, y: summoner.stats.totalDamageTaken });
   });
 
   // 선택한 chart data chart에 꽂기
@@ -114,6 +126,10 @@ const MatchDetailAnalysis = ({ match }) => {
         return winOrLose === 'win' ? winTeamGoldEarned : loseTeamGoldEarned;
       case 'kills':
         return winOrLose === 'win' ? winTeamKills : loseTeamKills;
+      case 'wardsPlaced':
+        return winOrLose === 'win' ? winWardsPlaced : loseWardsPlaced;
+      case 'totalDamageTaken':
+        return winOrLose === 'win' ? winTotalDamageTaken : loseTotalDamageTaken;
     }
   }, [chartData]);
   
