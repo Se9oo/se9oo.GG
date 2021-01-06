@@ -6,7 +6,6 @@ import { createGlobalStyle } from 'styled-components';
 import reset from 'styled-reset';
 import { ThemeProvider } from 'styled-components';
 import wrapper from '../store/configureStore';
-import withReduxSaga from 'next-redux-saga';
 import 'antd/dist/antd.css';
 import { LoadMyInfoRequestAction } from '../reducer/user';
 
@@ -38,6 +37,8 @@ const Se9oogg = ({ Component }) => {
 Se9oogg.propTypes = {
   Component: PropTypes.elementType.isRequired,
 };
+
+export default wrapper.withRedux(Se9oogg);
 
 const GlobalStyles = createGlobalStyle`
   ${reset}
@@ -135,5 +136,3 @@ const theme = {
   laptop: `(min-width: ${size.laptop})`,
   desktop: `(min-width: ${size.desktop})`,
 }
-
-export default wrapper.withRedux(withReduxSaga(Se9oogg));
