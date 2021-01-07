@@ -1,29 +1,24 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import AppLayout from '../components/AppLayout';
-import { useDispatch, useSelector } from 'react-redux';
-import { loadSummonerDoneClearAction, loadSummonerRequestAction } from '../reducer/statistic';
+import { errorModal } from '../components/CommonModal';
 import { Input } from 'antd';
 import styled from 'styled-components';
 
 const Home = () => {
-  const dispatch = useDispatch('');
-  const { summoner, loadSummonerDone } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
 
   const onSubmitForm = useCallback(() => {
-    dispatch(loadSummonerRequestAction({
-      summonerName: search,
-    }));
-  }, [search]);
-
-  useEffect(() => {
-    if (summoner && loadSummonerDone) {
-      dispatch(loadSummonerDoneClearAction());
-      Router.push('/statistic');
+    if (!search) {
+      return errorModal('사용자명을 입력하세요.');
     }
-  }, [summoner, loadSummonerDone]);
+
+    Router.push({
+      pathname: '/statistic',
+      query: `summonerName=${search.replace(/ /gi, '+')}`,
+    });
+  }, [search])
 
   return (
     <AppLayout>
@@ -40,6 +35,8 @@ const Home = () => {
     </AppLayout>
   );
 };
+
+export default Home;
 
 const HomeContainer = styled.div`
   width: 100%;
@@ -61,5 +58,3 @@ const UserSearchInput = styled(Input.Search)`
     font-size: 1.2rem;
   }
 `;
-
-export default Home;

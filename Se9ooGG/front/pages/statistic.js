@@ -1,28 +1,32 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { LoadMyInfoRequestAction } from '../reducer/user';
 import { loadSummonerDoneClearAction, loadSummonerRequestAction } from '../reducer/statistic';
 import Router from 'next/router';
+import wrapper from '../store/configureStore';
+import { END } from 'redux-saga';
+import axios from 'axios';
 import AppLayout from '../components/AppLayout';
+import useInput from '../hooks/useInput';
 import SummonerRankItem from '../components/SummonerRankItem';
 import SummonerMostChampionItem from '../components/SummonerMostChampionItem';
 import SummonerMatchItem from '../components/SummonerMatchItem';
+import { errorModal } from '../components/CommonModal';
 import { Button, Input } from 'antd';
 import styled from 'styled-components';
-import { errorModal } from '../components/CommonModal';
-import useInput from '../hooks/useInput';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
   const { summoner, loadSummonerDone } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
 
-  // 예외처리
-  useEffect(() => {
-    if (Object.keys(summoner).length == 0) {
-      errorModal(`사용자를 검색해주세요.\n메인 화면으로 이동합니다.`);
-      Router.push('/');
-    }
-  }, [summoner])
+  //예외처리
+  // useEffect(() => {
+  //   if (Object.keys(summoner).length == 0) {
+  //     errorModal(`사용자를 검색해주세요.\n메인 화면으로 이동합니다.`);
+  //     Router.push('/');
+  //   }
+  // }, [summoner]);
 
   // 사용자 전적 검색 후 loadSummonerDone state 초기화
   useEffect(() => {
@@ -33,10 +37,15 @@ const Statistic = () => {
 
   // 사용자 전적 검색
   const onSubmitInput = useCallback(() => {
-    dispatch(loadSummonerRequestAction({
-      summonerName: search
-    }));
-  }, [search])
+    if (!search) {
+      return errorModal('사용자명을 입력하세요.');
+    }
+
+    Router.push({
+      pathname: '/statistic',
+      query: `summonerName=${search.replace(/ /gi, '+')}`,
+    });
+  }, [search]);
 
   // 전적 새로고침
   const onClickRefresh = useCallback(() => {
@@ -95,6 +104,28 @@ const Statistic = () => {
     </AppLayout>
   );
 };
+
+export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
+  const cookie = context.req ? context.req.headers.cookie : '';
+  axios.defaults.headers.Cookie = '';
+
+  if (context.req && cookie) {
+    axios.defaults.headers.Cookie = cookie;
+  }
+
+  context.store.dispatch(LoadMyInfoRequestAction());
+
+  if (context.query.summonerName) {
+    context.store.dispatch(loadSummonerRequestAction({
+      summonerName: context.query.summonerName,
+    }));
+  }
+
+  context.store.dispatch(END);
+  await context.store.sagaTask.toPromise(); 
+});
+
+export default Statistic;
 
 const UserSearchInput = styled(Input.Search)`
   max-width: 100%;
@@ -156,5 +187,3 @@ const SummonerMostChampion = styled.div`
     align-items: center;
   }
 `;
-
-export default Statistic;
