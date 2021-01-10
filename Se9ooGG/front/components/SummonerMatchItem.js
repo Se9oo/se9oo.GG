@@ -162,7 +162,9 @@ const SummonerMatchItem = ({ match }) => {
                 </SummonerKDA>
                 <SummonerStats>
                   <span>{`레벨 ${summonerStats.champLevel}`}</span>
-                  <span>{`${summonerStats.totalMinionsKilled} CS`}</span>
+                  <span>
+                    {`${parseInt(summonerStats.totalMinionsKilled + summonerStats.neutralMinionsKilled, 10)} CS`}
+                  </span>
                 </SummonerStats>
               </SummonerText>
             </SummonerStatInfo>
