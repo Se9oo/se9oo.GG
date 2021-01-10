@@ -1,5 +1,4 @@
 import React, { useCallback } from 'react';
-import { motion } from 'framer-motion';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
@@ -23,13 +22,7 @@ const ChampionList = ({ data }) => {
                 key={v.name}
                 onClick={() => onClickChampionItem(v.id)}
               >
-                <motion.div
-                  key={v.name}
-                  style={{ cursor: 'pointer'}}
-                  whileTap={{ scale: 1.2 }}
-                >
-                  <ChampionImg src={`/img/champion/${v.id}.png`} alt={ `${v.id}` }/>
-                </motion.div>
+                <ChampionImg src={`/img/champion/${v.id}.png`} alt={ `${v.id}` }/>
                 <ChampionName>{v.name}</ChampionName>
               </ChampListItem>
             )

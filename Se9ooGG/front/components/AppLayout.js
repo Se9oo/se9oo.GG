@@ -2,8 +2,6 @@ import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
 import { CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
-import { motion } from 'framer-motion';
-import { Router } from 'next/dist/client/router';
 import styled from 'styled-components';
 
 const AppLayout = ({ children }) => {
@@ -25,23 +23,9 @@ const AppLayout = ({ children }) => {
         </ul>
       </DesktopNav>
       {/* content */}
-      <motion.div key={Router.route}
-          initial="pageInitial"
-          animate="pageAnimate"
-          transition={{ type: 'spring', bounce: 0.25 }}
-          variants={{
-            pageInitial: {
-              opacity: 0
-            },
-            pageAnimate: {
-              opacity: 1,
-            }
-          }}>
-          <ContentContainer>
-            {children}
-          </ContentContainer>
-        </motion.div>
-     
+        <ContentContainer>
+          {children}
+        </ContentContainer>
       {/* mobile nav */}
       <MobileFooter>
         <ul>
