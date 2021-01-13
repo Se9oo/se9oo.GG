@@ -50,6 +50,10 @@ router.post('/statistic/loadSummoner', async (req, res, next) => {
 
       const matchData = await Promise.all(allMatchesInfo.data.matches.map(async (match) => {
         const matchInfo = await axios.get(`https://kr.api.riotgames.com/lol/match/v4/matches/${match.gameId}?api_key=${process.env.API_KEY}`);
+        // timeLines 정보
+        const matchTimeLines = await axios.get(`https://kr.api.riotgames.com/lol/match/v4/timelines/by-match/${match.gameId}?api_key=${process.env.API_KEY}`);
+        // matchInfo에 timeLines data 추가
+        matchInfo.data.matchTimelines = matchTimeLines.data;
 
         return matchInfo.data;
       }));
