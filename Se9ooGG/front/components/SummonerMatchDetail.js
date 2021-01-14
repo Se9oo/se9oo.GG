@@ -2,6 +2,7 @@ import React, { useCallback, useState } from 'react';
 import MatchDetailTotal from './MatchDetailTotal';
 import MatchDetailAnalysis from './MatchDetailAnalysis';
 import styled from 'styled-components';
+import MatchDetailBuild from './MatchDetailBuild';
 
 const SummonerMatchDetail = ({ match, winOrLose }) => {
   // menu item
@@ -23,7 +24,7 @@ const SummonerMatchDetail = ({ match, winOrLose }) => {
       {
         (selectedMenu === 0 && <MatchDetailTotal match={match} />)
         || (selectedMenu === 1 && <MatchDetailAnalysis match={match} />)
-        || (selectedMenu === 2 && '빌드')
+        || (selectedMenu === 2 && <MatchDetailBuild match={match} />)
         || (selectedMenu === 3 && 'etc')
       }
     </>
