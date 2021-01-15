@@ -15,9 +15,20 @@ const MatchDetailBuild = ({ match }) => {
     return v.events.filter((e) => e.participantId === summonerParticipantId);
   });
 
+  console.log(events);
+
   return (
     <>
       <div>빌드</div>
+      {
+        events.map((timesAction) => {
+          if (!timesAction.length === 0) {
+            timesAction.map((action) => {
+              return <div>{action.type}</div>
+            })
+          }
+        })
+      }
     </>
   );
 };
