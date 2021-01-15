@@ -22,10 +22,10 @@ const MatchDetailBuild = ({ match }) => {
       <div>빌드</div>
       {
         events.map((timesAction) => {
-          if (!timesAction.length === 0) {
+          if (timesAction.length !== 0) {
             timesAction.map((action) => {
               return <div>{action.type}</div>
-            })
+            });
           }
         })
       }
