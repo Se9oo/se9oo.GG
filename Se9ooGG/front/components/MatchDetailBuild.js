@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import BuildItems from './BuildItems';
 
 const MatchDetailBuild = ({ match }) => {
   // 검색한 소환사명
@@ -14,18 +15,21 @@ const MatchDetailBuild = ({ match }) => {
   const events = matchTimelines.map((v) => {
     return v.events.filter((e) => e.participantId === summonerParticipantId);
   });
-
-  console.log(events);
+  // 아이템 (구매,판매 정보)
+  const items = events.map((item) => {
+    return item.filter((v) => v.type !== 'SKILL_LEVEL_UP');
+  });
+  // 스킬 레벨업 정보
+  const skills = events.map((skill) => {
+    return skill.filter((v) => v.type === 'SKILL_LEVEL_UP');
+  });
 
   return (
     <>
-      <div>빌드</div>
       {
-        events.map((timesAction) => {
-          if (timesAction.length !== 0) {
-            timesAction.map((action) => {
-              return <div>{action.type}</div>
-            });
+        items.map((item, i) => {
+          if (item.length !== 0) {
+            return <BuildItems key={i} items={item} time={i} />
           }
         })
       }
