@@ -19,6 +19,36 @@ const MatchDetailBuild = ({ match }) => {
   const items = events.map((item) => {
     return item.filter((v) => v.type !== 'SKILL_LEVEL_UP');
   });
+
+  // timestamp -> 분으로 변환해서 time property 추가
+  let formedItems = [];
+  items.map((item) => {
+    if (item.length !== 0) {
+      item.map((i) => {
+        i.time = parseInt(i.timestamp / 60000 , 10);
+        formedItems.push(i);
+      });
+    }
+  });
+
+  // 이전 시간
+  let prevTime = 0;
+  // 같은 시간에 구매/판매 한 아이템 배열
+  let sameTimeArr = [];
+  // 최종 빌드 아이템 배열
+  let finalItemArr = [];  
+  formedItems.map((f, i) => {
+    if (prevTime === f.time) {
+      sameTimeArr.push(f);
+      prevTime = f.time;
+      formedItems.length === (i + 1) ? finalItemArr.push(sameTimeArr) : null;
+    } else {
+      finalItemArr.push(sameTimeArr);
+      sameTimeArr = [];
+      sameTimeArr.push(f);
+      prevTime = f.time;
+    }
+  });
   // 스킬 레벨업 정보
   const skills = events.map((skill) => {
     return skill.filter((v) => v.type === 'SKILL_LEVEL_UP');
@@ -27,10 +57,8 @@ const MatchDetailBuild = ({ match }) => {
   return (
     <>
       {
-        items.map((item, i) => {
-          if (item.length !== 0) {
-            return <BuildItems key={i} items={item} time={i} />
-          }
+        finalItemArr.map((item, i) => {
+          return <BuildItems key={i} items={item} />
         })
       }
     </>
