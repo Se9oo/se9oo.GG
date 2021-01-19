@@ -4,7 +4,7 @@ import { getChampionNameById, getSpellNameById, getRuneImgUrl } from './JsonUtil
 
 // KDA 계산
 function getKDA(kill, death, assist) {
-  return ((kill + assist) / death).toFixed(2);
+  return death === 0 ? 'perfect' : ((kill + assist) / death).toFixed(2);
 }
 
 function getListOrder(lane, role) {
