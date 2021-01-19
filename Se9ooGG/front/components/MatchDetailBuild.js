@@ -1,6 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import BuildItems from './BuildItems';
+import { ArrowRightOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 const MatchDetailBuild = ({ match }) => {
   // 검색한 소환사명
@@ -17,7 +19,7 @@ const MatchDetailBuild = ({ match }) => {
   });
   // 아이템 (구매,판매 정보)
   const items = events.map((item) => {
-    return item.filter((v) => v.type !== 'SKILL_LEVEL_UP');
+    return item.filter((v) => v.type !== 'SKILL_LEVEL_UP' && v.type !== 'ITEM_DESTROYED');
   });
 
   // timestamp -> 분으로 변환해서 time property 추가
@@ -56,13 +58,45 @@ const MatchDetailBuild = ({ match }) => {
 
   return (
     <>
-      {
-        finalItemArr.map((item, i) => {
-          return <BuildItems key={i} items={item} />
-        })
-      }
+      <SubTitle>아이템 빌드</SubTitle>
+      <Build>
+        {
+          finalItemArr.map((item, i) => {
+            return (
+              <BuildItemsList>
+                <BuildItems key={i} items={item}/>
+                {
+                  finalItemArr.length - 1 !== i && <RightArrow />
+                }
+              </BuildItemsList>
+            )
+          })
+        }
+      </Build>
     </>
   );
 };
 
 export default MatchDetailBuild;
+
+const SubTitle = styled.div`
+  padding: 1rem;
+  border-bottom: 1px solid rgba(206,212,218,.5);
+`;
+
+const Build = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  padding: 1rem;
+  width: 100%;
+`;
+
+const BuildItemsList = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const RightArrow = styled(ArrowRightOutlined)`
+  padding: 0 .5rem;
+`;

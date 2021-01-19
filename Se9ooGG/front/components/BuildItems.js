@@ -20,7 +20,7 @@ const BuildItems = ({ items }) => {
     // props로 받은 items 배열 최종 구매/판매 item 배열로 세팅
     finalItemArr = [...items];
   } else {
-    // 되돌린 item은 최종 구매/판매 배열에서 제외되도록
+    // 되돌린 item은 최종 구매 배열에서 제외되도록
     items.map((item) => {
       if (item.type === 'ITEM_PURCHASED') {
         if (undoCount === 0) {
@@ -33,48 +33,60 @@ const BuildItems = ({ items }) => {
             finalItemArr.push(item);
           }
         }
+      } else if (item.type === 'ITEM_SOLD') {
+        finalItemArr.push(item);
       }
     });
   }
+  // 시간(분)
+  const time = finalItemArr[0].time;
   
   return (
-    <Item>
-      {
-        finalItemArr.map((i) => {
-          if (i.type === 'ITEM_PURCHASED') {
-            return <PurchasedItem src={`/img/item/${i.itemId}.png`} alt="purchased item" />
-          } else if (i.type === 'ITEM_SOLD') {
+    finalItemArr.length > 0 
+    ? (
+    <div>
+      <ItemList>
+        {
+          finalItemArr.map((i, idx) => {
             return (
-              <Sold>
-                <SoldItem src={`/img/item/${i.itemId}.png`} alt="sold item" />
-                <SoldIcon />
-              </Sold>
-            )
-          }
-        })
-      }
-    </Item>
+              <Item>
+                {i.type === 'ITEM_PURCHASED' && <PurchasedItem key={idx} src={`/img/item/${i.itemId}.png`} alt="purchased item" />}
+                {
+                  i.type === 'ITEM_SOLD' && 
+                  <>
+                    <SoldItem key={idx} src={`/img/item/${i.itemId}.png`} alt="sold item" />
+                    <SoldIcon />
+                  </>
+                }
+              </Item>
+            );
+          })
+        }
+      </ItemList>
+      <Time>{`${time}분`}</Time>
+    </div>
+    )
+    : null
   );
 };
 
 export default BuildItems;
 
-const Item = styled.div`
+const ItemList = styled.ol`
   display: flex;
+  padding: .5rem 0;
 `;
 
-const PurchasedItem = styled.img`
-  width: 50px;
-  height: 50px;
-`;
-
-const Sold = styled.div`
+const Item = styled.li`
   position: relative;
 `;
 
+const PurchasedItem = styled.img`
+  width: 2rem;
+`;
+
 const SoldItem = styled.img`
-  width: 50px;
-  height: 50px;
+  width: 2rem;
   opacity: .7;
 `;
 
@@ -82,6 +94,10 @@ const SoldIcon = styled(CloseOutlined)`
   position: absolute;
   bottom: 0;
   right: 0;
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   color: #e03131;
+`;
+
+const Time = styled.div`
+  text-align: center;
 `;
