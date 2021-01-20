@@ -23,6 +23,7 @@ const MatchDetailBuild = ({ match }) => {
   });
 
   // timestamp -> 분으로 변환해서 time property 추가
+  // 시간대별로 묶여있는 배열을 풀어서 시간값 추가 후 하나의 큰 배열안에 저장
   let formedItems = [];
   items.map((item) => {
     if (item.length !== 0) {
@@ -33,17 +34,40 @@ const MatchDetailBuild = ({ match }) => {
     }
   });
 
+  // 되돌린 구매 아이템 제거
+  // 이전 ITEM TYPE
+  let prevType = '';
+  // 아이템 Object 저장 array
+  let secondFormedItems = [];
+  // 아이템 Object의 property 'itemId' 값 저장 array
+  let secondFormedItemsId = [];
+  formedItems.map((f) => {
+    if (f.type === 'ITEM_PURCHASED' || f.type === 'ITEM_SOLD') {
+      secondFormedItems.push(f);
+      secondFormedItemsId.push(f.itemId);
+      // 현재 아이템 정보가 되돌린 아이템이면서 이전 item이 판매 아이템이 아니면
+    } else if (f.type === 'ITEM_UNDO' && prevType !== 'ITEM_SOLD') {
+      // 되돌린 아이템 id 와 구매한 id가 같은 마지막 item 의 index
+      const lastIdx = secondFormedItemsId.lastIndexOf(f.beforeId);
+      // 구매/판매 아이템 리스트에서 제거
+      secondFormedItems.splice(lastIdx, 1);
+      secondFormedItemsId.splice(lastIdx, 1);
+    }
+    prevType = f.type;
+  });
+
+  // 시간대별로 다시 배열로 묶음
   // 이전 시간
   let prevTime = 0;
   // 같은 시간에 구매/판매 한 아이템 배열
   let sameTimeArr = [];
   // 최종 빌드 아이템 배열
   let finalItemArr = [];  
-  formedItems.map((f, i) => {
+  secondFormedItems.map((f, i) => {
     if (prevTime === f.time) {
       sameTimeArr.push(f);
       prevTime = f.time;
-      formedItems.length === (i + 1) ? finalItemArr.push(sameTimeArr) : null;
+      secondFormedItems.length === (i + 1) ? finalItemArr.push(sameTimeArr) : null;
     } else {
       finalItemArr.push(sameTimeArr);
       sameTimeArr = [];
@@ -51,6 +75,7 @@ const MatchDetailBuild = ({ match }) => {
       prevTime = f.time;
     }
   });
+
   // 스킬 레벨업 정보
   const skills = events.map((skill) => {
     return skill.filter((v) => v.type === 'SKILL_LEVEL_UP');
