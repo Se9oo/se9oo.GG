@@ -14,13 +14,17 @@ const SummonerMatchDetail = ({ match, winOrLose }) => {
   }, []);
   return (
     <>
-      <MatchDetailHeader>
-        {
-          menuItemArr.map((item, idx) => {
-            return <MatchDetailMenu key={idx} idx={idx} select={selectedMenu} winOrLose={winOrLose} onClick={onClickMenu(idx)}>{`${item}`}</MatchDetailMenu>
-          })
-        }
-      </MatchDetailHeader>
+      {
+        winOrLose === '무'
+        ? null
+        : <MatchDetailHeader>
+            {
+              menuItemArr.map((item, idx) => {
+                return <MatchDetailMenu key={idx} idx={idx} select={selectedMenu} winOrLose={winOrLose} onClick={onClickMenu(idx)}>{`${item}`}</MatchDetailMenu>
+              })
+            }
+          </MatchDetailHeader>
+      }
       {
         (selectedMenu === 0 && <MatchDetailTotal match={match} />)
         || (selectedMenu === 1 && <MatchDetailAnalysis match={match} />)
