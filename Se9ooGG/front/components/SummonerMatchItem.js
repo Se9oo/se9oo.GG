@@ -235,7 +235,7 @@ const SummonerMatchListItemContent = styled.div`
 `;
 
 const SummonerWinOrLose = styled.div`
-  width: 20%;
+  width: 3rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -252,6 +252,7 @@ const SummonerWinOrLose = styled.div`
 `;
 
 const SummonerInfo = styled.div`
+  width: 100%;
   padding: .5rem;
 `;
 
