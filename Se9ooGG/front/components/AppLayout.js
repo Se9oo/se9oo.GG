@@ -11,7 +11,7 @@ const AppLayout = ({ children }) => {
     <Container>
       {/* desktop nav */}
       <DesktopNav>
-        <h1><Link href="/"><img src="/riot-logo.png" alt="logo"/></Link></h1>
+        <h1><Link href="/"><img src="/nav-logo.png" alt="logo"/></Link></h1>
         <ul>
             {
               me
@@ -72,8 +72,7 @@ const DesktopNav = styled.nav`
   }
 
   & img {
-    width: 50px;
-    height: 50px;
+    width: 4rem;
     cursor: pointer;
   }
 
