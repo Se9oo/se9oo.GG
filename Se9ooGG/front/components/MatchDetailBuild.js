@@ -1,7 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import BuildItems from './BuildItems';
-import { ArrowRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 import BuildSkills from './BuildSkills';
 
