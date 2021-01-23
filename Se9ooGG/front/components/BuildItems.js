@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { CloseOutlined } from '@ant-design/icons';
+import { ArrowRightOutlined, CloseOutlined } from '@ant-design/icons';
 
-const BuildItems = ({ items }) => {
+const BuildItems = ({ items, idx }) => {
   // 시간(분)
   const time = items[0].time;
 
@@ -10,24 +10,29 @@ const BuildItems = ({ items }) => {
     items.length > 0 
     ? (
     <div>
-      <ItemList>
+      <ItemBlock>
         {
-          items.map((i, idx) => {
-            return (
-              <Item>
-                {i.type === 'ITEM_PURCHASED' && <PurchasedItem key={idx} src={`/img/item/${i.itemId}.png`} alt="purchased item" />}
-                {
-                  i.type === 'ITEM_SOLD' && 
-                  <>
-                    <SoldItem key={idx} src={`/img/item/${i.itemId}.png`} alt="sold item" />
-                    <SoldIcon />
-                  </>
-                }
-              </Item>
-            );
-          })
+          idx !== 0 && <RightArrow />
         }
-      </ItemList>
+        <ItemList>
+          {
+            items.map((i, idx) => {
+              return (
+                <Item key={`${i.itemId + idx}`}>
+                  {i.type === 'ITEM_PURCHASED' && <PurchasedItem key={idx} src={`/img/item/${i.itemId}.png`} alt="purchased item" />}
+                  {
+                    i.type === 'ITEM_SOLD' && 
+                    <>
+                      <SoldItem key={idx} src={`/img/item/${i.itemId}.png`} alt="sold item" />
+                      <SoldIcon />
+                    </>
+                  }
+                </Item>
+              );
+            })
+          }
+        </ItemList>
+      </ItemBlock>
       <Time>{`${time}분`}</Time>
     </div>
     )
@@ -37,13 +42,21 @@ const BuildItems = ({ items }) => {
 
 export default BuildItems;
 
+const ItemBlock = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 const ItemList = styled.ol`
   display: flex;
-  padding: .5rem 0;
+  margin-bottom: .3rem;
+  padding: .3rem;
+  background-color: #e5e5e5;
 `;
 
 const Item = styled.li`
   position: relative;
+  padding: 0 .1rem;
 `;
 
 const PurchasedItem = styled.img`
@@ -65,4 +78,8 @@ const SoldIcon = styled(CloseOutlined)`
 
 const Time = styled.div`
   text-align: center;
+`;
+
+const RightArrow = styled(ArrowRightOutlined)`
+  padding: 0 .5rem;
 `;
