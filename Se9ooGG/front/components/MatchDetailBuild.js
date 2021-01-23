@@ -3,8 +3,9 @@ import { useSelector } from 'react-redux';
 import BuildItems from './BuildItems';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import BuildSkills from './BuildSkills';
 
-const MatchDetailBuild = ({ match }) => {
+const MatchDetailBuild = ({ match, winOrLose }) => {
   // 검색한 소환사명
   const { summonerName } = useSelector((state) => state.statistic.summoner);
   // 검색한 소환사의 participantId
@@ -77,27 +78,32 @@ const MatchDetailBuild = ({ match }) => {
   });
 
   // 스킬 레벨업 정보
-  const skills = events.map((skill) => {
-    return skill.filter((v) => v.type === 'SKILL_LEVEL_UP');
+  let skillArr = [];
+  events.map((skills) => {
+    skills.filter((v) => v.type === 'SKILL_LEVEL_UP');
+    skills.map((skill) => {
+      if (skill.type === 'SKILL_LEVEL_UP') {
+        skillArr.push(skill);
+      }
+    })
   });
 
   return (
     <>
-      <SubTitle>아이템 빌드</SubTitle>
+      <SubTitle title="build">아이템 빌드</SubTitle>
       <Build>
         {
           finalItemArr.map((item, i) => {
             return (
-              <BuildItemsList>
-                <BuildItems key={i} items={item}/>
-                {
-                  finalItemArr.length - 1 !== i && <RightArrow />
-                }
+              <BuildItemsList key={i}>
+                <BuildItems key={i} items={item} idx={i} />
               </BuildItemsList>
             )
           })
         }
       </Build>
+      <SubTitle title="skill">스킬 빌드</SubTitle>
+      <BuildSkills skills={skillArr} winOrLose={winOrLose} />
     </>
   );
 };
@@ -106,7 +112,16 @@ export default MatchDetailBuild;
 
 const SubTitle = styled.div`
   padding: 1rem;
-  border-bottom: 1px solid rgba(206,212,218,.5);
+  ${props => {
+    if (props.title === 'build') {
+      return `border-bottom: 1px solid rgba(206, 212, 218, .5);`;
+    } else {
+      return `
+        border-top: 1px solid rgba(206, 212, 218, .5);
+        border-bottom: 1px solid rgba(206, 212, 218, .5);
+      `;
+    }
+  }}
 `;
 
 const Build = styled.div`
@@ -120,8 +135,4 @@ const Build = styled.div`
 const BuildItemsList = styled.div`
   display: flex;
   align-items: center;
-`;
-
-const RightArrow = styled(ArrowRightOutlined)`
-  padding: 0 .5rem;
 `;
