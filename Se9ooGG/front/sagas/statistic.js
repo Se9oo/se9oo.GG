@@ -3,7 +3,7 @@ import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
 import { LOAD_SUMMONER_FAILURE, LOAD_SUMMONER_REQUEST, LOAD_SUMMONER_SUCCESS } from '../reducer/statistic';
 
 function loadSummonerAPI (data) {
-  return axios.post('/statistic/loadSummoner', data)
+  return axios.get('/statistic/loadSummoner', { params: data })
 }
 
 function* loadSummoner(action) {

@@ -6,8 +6,8 @@ const router = express.Router();
 
 dotenv.config();
 
-router.post('/statistic/loadSummoner', async (req, res, next) => {
-  const { summonerName } = req.body;
+router.get('/statistic/loadSummoner', async (req, res, next) => {
+  const { summonerName } = req.query;
   
   try {
      if (summonerName) {
