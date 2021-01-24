@@ -1,7 +1,19 @@
 import champion from '../json/champion.json';
+import championFull from '../json/championFull.json';
 import spell from '../json/summoner.json';
 import rune from '../json/runesReforged.json';
 import queue from '../json/queues.json';
+
+export function getChampionFullInfoById(id) {
+  const fullData = championFull.data;
+
+  for (let i in fullData) {
+    if (fullData[i].key == id) {
+      return fullData[i];
+    }
+  }
+  return null;
+}
 
 export function getChampionInfoById(id) {
   const data = champion.data;
