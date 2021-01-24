@@ -87,6 +87,11 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
     })
   });
 
+  // 스킬 빌드에서 사용할 summoner champion id 값 추출
+  const championId = match.participants.filter((summoner) => {
+    return summoner.participantId === summonerParticipantId;
+  })[0].championId;
+
   return (
     <>
       <SubTitle title="build">아이템 빌드</SubTitle>
@@ -102,7 +107,7 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
         }
       </Build>
       <SubTitle title="skill">스킬 빌드</SubTitle>
-      <BuildSkills skills={skillArr} winOrLose={winOrLose} />
+      <BuildSkills skills={skillArr} winOrLose={winOrLose} championId={championId} />
     </>
   );
 };
