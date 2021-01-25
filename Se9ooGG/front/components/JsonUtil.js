@@ -59,13 +59,31 @@ export function getSpellNameById(spell1, spell2) {
 export function getRuneImgUrl(perkInfo) {
   const runeImgUrl = {};
 
+  // primary Rune 세팅
   const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
-  const perk0 = primaryPerk.slots[0].runes.find((perk) => perk.id === perkInfo.perk0);
+  runeImgUrl.primaryPerk = primaryPerk.icon;
+  primaryPerk.slots.map((slot, i) => {
+    if (perkInfo.hasOwnProperty(`perk${i}`)) {
+      const perks = slot.runes.find((perk) => perk.id === perkInfo[`perk${i}`]);
+      runeImgUrl[`perk${i}`] = perks.icon;
+    }
+  });
 
+  // sub Rune 세팅
   const subPerk = rune.find((perk) => perk.id === perkInfo.perkSubStyle);
+  let subPerks = [];
+  subPerk.slots.slice(1, 4).map((perk) => {
+    perk.runes.map((p) => subPerks.push(p));
+  });
 
-  runeImgUrl.perk0 = perk0.icon;
   runeImgUrl.subPerk = subPerk.icon;
+  if (perkInfo.hasOwnProperty('perk4') && perkInfo.hasOwnProperty('perk5')) {
+    const perk4 = subPerks.find((perk) => perk.id === perkInfo.perk4);
+    const perk5 = subPerks.find((perk) => perk.id === perkInfo.perk5);
+
+    runeImgUrl.perk4 = perk4.icon;
+    runeImgUrl.perk5 = perk5.icon;
+  }
 
   return runeImgUrl;
 }
