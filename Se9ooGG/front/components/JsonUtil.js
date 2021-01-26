@@ -88,6 +88,18 @@ export function getRuneImgUrl(perkInfo) {
   return runeImgUrl;
 }
 
+export function getAllRuneImgUrl(perkInfo) {
+
+  let allRuneImgUrl = [];
+  const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
+  const subPerk = rune.find((perk) => perk.id === perkInfo.perkSubStyle);
+
+  allRuneImgUrl.push(primaryPerk);
+  allRuneImgUrl.push(subPerk);
+
+  return allRuneImgUrl;
+}
+
 export function getQueueType(queueId) {
   const queueType = queue.find((v) => v.queueId === queueId);
   
