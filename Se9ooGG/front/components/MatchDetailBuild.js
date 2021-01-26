@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import BuildItems from './BuildItems';
 import styled from 'styled-components';
 import BuildSkills from './BuildSkills';
+import BuildRune from './BuildRune';
 
 const MatchDetailBuild = ({ match, winOrLose }) => {
   // 검색한 소환사명
@@ -87,10 +88,27 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
     })
   });
 
-  // 스킬 빌드에서 사용할 summoner champion id 값 추출
-  const championId = match.participants.filter((summoner) => {
+  // summoner game info 추출
+  const gameInfo = match.participants.filter((summoner) => {
     return summoner.participantId === summonerParticipantId;
-  })[0].championId;
+  })[0];
+  // 스킬 빌드에서 사용할 summoner champion id 값 추출
+  const championId = gameInfo.championId;
+
+  const stats = gameInfo.stats;
+  const runeInfo = {
+    perkPrimaryStyle: stats.perkPrimaryStyle,
+    perkSubStyle: stats.perkSubStyle,
+    perk0: stats.perk0,
+    perk1: stats.perk1,
+    perk2: stats.perk2,
+    perk3: stats.perk3,
+    perk4: stats.perk4,
+    perk5: stats.perk5,
+    statPerk0: stats.statPerk0,
+    statPerk1: stats.statPerk1,
+    statPerk2: stats.statPerk2
+  };
 
   return (
     <>
@@ -108,6 +126,8 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
       </Build>
       <SubTitle title="skill">스킬 빌드</SubTitle>
       <BuildSkills skills={skillArr} winOrLose={winOrLose} championId={championId} />
+      <SubTitle title="rune">룬</SubTitle>
+      <BuildRune rune={runeInfo} />
     </>
   );
 };
@@ -126,6 +146,7 @@ const SubTitle = styled.div`
       `;
     }
   }}
+  font-size: 1.2rem;
 `;
 
 const Build = styled.div`
