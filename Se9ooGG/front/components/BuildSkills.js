@@ -18,30 +18,28 @@ const BuildSkills = ({ skills, winOrLose, championId }) => {
   
   // skill master 순서
   let skillMasterOrder = [];
-  // 모든 스킬 master인 경우
-  if (skills.length === 18) {
-    skills.map((skill) => {
-      // R 스킬 제외한 나머지 스킬만 체크
-      if (skill.skillSlot !== 4) {
-        championSkillMaxrank[skill.skillSlot - 1].maxrank -= 1;
-        // maxrank에 도달하면
-        if (championSkillMaxrank[skill.skillSlot - 1].maxrank === 0) {
-          // skill master order에 push
-          skillMasterOrder.push(championSkillMaxrank[skill.skillSlot - 1]);
-        }
+  
+  skills.map((skill) => {
+    // R 스킬 제외한 나머지 스킬만 체크
+    if (skill.skillSlot !== 4) {
+      championSkillMaxrank[skill.skillSlot - 1].maxrank -= 1;
+      // maxrank에 도달하면
+      if (championSkillMaxrank[skill.skillSlot - 1].maxrank === 0) {
+        // skill master order에 push
+        skillMasterOrder.push(championSkillMaxrank[skill.skillSlot - 1]);
       }
-    });
-  } else {
-    skills.map((skill) => {
-      // R 스킬 제외한 나머지 스킬만 체크
-      if (skill.skillSlot !== 4) {
-        championSkillMaxrank[skill.skillSlot - 1].maxrank -= 1;
-      }
-    });
+    }
+  })
+
+  // 순서가 모두 세팅되지 않았다면
+  if (skillMasterOrder.length !== 3) {
     // maxrank 도달 순서 대로 오름차순으로 정렬
-    championSkillMaxrank.sort((a, b) => a.maxrank - b.maxrank);
-    // skillMasterOrder 세팅
-    skillMasterOrder = [...championSkillMaxrank];
+    championSkillMaxrank.sort((a, b) => a.maxrank - b.maxrank).map((skill) => {
+      // 이미 push 된 skill을 제외한 나머지 skill push
+      if (skill.maxrank !== 0) {
+        skillMasterOrder.push(skill);
+      }
+    })
   }
   
   return (
