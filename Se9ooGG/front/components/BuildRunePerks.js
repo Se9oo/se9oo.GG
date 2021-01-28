@@ -28,6 +28,7 @@ export default BuildRunePerks;
 
 const PerkList = styled.ul`
   display: flex;
+  justify-content: center;
 `;
 
 const Perk = styled.li`
