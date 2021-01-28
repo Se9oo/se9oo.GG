@@ -72,8 +72,9 @@ router.get('/statistic/loadSummoner', async (req, res, next) => {
        return res.status(401).json('사용자 정보를 확인해주세요.');
      }
   } catch (err) {
-    console.error(err);
-    next(err);
+    console.error(err.response.data);
+    res.status(err.response.data.status.status_code).json(err.response.data.status.message);
+    //next(JSON.stringify(err.response.data));
   }
 });
 
