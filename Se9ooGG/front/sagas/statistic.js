@@ -16,7 +16,7 @@ function* loadSummoner(action) {
   } catch (err) {
     yield put({
       type: LOAD_SUMMONER_FAILURE,
-      data: err.response,
+      data: err.response.data,
     });
   }
 }
