@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadMyInfoRequestAction } from '../reducer/user';
-import { loadSummonerDoneClearAction, loadSummonerRequestAction } from '../reducer/statistic';
+import { loadSummonerDoneClearAction, loadSummonerErrorClearAction, loadSummonerRequestAction } from '../reducer/statistic';
 import Router from 'next/router';
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
@@ -17,16 +17,20 @@ import styled from 'styled-components';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
-  const { summoner, loadSummonerDone } = useSelector((state) => state.statistic);
+  const { summoner, loadSummonerDone, loadSummonerError } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
 
-  //예외처리
-  // useEffect(() => {
-  //   if (Object.keys(summoner).length == 0) {
-  //     errorModal(`사용자를 검색해주세요.\n메인 화면으로 이동합니다.`);
-  //     Router.push('/');
-  //   }
-  // }, [summoner]);
+  // 소환사 검색 중 에러가 존재하는 경우
+  useEffect(() => {
+    if (loadSummonerError !== null) {
+      // 에러 모달
+      errorModal(loadSummonerError);
+      // 에러 내용 초기화
+      dispatch(loadSummonerErrorClearAction());
+      // index 페이지로 이동
+      Router.push('/');
+    }
+  }, [loadSummonerError])
 
   // 사용자 전적 검색 후 loadSummonerDone state 초기화
   useEffect(() => {
@@ -113,16 +117,16 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
     axios.defaults.headers.Cookie = cookie;
   }
 
-  context.store.dispatch(LoadMyInfoRequestAction());
-
   if (context.query.summonerName) {
     context.store.dispatch(loadSummonerRequestAction({
       summonerName: context.query.summonerName,
     }));
   }
 
+  context.store.dispatch(LoadMyInfoRequestAction());
+
   context.store.dispatch(END);
-  await context.store.sagaTask.toPromise(); 
+  await context.store.sagaTask.toPromise();
 });
 
 export default Statistic;

@@ -10,6 +10,7 @@ export const LOAD_SUMMONER_REQUEST = 'LOAD_SUMMONER_REQUEST';
 export const LOAD_SUMMONER_SUCCESS = 'LOAD_SUMMONER_SUCCESS';
 export const LOAD_SUMMONER_FAILURE = 'LOAD_SUMMONER_FAILURE';
 export const LOAD_SUMMONER_DONE_CLEAR = 'LOAD_SUMMONER_DONE_CLEAR';
+export const LOAD_SUMMONER_ERROR_CLEAR = 'LOAD_SUMMONER_ERROR_CLEAR';
 
 export const loadSummonerRequestAction = (data) => {
   return {
@@ -24,12 +25,20 @@ export const loadSummonerDoneClearAction = () => {
   }
 }
 
+export const loadSummonerErrorClearAction = () => {
+  return {
+    type: LOAD_SUMMONER_ERROR_CLEAR,
+  }
+}
+
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case LOAD_SUMMONER_REQUEST:
       return {
         ...state,
         loadSummonerLoading: true,
+        loadSummonerDone: false,
+        loadSummonerError: null,
       };
 
     case LOAD_SUMMONER_SUCCESS:
@@ -53,6 +62,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         loadSummonerDone: false,
       };
+    case LOAD_SUMMONER_ERROR_CLEAR:
+      return {
+        ...state,
+        loadSummonerError: null,
+      }
     default:
       return state;
   };
