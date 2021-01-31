@@ -230,22 +230,25 @@ const MatchDetailAnalysis = ({ match }) => {
 export default MatchDetailAnalysis;
 
 const ChartSelector = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  position: relative;
   width: 100%;
   padding: 5%;
-
-  & span {
-    margin: 0 5%;
-  }
+  text-align: center;
 `;
 
 const LeftSelectButton = styled(LeftOutlined)`
+  position: absolute;
+  top: 50%;
+  left: 10%;
+  transform: translateY(-50%);
   cursor: pointer;
 `;
 
 const RightSelectButton = styled(RightOutlined)`
+  position: absolute;
+  top: 50%;
+  right: 10%;
+  transform: translateY(-50%);
   cursor: pointer;
 `;
 
