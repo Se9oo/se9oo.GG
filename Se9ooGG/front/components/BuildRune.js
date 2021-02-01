@@ -67,7 +67,8 @@ const Rune = styled.div`
 `;
 
 const MainRuneImg = styled.img`
-  margin: 0 auto;
+  width: 3rem;
+  margin: 0 auto 1rem;
   background-color: #e5e5e5;
   border-radius: 9999px;
 `;
@@ -76,11 +77,11 @@ const StatPerk = styled.ul`
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  margin-left: 1rem;
+  margin-left: .5rem;
   padding-bottom: .5rem;
 
   & img {
-    width: 3rem;
+    width: 2.5rem;
     background-color: #000000;
     border: 1px solid #e5e5e5;
     border-radius: 9999px;
