@@ -1,9 +1,6 @@
 import React from 'react';
+import { getWinRate } from '../util/util';
 import styled from 'styled-components';
-
-function getWinRate(win, lose) {
-  return Math.floor((win / (win + lose)) * 100);
-}
 
 const SummonerRankItem = ({rank}) => {
   return (

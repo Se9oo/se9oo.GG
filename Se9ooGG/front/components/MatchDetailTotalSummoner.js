@@ -1,28 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { getChampionNameById, getSpellNameById, getRuneImgUrl } from './JsonUtil';
-
-// KDA 계산
-function getKDA(kill, death, assist) {
-  return death === 0 ? 'perfect' : ((kill + assist) / death).toFixed(2);
-}
-
-function getListOrder(lane, role) {
-  switch (lane) {
-    case 'TOP':
-      return 0;
-    case 'JUNGLE':
-      return 1;
-    case 'MIDDLE':
-      return 2;
-    case 'BOTTOM':
-      if (role === 'DUO_CARRY') {
-        return 3;
-      } else {
-        return 4;
-      }
-  }
-}
+import { getKDA, getListOrder } from '../util/util';
+import { getChampionNameById, getSpellNameById, getRuneImgUrl } from '../util/JsonUtil';
 
 const MatchDetailTotalSummoner = ({ gameInfo }) => {
   // 각 소환사가 선택한 챔피언 고유 id

@@ -1,24 +1,8 @@
 import React from 'react'
 import EtcChampionList from './EtcChampionList';
-import { getChampionNameById } from './JsonUtil';
+import { getChampionNameById } from '../util/JsonUtil';
+import { getListOrder } from '../util/util';
 import styled from 'styled-components';
-
-function getListOrder(lane, role) {
-  switch (lane) {
-    case 'TOP':
-      return 0;
-    case 'JUNGLE':
-      return 1;
-    case 'MIDDLE':
-      return 2;
-    case 'BOTTOM':
-      if (role === 'DUO_CARRY') {
-        return 3;
-      } else {
-        return 4;
-      }
-  }
-};
 
 const MatchDetailEtc = ({ match }) => {
   const navItems = ['챔피언별 골드 획득', '챔피언별 경험치 획득', '챔피언별 CS'];

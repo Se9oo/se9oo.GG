@@ -1,26 +1,10 @@
 import React, { useCallback, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { getChampionNameById } from './JsonUtil';
+import { getChampionNameById } from '../util/JsonUtil';
+import { getListOrder } from '../util/util';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-
-function getListOrder(lane, role) {
-  switch (lane) {
-    case 'TOP':
-      return 0;
-    case 'JUNGLE':
-      return 1;
-    case 'MIDDLE':
-      return 2;
-    case 'BOTTOM':
-      if (role === 'DUO_CARRY') {
-        return 3;
-      } else {
-        return 4;
-      }
-  }
-}
 
 // chart data 명 표시
 function getChartDataName(data) {
@@ -38,7 +22,7 @@ function getChartDataName(data) {
     case 'cs':
       return 'CS';
   }
-}
+};
 
 const MatchDetailAnalysis = ({ match }) => {
   // 모든 소환사 정보
