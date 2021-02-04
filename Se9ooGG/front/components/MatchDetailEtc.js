@@ -3,6 +3,7 @@ import EtcChampionList from './EtcChampionList';
 import { getChampionNameById } from '../util/JsonUtil';
 import { getListOrder } from '../util/util';
 import styled from 'styled-components';
+import EtcChart from './EtcChart';
 
 const MatchDetailEtc = ({ match }) => {
   const navItems = ['챔피언별 골드 획득', '챔피언별 경험치 획득', '챔피언별 CS'];
@@ -55,16 +56,17 @@ const MatchDetailEtc = ({ match }) => {
         {
           teamImg.map((team, i) => {
             return (
-              <>
+              <React.Fragment key={i}>
                 <EtcChampionList key={i} team={team} />
                 {
                   i === 0 && <Vs>vs</Vs>
                 }
-              </>
+              </React.Fragment>
             )
           })
         }
       </ChampSelect>
+      <EtcChart matchTimelines={matchTimelines} />
     </>
   )
 };
