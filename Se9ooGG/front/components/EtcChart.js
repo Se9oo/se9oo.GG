@@ -12,7 +12,20 @@ const EtcChart = ({ matchTimelines }) => {
       eachParticipantsTimeLines[time[value].participantId - 1][i] = time[value];
     }
   });
-  console.log(eachParticipantsTimeLines);
+
+  let totalData = [];
+  eachParticipantsTimeLines.map((participant) => {
+    let totalGoldArr = [];
+    let participantId;
+    participant.map((summoner, i) => {
+      i === 0 ? participantId = summoner.participantId : totalGoldArr.push(summoner.totalGold);
+    });
+
+    totalData.push({
+      name: participantId,
+      data: totalGoldArr
+    });
+  });
 
   const options = {
     title: {
@@ -26,16 +39,7 @@ const EtcChart = ({ matchTimelines }) => {
         text: null
       }
     },
-    series: [{
-      name: 1,
-      data: [500, 700, 1000]
-    }, {
-      name: 2,
-      data: [300, 900, 2000]
-    }, {
-      name: 3,
-      data: [400, 1000, 5000]
-    }]
+    series: totalData,
   };
   return (
     <ChartWrapper>
