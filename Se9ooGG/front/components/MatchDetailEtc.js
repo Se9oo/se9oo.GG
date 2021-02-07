@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { memo, useCallback, useState } from 'react'
+import { useSelector } from 'react-redux';
 import EtcChampionList from './EtcChampionList';
 import { getChampionNameById } from '../util/JsonUtil';
 import { getListOrder } from '../util/util';
 import styled from 'styled-components';
 import EtcChart from './EtcChart';
 
-const MatchDetailEtc = ({ match }) => {
+const MatchDetailEtc = memo(({ match }) => {
   const navItems = ['챔피언별 골드 획득', '챔피언별 경험치 획득', '챔피언별 CS'];
   const matchTimelines = match.matchTimelines.frames;
 
@@ -33,16 +34,40 @@ const MatchDetailEtc = ({ match }) => {
   loseTeamInfo.sort((a, b) => a.order - b.order);
   // 승리팀 챔피언 이미지
   const winTeamImg = winTeamInfo.map((info) => {
-    return getChampionNameById(info.championId).eng;
+    return {
+      id: info.participantId,
+      name: getChampionNameById(info.championId).eng
+    };
   });
   // 패배팀 챔피언 이미지
   const loseTeamImg = loseTeamInfo.map((info) => {
-    return getChampionNameById(info.championId).eng;
+    return { 
+      id: info.participantId,
+      name: getChampionNameById(info.championId).eng
+    };
   });
   // 승리, 패배팀 이미지 저장 arr
-  let teamImg = [];
-  teamImg.push(winTeamImg);
-  teamImg.push(loseTeamImg);
+  const teamImg = [winTeamImg, loseTeamImg];
+  // 검색 소환사 이름
+  const { summonerName } = useSelector((state) => (state.statistic.summoner));
+  // 검색 소환사 정보
+  const findSummonerInfo = allSummonerGameInfo.find((summoner) => summoner.summonerName == summonerName);
+  // 선택한 챔피언 state (초기값은 검색 소환사)
+  const [selectChampList, setSelectChampList] = useState([{
+    id: findSummonerInfo.participantId,
+    name: getChampionNameById(findSummonerInfo.championId).eng
+  }]);
+  // 정보를 조회할 챔피언 선택시 setState 처리
+  const onClickSelectChamp = useCallback((champ) => {
+    const idx = selectChampList.findIndex((selectedChamp) => selectedChamp.id === champ.id);
+    if (idx === -1) {
+      setSelectChampList([...selectChampList, champ]);
+    } else {
+      const tempList = [...selectChampList];
+      tempList.splice(idx, 1);
+      setSelectChampList([...tempList]);
+    }
+  }, [selectChampList]);
 
   return (
     <>
@@ -53,23 +78,12 @@ const MatchDetailEtc = ({ match }) => {
       </EtcNav>
       <ChampSelect>
         <Title>챔피언 선택</Title>
-        {
-          teamImg.map((team, i) => {
-            return (
-              <React.Fragment key={i}>
-                <EtcChampionList key={i} team={team} />
-                {
-                  i === 0 && <Vs>vs</Vs>
-                }
-              </React.Fragment>
-            )
-          })
-        }
+        <EtcChampionList teamList={teamImg} selectedChampList={selectChampList} onClickSelectChamp={onClickSelectChamp}/>
       </ChampSelect>
-      <EtcChart matchTimelines={matchTimelines} />
+      <EtcChart matchTimelines={matchTimelines} selectedChampList={selectChampList} />
     </>
   )
-};
+});
 
 export default MatchDetailEtc;
 
@@ -91,12 +105,4 @@ const Title = styled.h2`
   display: block;
   margin-bottom: 1rem;
   text-align: center;
-  opacity: .6;
-`;
-
-const Vs = styled.span`
-  display: block;
-  margin: 1rem 0;
-  text-align: center;
-  opacity: .6;
 `;

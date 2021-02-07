@@ -3,9 +3,11 @@ import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
 import styled from 'styled-components';
 
-const EtcChart = ({ matchTimelines }) => {
+const EtcChart = ({ matchTimelines, selectedChampList }) => {
 
+  // 소환사별 타임라인 배열 생성
   let eachParticipantsTimeLines = Array.from(Array(10), () => Array(1).fill(null));
+  // 할당
   matchTimelines.map((timeLine, i) => {
     const time = timeLine.participantFrames;
     for ( let value in time) {
@@ -14,17 +16,19 @@ const EtcChart = ({ matchTimelines }) => {
   });
 
   let totalData = [];
-  eachParticipantsTimeLines.map((participant) => {
-    let totalGoldArr = [];
-    let participantId;
-    participant.map((summoner, i) => {
-      i === 0 ? participantId = summoner.participantId : totalGoldArr.push(summoner.totalGold);
-    });
-
-    totalData.push({
-      name: participantId,
-      data: totalGoldArr
-    });
+  eachParticipantsTimeLines.map((participant, idx) => {
+    let selectedChampionIdx = selectedChampList.findIndex((champion) => champion.id === participant[idx].participantId);
+    if (selectedChampionIdx !== -1) {
+      let totalGoldArr = [];
+      participant.map((summoner, i) => {
+        i !== 0 && totalGoldArr.push(summoner.totalGold);
+      });
+  
+      totalData.push({
+        name: selectedChampList[selectedChampionIdx].name,
+        data: totalGoldArr
+      });
+    }
   });
 
   const options = {
@@ -41,6 +45,7 @@ const EtcChart = ({ matchTimelines }) => {
     },
     series: totalData,
   };
+
   return (
     <ChartWrapper>
       <HighchartsReact highcharts={Highcharts} options={options} />
