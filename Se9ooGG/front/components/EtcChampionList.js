@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { getColorByParticipantId } from '../util/util';
 
 const EtcChampionList = ({ teamList, selectedChampList, onClickSelectChamp }) => {
 
@@ -15,10 +16,13 @@ const EtcChampionList = ({ teamList, selectedChampList, onClickSelectChamp }) =>
                 ? isSelected = false
                 : isSelected = true;
 
+                let color = getColorByParticipantId(champ.id);
+
                 return (
-                  <li key={i}>
-                    <ChampionImg isSelected={isSelected} onClick={() => onClickSelectChamp(champ)} key={`${champ.name}_${i}`} src={`/img/champion/${champ.name}.png`} alt="champion-image"/>
-                  </li>
+                  <Champion isSelected={isSelected} key={i}>
+                    <ChampionImg onClick={() => onClickSelectChamp(champ)} key={`${champ.name}_${i}`} src={`/img/champion/${champ.name}.png`} alt="champion-image"/>
+                    <ParticipantColor color={color} />
+                  </Champion>
                 )
               })
             }
@@ -40,10 +44,7 @@ const Team = styled.ul`
   align-items: center;
 `;
 
-const ChampionImg = styled.img`
-  width: 70%;
-  margin: 0 auto;
-  cursor: pointer;
+const Champion = styled.li`
   ${props => {
     if (props.isSelected) {
       return `opacity: 1;`;
@@ -51,6 +52,19 @@ const ChampionImg = styled.img`
       return `opacity: .3;`;
     }
   }}
+`;
+
+const ChampionImg = styled.img`
+  width: 70%;
+  margin: 0 auto;
+  cursor: pointer;
+`;
+
+const ParticipantColor = styled.div`
+  width: 70%;
+  height: 10px;
+  margin: 0 auto;
+  background-color: ${props => props.color};
 `;
 
 const Vs = styled.span`

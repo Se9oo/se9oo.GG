@@ -74,3 +74,29 @@ export function getGameCreation(creation) {
 export function getWinRate(win, lose) {
   return lose === 0 ? 100 : Math.floor((win / (win + lose)) * 100);
 };
+
+// etc chart graph color
+export function getColorByParticipantId(id) {
+  switch (id) {
+    case 1:
+      return '#b197fc';
+    case 2:
+      return '#ffa8a8';
+    case 3:
+      return '#91a7ff';
+    case 4:
+      return '#66d9e8';
+    case 5:
+      return '#74c0fc';
+    case 6:
+      return '#c0eb75';
+    case 7:
+      return '#ffe066';
+    case 8:
+      return '#ffc078';
+    case 9:
+      return '#099268';
+    case 10:
+      return '#e8590c';
+  }
+};
