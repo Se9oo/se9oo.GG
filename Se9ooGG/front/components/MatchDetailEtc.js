@@ -6,10 +6,15 @@ import { getListOrder } from '../util/util';
 import styled from 'styled-components';
 import EtcChart from './EtcChart';
 
-const MatchDetailEtc = memo(({ match }) => {
+const MatchDetailEtc = memo(({ match, winOrLose }) => {
   const navItems = ['챔피언별 골드 획득', '챔피언별 경험치 획득', '챔피언별 CS'];
-  const matchTimelines = match.matchTimelines.frames;
+  // 선택한 nav state
+  const [selectedNav, setSelectedNav] = useState(1);
+  const onClickNavList = useCallback((num) => () => {
+    setSelectedNav(num);
+  }, [selectedNav]);
 
+  const matchTimelines = match.matchTimelines.frames;
   // 모든 소환사 정보
   const allSummonerGameInfo = [...match.participants];
   // 승리팀 id
@@ -71,16 +76,18 @@ const MatchDetailEtc = memo(({ match }) => {
 
   return (
     <>
-      <EtcNav>
+      <EtcNav selectedNav={selectedNav} winOrLose={winOrLose}>
         {
-          navItems.map((item, i) => <li key={i}>{item}</li>)
+          navItems.map((item, i) => {
+            return <li key={i} onClick={onClickNavList(i + 1)}>{item}</li>
+          })
         }
       </EtcNav>
       <ChampSelect>
         <Title>챔피언 선택</Title>
         <EtcChampionList teamList={teamImg} selectedChampList={selectChampList} onClickSelectChamp={onClickSelectChamp}/>
       </ChampSelect>
-      <EtcChart matchTimelines={matchTimelines} selectedChampList={selectChampList} />
+      <EtcChart matchTimelines={matchTimelines} selectedChampList={selectChampList} selectedNav={selectedNav}/>
     </>
   )
 });
@@ -91,8 +98,40 @@ const EtcNav = styled.ul`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1rem;
   border-bottom: 1px solid rgba(206, 212, 218, .5);
+
+  & li {
+    position: relative;
+    width: 33.3%;
+    padding: 1rem 0;
+    cursor: pointer;
+    text-align: center;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    work-wrap: normal;
+    overflow: hidden;
+  }
+
+  & li::after {
+    display: block;
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0px;
+    height: 2px;
+    ${props => {
+      if (props.winOrLose === '승') {
+        return `background-color: #339af0;`;
+      } else {
+        return `background-color: #e03131;`;
+      }
+    }}
+  }
+
+  & li:nth-child(${props => props.selectedNav})::after {
+    width: 100%;
+  }
 `;
 
 const ChampSelect = styled.div`

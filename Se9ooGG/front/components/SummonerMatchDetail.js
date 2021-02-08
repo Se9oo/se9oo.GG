@@ -30,7 +30,7 @@ const SummonerMatchDetail = ({ match, winOrLose }) => {
         (selectedMenu === 0 && <MatchDetailTotal match={match} />)
         || (selectedMenu === 1 && <MatchDetailAnalysis match={match} />)
         || (selectedMenu === 2 && <MatchDetailBuild match={match} winOrLose={winOrLose} />)
-        || (selectedMenu === 3 && <MatchDetailEtc match={match} />)
+        || (selectedMenu === 3 && <MatchDetailEtc match={match} winOrLose={winOrLose} />)
       }
     </>
   );
