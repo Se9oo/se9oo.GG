@@ -9,6 +9,9 @@ export const initialState = {
 export const LOAD_SUMMONER_REQUEST = 'LOAD_SUMMONER_REQUEST';
 export const LOAD_SUMMONER_SUCCESS = 'LOAD_SUMMONER_SUCCESS';
 export const LOAD_SUMMONER_FAILURE = 'LOAD_SUMMONER_FAILURE';
+export const LOAD_SUMMONER_INGAME_REQUEST = 'LOAD_SUMMONER_INGAME_REQUEST';
+export const LOAD_SUMMONER_INGAME_SUCCESS = 'LOAD_SUMMONER_INGAME_SUCCESS';
+export const LOAD_SUMMONER_INGAME_FAILURE = 'LOAD_SUMMONER_INGAME_FAILURE';
 export const LOAD_SUMMONER_DONE_CLEAR = 'LOAD_SUMMONER_DONE_CLEAR';
 export const LOAD_SUMMONER_ERROR_CLEAR = 'LOAD_SUMMONER_ERROR_CLEAR';
 
@@ -19,17 +22,24 @@ export const loadSummonerRequestAction = (data) => {
   };
 };
 
+export const loadSummonerInGameRequestAction = (data) => {
+  return {
+    type: LOAD_SUMMONER_INGAME_REQUEST,
+    data
+  }
+};
+
 export const loadSummonerDoneClearAction = () => {
   return {
     type: LOAD_SUMMONER_DONE_CLEAR,
   }
-}
+};
 
 export const loadSummonerErrorClearAction = () => {
   return {
     type: LOAD_SUMMONER_ERROR_CLEAR,
   }
-}
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -57,6 +67,27 @@ const reducer = (state = initialState, action) => {
         loadSummonerDone: false,
         loadSummonerError: action.data,
       };
+    case LOAD_SUMMONER_INGAME_REQUEST:
+      return {
+        ...state,
+        loadSummonerInGameLoading: true,
+        loadSummonerInGameDone: false,
+        loadSummonerInGameError: false,
+      };
+    case LOAD_SUMMONER_INGAME_SUCCESS:
+      return {
+        ...state,
+        loadSummonerInGameLoading: false,
+        loadSummonerInGameDone: action.data,
+        loadSummonerInGameError: false,
+      };
+    case LOAD_SUMMONER_INGAME_FAILURE:
+      return {
+        ...state,
+        loadSummonerInGameLoading: false,
+        loadSummonerInGameDone: false,
+        loadSummonerInGameError: action.data,
+      }
     case LOAD_SUMMONER_DONE_CLEAR:
       return {
         ...state,

@@ -1,7 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadMyInfoRequestAction } from '../reducer/user';
-import { loadSummonerDoneClearAction, loadSummonerErrorClearAction, loadSummonerRequestAction } from '../reducer/statistic';
+import { 
+    loadSummonerDoneClearAction, loadSummonerErrorClearAction
+  , loadSummonerRequestAction, loadSummonerInGameRequestAction
+ } from '../reducer/statistic';
 import Router from 'next/router';
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
@@ -58,6 +61,13 @@ const Statistic = () => {
     }));
   }, [summoner]);
 
+  // 인게임 정보
+  const onClickInGame = useCallback(() => {
+    dispatch(loadSummonerInGameRequestAction({
+      summonerName: summoner.summonerName
+    }));
+  }, []);
+
   return (
     <AppLayout>
       {
@@ -75,7 +85,7 @@ const Statistic = () => {
             <img src={`./img/profileicon/${summoner.profileIconId}.png`} alt="summoner-profile-icon"/>
             <strong>{summoner.summonerName}</strong>
             <Button onClick={onClickRefresh}>전적 새로고침</Button>
-            <Button type="primary">인게임 정보</Button>
+            <Button type="primary" onClick={onClickInGame}>인게임 정보</Button>
           </Summoner>
           <SummonerRank>
             <ul>
@@ -127,6 +137,8 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
 
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
+  //console.log('흐에');
+//  console.log(context.store.getState().statistic);
 });
 
 export default Statistic;
