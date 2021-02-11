@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { LoadMyInfoRequestAction } from '../reducer/user';
 import { 
     loadSummonerDoneClearAction, loadSummonerErrorClearAction
-  , loadSummonerRequestAction, loadSummonerInGameRequestAction
+  , loadSummonerRequestAction, loadSummonerInGameRequestAction, loadSummonerInGameErrorClearAction
  } from '../reducer/statistic';
 import Router from 'next/router';
 import wrapper from '../store/configureStore';
@@ -20,7 +20,7 @@ import styled from 'styled-components';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
-  const { summoner, loadSummonerDone, loadSummonerError } = useSelector((state) => state.statistic);
+  const { summoner, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
 
   // 소환사 검색 중 에러가 존재하는 경우
@@ -66,7 +66,15 @@ const Statistic = () => {
     dispatch(loadSummonerInGameRequestAction({
       summonerName: summoner.summonerName
     }));
-  }, []);
+  }, [summoner]);
+
+  // 인게임 정보 없는 경우 메세지 처리
+  useEffect(() => {
+    if (loadSummonerInGameError !== null) {
+      errorModal(loadSummonerInGameError);
+      dispatch(loadSummonerInGameErrorClearAction());
+    }
+  }, [loadSummonerInGameError]);
 
   return (
     <AppLayout>

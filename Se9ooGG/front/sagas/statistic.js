@@ -24,7 +24,7 @@ function* loadSummoner(action) {
 
 // 사용자 인게임 정보 가져오기
 function loadSummonerInGameAPI (data) {
-  return axios.get('/statistic/loadSummonerInGame', { params: data });
+  return axios.get(`/statistic/loadSummonerInGame/${data.summonerName}`);
 }
 
 function* loadSummonerInGame(action) {

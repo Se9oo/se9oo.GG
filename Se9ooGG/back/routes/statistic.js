@@ -78,4 +78,25 @@ router.get('/statistic/loadSummoner', async (req, res, next) => {
   }
 });
 
+// 사용자 인게임 정보 가져오기
+router.get('/statistic/loadSummonerInGame/:summonerName', async (req, res, next) => {
+  const { summonerName } = req.params;
+
+  try {
+    if (summonerName) {
+      const summonerBaseInfo = await axios.get(encodeURI(`https://kr.api.riotgames.com/lol/summoner/v4/summoners/by-name/${summonerName}?api_key=${process.env.API_KEY}`));
+      const { id } = summonerBaseInfo.data;
+    
+      const InGameInfo = await axios.get(encodeURI(`https://kr.api.riotgames.com/lol/spectator/v4/active-games/by-summoner/${id}?api_key=${process.env.API_KEY}`));
+  
+      return res.status(200).json(InGameInfo);
+    } else {
+      return res.status(401).json('사용자 정보를 확인해주세요.');
+    }
+  } catch (err) {
+    console.error(err.response.data);
+    res.status(err.response.data.status.status_code).json(err.response.data.status.message);
+  }
+});
+
 module.exports = router;
