@@ -20,7 +20,7 @@ import styled from 'styled-components';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
-  const { summoner, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
+  const { summoner, inGame, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
 
   // 소환사 검색 중 에러가 존재하는 경우
@@ -41,6 +41,14 @@ const Statistic = () => {
       dispatch(loadSummonerDoneClearAction());
     }
   }, [loadSummonerDone])
+
+  // 인게임 정보 없는 경우 메세지 처리
+  useEffect(() => {
+    if (loadSummonerInGameError !== null) {
+      errorModal(loadSummonerInGameError);
+      dispatch(loadSummonerInGameErrorClearAction());
+    }
+  }, [loadSummonerInGameError]);
 
   // 사용자 전적 검색
   const onSubmitInput = useCallback(() => {
@@ -68,18 +76,10 @@ const Statistic = () => {
     }));
   }, [summoner]);
 
-  // 인게임 정보 없는 경우 메세지 처리
-  useEffect(() => {
-    if (loadSummonerInGameError !== null) {
-      errorModal(loadSummonerInGameError);
-      dispatch(loadSummonerInGameErrorClearAction());
-    }
-  }, [loadSummonerInGameError]);
-
   return (
     <AppLayout>
       {
-        Object.keys(summoner).length != 0
+        Object.keys(summoner).length !== 0
         ?
         <>
           <UserSearchInput 
