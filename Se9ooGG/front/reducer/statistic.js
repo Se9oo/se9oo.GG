@@ -88,8 +88,9 @@ const reducer = (state = initialState, action) => {
     case LOAD_SUMMONER_INGAME_SUCCESS:
       return {
         ...state,
+        inGame: action.data,
         loadSummonerInGameLoading: false,
-        loadSummonerInGameDone: action.data,
+        loadSummonerInGameDone: true,
         loadSummonerInGameError: null,
       };
     case LOAD_SUMMONER_INGAME_FAILURE:
