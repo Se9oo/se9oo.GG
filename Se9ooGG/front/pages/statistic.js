@@ -13,6 +13,7 @@ import AppLayout from '../components/AppLayout';
 import useInput from '../hooks/useInput';
 import SummonerRankItem from '../components/SummonerRankItem';
 import SummonerMostChampionItem from '../components/SummonerMostChampionItem';
+import SummonerInGame from '../components/SummonerInGame';
 import SummonerMatchItem from '../components/SummonerMatchItem';
 import { errorModal } from '../components/CommonModal';
 import { Button, Input } from 'antd';
@@ -22,7 +23,7 @@ const Statistic = () => {
   const dispatch = useDispatch('');
   const { summoner, inGame, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
-
+  
   // 소환사 검색 중 에러가 존재하는 경우
   useEffect(() => {
     if (loadSummonerError !== null) {
@@ -95,9 +96,9 @@ const Statistic = () => {
             <Button onClick={onClickRefresh}>전적 새로고침</Button>
             <Button type="primary" onClick={onClickInGame}>인게임 정보</Button>
           </Summoner>
-          <InGame>
-            {inGame}
-          </InGame>
+          {
+            Object.keys(inGame).length !== 0 && <SummonerInGame />
+          }
           <SummonerRank>
             <ul>
               {
@@ -187,10 +188,6 @@ const Summoner = styled.div`
   & button {
     width: 100%;
   }
-`;
-
-const InGame = styled.div`
-  width: 100%;
 `;
 
 const SummonerRank = styled.div`
