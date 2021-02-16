@@ -36,11 +36,11 @@ export default InGameSummoner;
 const ListItem = styled.li`
   display: flex;
   align-items: center;
-  padding: 1rem 0 0;
+  padding: .5rem 0;
 `;
 
 const ChampionImg = styled.img`
-  width: 10%;
+  width: 3rem;
   margin-right: .5rem;
   border-radius: 9999px;
 `;

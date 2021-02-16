@@ -46,7 +46,7 @@ const Statistic = () => {
   // 인게임 정보 없는 경우 메세지 처리
   useEffect(() => {
     if (loadSummonerInGameError !== null) {
-      errorModal(loadSummonerInGameError);
+      errorModal('게임중이 아닙니다!');
       dispatch(loadSummonerInGameErrorClearAction());
     }
   }, [loadSummonerInGameError]);
@@ -96,9 +96,7 @@ const Statistic = () => {
             <Button onClick={onClickRefresh}>전적 새로고침</Button>
             <Button type="primary" onClick={onClickInGame}>인게임 정보</Button>
           </Summoner>
-          {
-            Object.keys(inGame).length !== 0 && <SummonerInGame />
-          }
+          <SummonerInGame />
           <SummonerRank>
             <ul>
               {
