@@ -35,7 +35,7 @@ const Perk = styled.li`
   padding: .3rem;  
 
   & img {
-    width: 2.8rem;
+    width: 2.4rem;
     background-color: #000000;
     border-radius: 9999px;
     ${props => {

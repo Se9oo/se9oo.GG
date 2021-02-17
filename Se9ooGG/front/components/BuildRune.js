@@ -53,17 +53,13 @@ export default BuildRune;
 
 const RuneList = styled.div`
   display: flex;
-  padding: 1rem;
+  padding: .5rem;
+  justify-content: center;
 `;
 
 const Rune = styled.div`
   width: 50%;
-  padding: .5rem;
   border-right: 1px solid #e5e5e5;
-
-  @media ${props => props.theme.laptop} {
-    width: 33%;
-  }
 `;
 
 const MainRuneImg = styled.img`
