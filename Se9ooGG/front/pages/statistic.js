@@ -21,7 +21,7 @@ import styled from 'styled-components';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
-  const { summoner, inGame, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
+  const { summoner, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
   const [search, onSearchInput] = useInput('');
   
   // 소환사 검색 중 에러가 존재하는 경우
@@ -147,8 +147,6 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
 
   context.store.dispatch(END);
   await context.store.sagaTask.toPromise();
-  //console.log('흐에');
-//  console.log(context.store.getState().statistic);
 });
 
 export default Statistic;
