@@ -9,10 +9,15 @@ const SummonerInGame = () => {
   const [isShowInGame, setIsShowInGame] = useState(true);
 
   let teamArr = [];
+  let bannedListArr = [];
   if (Object.keys(inGame).length !== 0) {
     const team1 = inGame.participants.filter((summoner) => summoner.teamId === 100);
     const team2 = inGame.participants.filter((summoner) => summoner.teamId === 200);
     teamArr = [team1, team2];
+
+    const team1BannedList = inGame.bannedChampions.filter((item) => item.teamId === 100);
+    const team2BannedList = inGame.bannedChampions.filter((item) => item.teamId === 200);
+    bannedListArr = [team1BannedList, team2BannedList];
   }
 
   const onToggleShowInGame = useCallback(() => {
@@ -37,8 +42,8 @@ const SummonerInGame = () => {
           ? (
             <div>
               {
-                teamArr.map((team) => {
-                  return <InGameSummonerList team={team} />
+                teamArr.map((team, i) => {
+                  return <InGameSummonerList key={i} team={team} bannedList={bannedListArr[i]}/>
                 })
               }
             </div>
