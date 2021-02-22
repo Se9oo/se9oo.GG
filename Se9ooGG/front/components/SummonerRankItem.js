@@ -22,18 +22,26 @@ const SummonerRankListItem = styled.li`
   order: ${props => props.sort};
 
   & img {
-    width: 40%;
-    height: 40%;
+    width: 30%;
+    height: 30%;
   }
 
   & h3 {
     font-size: 1.4rem;
+
+    @media ${props => props.theme.tablet} {
+      font-size: 1.2rem;
+    }
   }
 
   & span {
     margin: .5rem 0;
     font-size: 1.2rem;
     color: #333333;
+    
+    @media ${props => props.theme.tablet} {
+      font-size: 1rem;
+    }
   }
 `;
 

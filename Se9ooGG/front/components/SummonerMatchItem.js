@@ -149,6 +149,10 @@ const SummonerMatchListItemHeader = styled.div`
 
   & span {
     font-size: 1.2rem;
+
+    @media ${props => props.theme.tablet} {
+      font-size: 1rem;
+    }
   }
 
   & svg {
@@ -223,6 +227,10 @@ const SummonerChampion = styled.div`
     padding: .5rem;
     border-radius: 999px;
   }
+
+  @media ${props => props.theme.tablet} {
+    width: 9%;
+  }
 `;
 
 const SummonerSpell = styled.div`
@@ -232,6 +240,10 @@ const SummonerSpell = styled.div`
     width: 100%;
     margin: 10%;
     border-radius: 20%;
+  }
+
+  @media ${props => props.theme.tablet} {
+    width: 3%;
   }
 `;
 
@@ -245,6 +257,10 @@ const SummonerRune = styled.div`
     padding: 10%;
     background-color: #000000;
     border-radius: 999px;
+  }
+
+  @media ${props => props.theme.tablet} {
+    width: 3%;
   }
 `;
 
@@ -292,10 +308,13 @@ const SummonerItems = styled.div`
 
   & img {
     width: 12%;
-    height: 12%;
     padding: .1rem;
     border: 1px solid #ced4da;
     border-radius: 20%;
+
+    @media ${props => props.theme.tablet} {
+      width: 6%;
+    }
   }
 
   & img:last-child {

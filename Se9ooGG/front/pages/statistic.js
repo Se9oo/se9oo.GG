@@ -170,8 +170,8 @@ const Summoner = styled.div`
   border: 1px solid rgba(206, 212, 218, .5);
 
   & img {
-    width: 30%;
-    height: 30%;
+    width: 5rem;
+    height: 5rem;
     border-radius: 999px;
   }
 
@@ -179,6 +179,10 @@ const Summoner = styled.div`
     display: block;
     font-size: 2rem;
     margin: 1rem 0;
+
+    @media ${props => props.theme.tablet} {
+      font-size: 1.5rem;
+    }
   }
 
   & button {

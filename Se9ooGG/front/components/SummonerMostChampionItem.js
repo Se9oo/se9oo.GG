@@ -24,12 +24,21 @@ const SummonerMostChampionListItem = styled.li`
     width: 40%;
     height: 40%;
     border-radius: 999px;
+
+    @media ${props => props.theme.tablet} {
+      width: 25%;
+      height: 25%;
+    }
   }
 
   & strong, span {
     margin-top: .5rem;
     font-size: 1.2rem;
     color: #333333;
+
+    @media ${props => props.theme.tablet} {
+      font-size: 1rem;
+    }
   }
 `;
 

@@ -72,6 +72,10 @@ const SubTitle = styled.div`
   padding: 1rem;
   font-size: 1.2rem;
 
+  @media ${props => props.theme.tablet} {
+    font-size: 1rem;
+  }
+
   & svg {
     position: absolute;
     top: 50%;
@@ -89,5 +93,9 @@ const Info = styled.div`
   & strong {
     font-weight: 700;
     color: #1890ff;
+  }
+
+  @media ${props => props.theme.tablet} {
+    font-size: 1.2rem;
   }
 `;
