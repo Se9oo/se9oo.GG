@@ -98,7 +98,11 @@ const DesktopNav = styled.nav`
 
 const ContentContainer = styled.section`
   display: block;
-  padding: 1rem 1rem 71px;
+  padding: 10px 10px 80px;
+
+  @media ${props => props.theme.tablet} {
+    padding: 10px 10px 100px;
+  }
 
   @media ${props => props.theme.laptop} {
     padding: 80px 1rem 1rem;
