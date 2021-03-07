@@ -7,12 +7,12 @@ import styled from 'styled-components';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 
 const SummonerMatchItem = ({ match }) => {
-  // 소환사 이름
-  const summonerName = useSelector((state) => (state.statistic.summoner.summonerName));
-  // 소환사 id
+  // 검색 소환사 accountId
+  const { accountId } = useSelector((state) => (state.statistic.summoner));
+  // 검색 소환사 accoutId로 소환사 정보 찾기
   const findSummoner = match.participantIdentities.find((summoner) => {
-    return summoner.player.summonerName.toLowerCase() === summonerName.toLowerCase();
-  });
+    return summoner.player.accountId === accountId;
+  })
   // 소환사 id로 찾은 소환사의 게임 정보
   const summonerInfo = match.participants.find((info) => info.participantId === parseInt(findSummoner.participantId, 10));
   // 소환사 게임 stat

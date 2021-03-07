@@ -59,10 +59,11 @@ router.get('/statistic/loadSummoner', async (req, res, next) => {
       }));
 
       const summonerData = {
-        profileIconId: profileIconId,
+        profileIconId,
+        accountId,
         summonerName: name,
-        summonerLevel: summonerLevel,
-        tier: tier,
+        summonerLevel,
+        tier,
         proficiencyTop3: proficiencyTop3Info,
         match: matchData,
       }
