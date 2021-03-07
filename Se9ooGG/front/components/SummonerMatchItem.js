@@ -1,6 +1,7 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SummonerMatchDetail from './SummonerMatchDetail';
+import ParticipantList from './ParticipantList';
 import { getChampionNameById, getQueueType, getRuneImgUrl, getSpellNameById } from '../util/JsonUtil';
 import { getKDA, getGameDuration, getGameCreation } from '../util/util';
 import styled from 'styled-components';
@@ -61,6 +62,18 @@ const SummonerMatchItem = ({ match }) => {
     e.target.src = "/img/item/0.png";
   }, []);
 
+  // 참가자 정보에 이름 추가
+  const participants = [...match.participants];
+  participants.map((participant) => {
+    const participantInfo = match.participantIdentities.find((summoner) => summoner.participantId === participant.participantId);
+    participant[`summonerName`] = participantInfo.player.summonerName;
+  });
+  
+  // 팀 별로 소환사 나누기
+  const teamA = participants.filter((summoner) => summoner.teamId === 100);
+  const teamB = participants.filter((summoner) => summoner.teamId === 200);
+  const teamList = [teamA, teamB];
+  
   return (
     <SummonerMatchListItem>
       <SummonerMatchListItemHeader>
@@ -86,44 +99,47 @@ const SummonerMatchItem = ({ match }) => {
             <span>{summonerWinOrLose}</span>
           </SummonerWinOrLose>
           <SummonerInfo>
-            <SummonerStatInfo>
-              <SummonerChampion>
-                <img src={`./img/champion/${championName.eng}.png`} alt="summoner-champion-image"/>
-              </SummonerChampion>
-              <SummonerSpell>
-                <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell"/>
-                <img src={`./img/spell/${summonerSpell[1].eng}.png`} alt="summoner-second-spell"/>
-              </SummonerSpell>
-              <SummonerRune>
-                <img src={`./img/${summonerRune.perk0}`} alt="summoner-primary-rune"/>
-                <img src={`./img/${summonerRune.subPerk}`} alt="summoner-sub-rune"/>
-              </SummonerRune>
-              <SummonerText>
-                <SummonerKDA>
-                  <SummonerScore>
-                    <span>{summonerStats.kills}</span>
-                    <span>{summonerStats.deaths}</span>
-                    <span>{summonerStats.assists}</span>
-                  </SummonerScore>
-                  <SummonerKDARate>
-                    {`${summonerKDA} : 1`}
-                  </SummonerKDARate>
-                </SummonerKDA>
-                <SummonerStats>
-                  <span>{`레벨 ${summonerStats.champLevel}`}</span>
-                  <span>
-                    {`${parseInt(summonerStats.totalMinionsKilled + summonerStats.neutralMinionsKilled, 10)} CS`}
-                  </span>
-                </SummonerStats>
-              </SummonerText>
-            </SummonerStatInfo>
-            <SummonerItems>
-              {
-                summonerItemsArr.map((v, i) => {
-                  return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
-                })
-              }
-            </SummonerItems>
+            <SummonerStat>
+              <SummonerStatInfo>
+                <SummonerChampion>
+                  <img src={`./img/champion/${championName.eng}.png`} alt="summoner-champion-image"/>
+                </SummonerChampion>
+                <SummonerSpell>
+                  <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell"/>
+                  <img src={`./img/spell/${summonerSpell[1].eng}.png`} alt="summoner-second-spell"/>
+                </SummonerSpell>
+                <SummonerRune>
+                  <img src={`./img/${summonerRune.perk0}`} alt="summoner-primary-rune"/>
+                  <img src={`./img/${summonerRune.subPerk}`} alt="summoner-sub-rune"/>
+                </SummonerRune>
+                <SummonerText>
+                  <SummonerKDA>
+                    <SummonerScore>
+                      <span>{summonerStats.kills}</span>
+                      <span>{summonerStats.deaths}</span>
+                      <span>{summonerStats.assists}</span>
+                    </SummonerScore>
+                    <SummonerKDARate>
+                      {`${summonerKDA} : 1`}
+                    </SummonerKDARate>
+                  </SummonerKDA>
+                  <SummonerStats>
+                    <span>{`레벨 ${summonerStats.champLevel}`}</span>
+                    <span>
+                      {`${parseInt(summonerStats.totalMinionsKilled + summonerStats.neutralMinionsKilled, 10)} CS`}
+                    </span>
+                  </SummonerStats>
+                </SummonerText>
+              </SummonerStatInfo>
+              <SummonerItems>
+                {
+                  summonerItemsArr.map((v, i) => {
+                    return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
+                  })
+                }
+              </SummonerItems>
+            </SummonerStat>
+            <ParticipantList teamList={teamList} />
           </SummonerInfo>
         </SummonerMatchListItemContent>
       }
@@ -206,7 +222,19 @@ const SummonerWinOrLose = styled.div`
 
 const SummonerInfo = styled.div`
   width: 100%;
+  display: flex;
+`
+
+const SummonerStat = styled.div`
+  width: 100%;
   padding: .5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media ${props => props.theme.tablet} {
+    width: 70%;
+  }
 `;
 
 const SummonerStatInfo = styled.div`
@@ -229,7 +257,7 @@ const SummonerChampion = styled.div`
   }
 
   @media ${props => props.theme.tablet} {
-    width: 9%;
+    width: 13%;
   }
 `;
 
@@ -243,7 +271,7 @@ const SummonerSpell = styled.div`
   }
 
   @media ${props => props.theme.tablet} {
-    width: 3%;
+    width: 5%;
   }
 `;
 
@@ -260,7 +288,7 @@ const SummonerRune = styled.div`
   }
 
   @media ${props => props.theme.tablet} {
-    width: 3%;
+    width: 5%;
   }
 `;
 
@@ -313,7 +341,7 @@ const SummonerItems = styled.div`
     border-radius: 20%;
 
     @media ${props => props.theme.tablet} {
-      width: 6%;
+      width: 8%;
     }
   }
 
