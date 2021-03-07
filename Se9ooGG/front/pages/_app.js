@@ -61,10 +61,6 @@ const GlobalStyles = createGlobalStyle`
     @media ${props => props.theme.tablet} {
       font-size: 12px;
     } 
-
-    @media ${props => props.theme.laptop} {
-      font-size: 16px;
-    } 
   }
 
   body {
