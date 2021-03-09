@@ -1,5 +1,6 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
+import { Input } from 'antd';
 import styled from 'styled-components';
 
 const ChampionList = ({ data }) => {
@@ -14,6 +15,10 @@ const ChampionList = ({ data }) => {
   
   return (
     <>
+      <ChampionSearchInput
+        placeholder="챔피언 검색" 
+        enterButton
+      />
       <ChampList>
         {
           data.map((v) => {
@@ -33,6 +38,14 @@ const ChampionList = ({ data }) => {
   );
 };
 
+const ChampionSearchInput = styled(Input.Search)`
+  margin: 1rem 0;
+
+  & ::placeholder {
+    font-size: 1.2rem;
+  }
+`;
+
 const ChampList = styled.ul`
   display: flex;
   flex-wrap: wrap;
@@ -40,6 +53,7 @@ const ChampList = styled.ul`
   overflow-y: scroll;
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, .5);
+  padding: 1rem;
 
   @media ${props => props.theme.tablet} {
     max-height: 100%;
