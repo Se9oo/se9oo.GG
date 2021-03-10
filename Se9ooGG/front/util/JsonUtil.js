@@ -3,6 +3,16 @@ import championFull from '../json/championFull.json';
 import spell from '../json/summoner.json';
 import rune from '../json/runesReforged.json';
 import queue from '../json/queues.json';
+import championList from '../json/champion.json';
+
+export function getChampionList() {
+  const arr = [];
+  for (let i in championList.data) {
+    arr.push(championList.data[i]);
+  }
+
+  return arr;
+};
 
 export function getChampionFullInfoById(id) {
   const fullData = championFull.data;

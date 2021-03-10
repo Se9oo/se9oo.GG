@@ -2,27 +2,18 @@ import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout';
 import ChampionList from '../../components/ChampionList';
-import championData from '../../json/champion.json';
-
-function getChampionList() {
-  const arr = [];
-  for (let i in championData.data) {
-    arr.push(championData.data[i]);
-  }
-  //console.log(JSON.stringify(arr));
-  return arr;
-};
+import { getChampionList } from '../../util/JsonUtil';
 
 const Champion = () => {
+  // total champion list
   const champList = getChampionList();
-  //console.log(champList[0].name);
   
   return (
     <AppLayout>
       <Head>
         <title>se9oo.GG | 챔피언</title>
       </Head>
-      <ChampionList data={champList}/>
+      <ChampionList champion={champList}/>
     </AppLayout>
   )
 }
