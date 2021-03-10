@@ -6,6 +6,7 @@ import {
   , loadSummonerRequestAction, loadSummonerInGameRequestAction, loadSummonerInGameErrorClearAction
  } from '../reducer/statistic';
 import Router from 'next/router';
+import Head from 'next/head';
 import wrapper from '../store/configureStore';
 import { END } from 'redux-saga';
 import axios from 'axios';
@@ -79,6 +80,9 @@ const Statistic = () => {
 
   return (
     <AppLayout>
+      <Head>
+        <title>se9oo | {`${summoner.summonerName}`}</title>
+      </Head>
       {
         Object.keys(summoner).length !== 0
         ?
