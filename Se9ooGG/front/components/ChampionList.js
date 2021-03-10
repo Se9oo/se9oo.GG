@@ -70,6 +70,7 @@ const ChampList = styled.ul`
   flex-direction: column;
   align-items: center;
   padding: .2rem;
+  cursor: pointer;
 `;
 
  const ChampionImg = styled.img`
