@@ -3,8 +3,10 @@ import { useRouter } from 'next/router';
 import { Input } from 'antd';
 import styled from 'styled-components';
 
-const ChampionList = ({ data }) => {
+const ChampionList = ({ champion }) => {
   const router = useRouter();
+  // 가나다 순으로 정렬
+  const championArray = [...champion].sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
 
   const onClickChampionItem = useCallback((id) => {
     router.push({
@@ -21,13 +23,13 @@ const ChampionList = ({ data }) => {
       />
       <ChampList>
         {
-          data.map((v) => {
+          championArray.map((v) => {
             return (
               <ChampListItem 
                 key={v.name}
                 onClick={() => onClickChampionItem(v.id)}
               >
-                <ChampionImg src={`/img/champion/${v.id}.png`} alt={ `${v.id}` }/>
+                <ChampionImg src={`/img/champion/${v.id}.png`} alt={`${v.id}`}/>
                 <ChampionName>{v.name}</ChampionName>
               </ChampListItem>
             )
@@ -37,6 +39,8 @@ const ChampionList = ({ data }) => {
     </>
   );
 };
+
+export default ChampionList;
 
 const ChampionSearchInput = styled(Input.Search)`
   margin: 1rem 0;
@@ -84,5 +88,3 @@ const ChampList = styled.ul`
   white-space: nowrap;
   overflow: hidden;
 `;
-
-export default ChampionList;
