@@ -74,8 +74,7 @@ const ChampList = styled.ul`
 
  const ChampionImg = styled.img`
   display: block;
-  width: 4rem;
-  height: 4rem;
+  width: 5rem;
 `;
 
  const ChampionName = styled.span`
