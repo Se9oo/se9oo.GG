@@ -14,9 +14,21 @@ export function getChampionList() {
   return arr;
 };
 
+export function getChampionFullInfoByName(name) {
+  const fullData = championFull.data;
+
+  for (let i in fullData) {
+    if (fullData[i].id === name) {
+      return fullData[i];
+    }
+  }
+  return null;
+}
+
 export function getChampionFullInfoById(id) {
   const fullData = championFull.data;
 
+  console.log(id);
   for (let i in fullData) {
     if (fullData[i].key == id) {
       return fullData[i];
