@@ -10,8 +10,8 @@ const ChampionList = ({ champion }) => {
 
   const onClickChampionItem = useCallback((id) => {
     router.push({
-      pathname: '/champion/detail',
-      query: { championName: id}
+      pathname: '/champion/[championName]',
+      query: { championName: `${id}`}
     });
   }, []);
   

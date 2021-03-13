@@ -7,10 +7,12 @@ import ChampionDetail from '../../components/ChampionDetail';
 const ChampionInfo = () => {
   const router = useRouter();
   const championInfo = getChampionFullInfoByName(router.query.championName);
-
+  
   return (
     <AppLayout>
-      <ChampionDetail champion={championInfo} />
+      {
+        championInfo && <ChampionDetail champion={championInfo} />
+      }
     </AppLayout>
   );
 };
