@@ -4,8 +4,8 @@ import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { LoginErrorClearRequestAction, LoginRequsetAction } from '../reducer/user';
-import { errorModal } from './CommonModal';
+import { LoginErrorClearRequestAction, LoginRequsetAction } from '../../reducer/user';
+import { errorModal } from '../CommonModal';
 import styled from 'styled-components';
 
 const LoginForm = () => {

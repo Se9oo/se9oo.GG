@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
-import { getKDA, getListOrder } from '../util/util';
-import { getChampionNameById, getSpellNameById, getRuneImgUrl } from '../util/JsonUtil';
+import { getKDA, getListOrder } from '../../util/util';
+import { getChampionNameById, getSpellNameById, getRuneImgUrl } from '../../util/JsonUtil';
 
 const MatchDetailTotalSummoner = ({ gameInfo }) => {
   // 각 소환사가 선택한 챔피언 고유 id

@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
-import { deletePostRequestAction } from '../reducer/post';
+import { deletePostRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
-import CommonModal from './CommonModal';
+import CommonModal from '../CommonModal';
 import CommentCard from './CommentCard';
 import styled from 'styled-components';
 

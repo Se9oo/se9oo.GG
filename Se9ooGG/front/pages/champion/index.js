@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../../components/AppLayout';
-import ChampionList from '../../components/ChampionList';
+import ChampionList from '../../components/champion/ChampionList';
 import { getChampionList } from '../../util/JsonUtil';
 
 const Champion = () => {

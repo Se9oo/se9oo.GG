@@ -2,10 +2,10 @@ import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SummonerMatchDetail from './SummonerMatchDetail';
 import ParticipantList from './ParticipantList';
-import { getChampionNameById, getQueueType, getRuneImgUrl, getSpellNameById } from '../util/JsonUtil';
-import { getKDA, getGameDuration, getGameCreation } from '../util/util';
-import styled from 'styled-components';
+import { getChampionNameById, getQueueType, getRuneImgUrl, getSpellNameById } from '../../util/JsonUtil';
+import { getKDA, getGameDuration, getGameCreation } from '../../util/util';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 const SummonerMatchItem = ({ match }) => {
   // 검색 소환사 accountId

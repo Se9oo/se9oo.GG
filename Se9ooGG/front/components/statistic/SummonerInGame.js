@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import InGameSummonerList from './InGameSummonerList';
-import styled from 'styled-components';
 import { UpOutlined, DownOutlined } from '@ant-design/icons';
+import styled from 'styled-components';
 
 const SummonerInGame = () => {
   const { inGame } = useSelector((state) => state.statistic);

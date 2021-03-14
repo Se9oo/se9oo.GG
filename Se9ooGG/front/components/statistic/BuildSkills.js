@@ -1,5 +1,5 @@
 import React from 'react';
-import { getChampionFullInfoById } from '../util/JsonUtil';
+import { getChampionFullInfoById } from '../../util/JsonUtil';
 import { ArrowRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 

@@ -1,10 +1,10 @@
 import React, { memo, useCallback, useState } from 'react'
 import { useSelector } from 'react-redux';
+import { getChampionNameById } from '../../util/JsonUtil';
+import { getListOrder } from '../../util/util';
 import EtcChampionList from './EtcChampionList';
-import { getChampionNameById } from '../util/JsonUtil';
-import { getListOrder } from '../util/util';
-import styled from 'styled-components';
 import EtcChart from './EtcChart';
+import styled from 'styled-components';
 
 const MatchDetailEtc = memo(({ match, winOrLose }) => {
   const navItems = ['챔피언별 골드 획득', '챔피언별 경험치 획득', '챔피언별 CS'];

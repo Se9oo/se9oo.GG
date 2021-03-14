@@ -1,8 +1,8 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Avatar, Comment } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCommentRequestAction } from '../reducer/post';
-import CommonModal from './CommonModal';
+import { deleteCommentRequestAction } from '../../reducer/post';
+import CommonModal from '../CommonModal';
 import { CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 

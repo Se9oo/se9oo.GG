@@ -1,6 +1,6 @@
 import React from 'react';
 import AppLayout from '../components/AppLayout';
-import LoginForm from '../components/LoginForm';
+import LoginForm from '../components/user/LoginForm';
 import Head from 'next/head';
 
 const Login = () => {

@@ -1,7 +1,7 @@
 import React from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { getColorByParticipantId } from '../util/util';
+import { getColorByParticipantId } from '../../util/util';
 import styled from 'styled-components';
 
 // 데이터 단위 세팅

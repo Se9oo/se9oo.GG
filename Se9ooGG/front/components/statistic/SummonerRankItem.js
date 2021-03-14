@@ -1,5 +1,5 @@
 import React from 'react';
-import { getWinRate } from '../util/util';
+import { getWinRate } from '../../util/util';
 import styled from 'styled-components';
 
 const SummonerRankItem = ({rank}) => {

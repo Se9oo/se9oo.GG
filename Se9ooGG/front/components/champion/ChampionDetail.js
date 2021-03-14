@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 const ChampionDetail = ({ champion }) => {
 
+  console.log(champion);
   return (
     <>
       <Info>
@@ -23,14 +24,14 @@ const ChampionDetail = ({ champion }) => {
         </Definition>
       </Info>
       <section>
-        <div>
+        <Contents>
           <article>stats</article>
           <article>skills</article>
-        </div>
-        <div>
+        </Contents>
+        <Contents>
           <article>tip</article>
           <article>comments</article>
-        </div>
+        </Contents>
       </section>
       <section>
         skins
@@ -114,5 +115,17 @@ const Tags = styled.div`
     & span:first-child {
       margin: 0 .5rem 0 0;
     }
+  }
+`;
+
+const Contents = styled.div`
+  display: flex;
+  justify-content: space-between;
+
+  & article {
+    width: 49%;
+    background-color: #ffffff;
+    border: 1px solid rgba(206, 212, 218, .5);
+    padding: 1rem;
   }
 `;

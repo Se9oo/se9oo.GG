@@ -1,5 +1,5 @@
 import React, { useCallback, useState } from 'react';
-import { getChampionNameById, getSpellNameById, getRuneImgUrl } from '../util/JsonUtil';
+import { getChampionNameById, getSpellNameById } from '../../util/JsonUtil';
 import BuildRune from './BuildRune';
 import { Button } from 'antd';
 import styled from 'styled-components';

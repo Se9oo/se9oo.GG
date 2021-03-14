@@ -1,8 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import Highcharts from 'highcharts';
 import HighchartsReact from 'highcharts-react-official';
-import { getChampionNameById } from '../util/JsonUtil';
-import { getListOrder } from '../util/util';
+import { getChampionNameById } from '../../util/JsonUtil';
+import { getListOrder } from '../../util/util';
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 

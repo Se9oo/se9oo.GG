@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { getColorByParticipantId } from '../util/util';
+import { getColorByParticipantId } from '../../util/util';
 
 const EtcChampionList = ({ teamList, selectedChampList, onClickSelectChamp }) => {
 

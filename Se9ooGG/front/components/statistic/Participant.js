@@ -1,5 +1,5 @@
 import React from 'react';
-import { getChampionNameById } from '../util/JsonUtil';
+import { getChampionNameById } from '../../util/JsonUtil';
 import styled from 'styled-components';
 
 const Participant = ({ team }) => {

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import { LogoutRequestAction } from '../reducer/user';
+import { LogoutRequestAction } from '../../reducer/user';
 import { Button } from 'antd';
 import styled from 'styled-components';
 

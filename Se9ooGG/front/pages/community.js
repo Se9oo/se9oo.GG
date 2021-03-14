@@ -2,7 +2,7 @@ import React, { useCallback, useEffect } from 'react';
 import Head from 'next/head';
 import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
-import PostCard from '../components/PostCard';
+import PostCard from '../components/community/PostCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadPostRequestAction } from '../reducer/post';
 import { Button, Input } from 'antd';

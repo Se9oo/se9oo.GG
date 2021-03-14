@@ -1,7 +1,7 @@
 import React from 'react';
 import Head from 'next/head';
 import AppLayout from '../components/AppLayout';
-import PostForm from '../components/PostForm';
+import PostForm from '../components/community/PostForm';
 
 const editPost = () => {
   return (

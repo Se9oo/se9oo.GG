@@ -1,7 +1,7 @@
 import React from 'react';
 import InGameSummoner from './InGameSummoner';
 import styled from 'styled-components';
-import { getChampionNameById } from '../util/JsonUtil';
+import { getChampionNameById } from '../../util/JsonUtil';
 
 const InGameSummonerList = ({ team, bannedList }) => {
   return (

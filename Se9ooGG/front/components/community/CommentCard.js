@@ -1,9 +1,9 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Comment, Empty, Form, Input } from 'antd';
-import { addCommentRequestAction } from '../reducer/post';
-import { errorModal } from './CommonModal';
-import CommentItem from '../components/CommentItem';
+import { addCommentRequestAction } from '../../reducer/post';
+import { errorModal } from '../CommonModal';
+import CommentItem from './CommentItem';
 import styled from 'styled-components';
 
 const CommentCard = memo(({ commentList, postId }) => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import SignUpForm from '../components/SignUpForm';
+import SignUpForm from '../components/user/SignUpForm';
 import AppLayout from '../components/AppLayout';
 
 const SignUp = () => {

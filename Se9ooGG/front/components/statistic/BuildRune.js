@@ -1,7 +1,7 @@
 import React from 'react';
 import BuildRunePerks from './BuildRunePerks';
 import styled from 'styled-components';
-import { getRuneImgUrl, getAllRuneImgUrl } from '../util/JsonUtil';
+import { getRuneImgUrl, getAllRuneImgUrl } from '../../util/JsonUtil';
 
 const BuildRune = ({ rune }) => {
 

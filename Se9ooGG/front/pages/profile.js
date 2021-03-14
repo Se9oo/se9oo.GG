@@ -1,6 +1,6 @@
 import React from 'react';
 import Head from 'next/head';
-import UserProfile from '../components/UserProfile';
+import UserProfile from '../components/user/UserProfile';
 import AppLayout from '../components/AppLayout';
 
 const Profile = () => {
