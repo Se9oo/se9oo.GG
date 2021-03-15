@@ -6,11 +6,14 @@ const SummonerMostChampionItem = ({ most }) => {
   const championName = getChampionNameById(most.championId);
   return (
     <SummonerMostChampionListItem>
-      <img src={`./img/champion/${championName.eng}.png`} alt="most-champion-img"/>
+      <img
+        src={`./img/champion/${championName.eng}.png`}
+        alt="most-champion-img"
+      />
       <strong>{championName.kor}</strong>
       <span>{most.championPoints} pt</span>
     </SummonerMostChampionListItem>
-  )
+  );
 };
 
 const SummonerMostChampionListItem = styled.li`
@@ -25,18 +28,19 @@ const SummonerMostChampionListItem = styled.li`
     height: 40%;
     border-radius: 999px;
 
-    @media ${props => props.theme.tablet} {
+    @media ${(props) => props.theme.tablet} {
       width: 25%;
       height: 25%;
     }
   }
 
-  & strong, span {
-    margin-top: .5rem;
+  & strong,
+  span {
+    margin-top: 0.5rem;
     font-size: 1.2rem;
     color: #333333;
 
-    @media ${props => props.theme.tablet} {
+    @media ${(props) => props.theme.tablet} {
       font-size: 1rem;
     }
   }

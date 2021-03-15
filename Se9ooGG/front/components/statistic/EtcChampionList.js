@@ -2,38 +2,42 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColorByParticipantId } from '../../util/util';
 
-const EtcChampionList = ({ teamList, selectedChampList, onClickSelectChamp }) => {
+const EtcChampionList = ({
+  teamList,
+  selectedChampList,
+  onClickSelectChamp,
+}) => {
+  return teamList.map((team, idx) => {
+    return (
+      <React.Fragment key={idx}>
+        <Team key={idx}>
+          {team.map((champ, i) => {
+            let isSelected = false;
+            selectedChampList.findIndex(
+              (champion) => champion.id === champ.id
+            ) === -1
+              ? (isSelected = false)
+              : (isSelected = true);
 
-  return (
-    teamList.map((team, idx) => {
-      return (
-        <React.Fragment key={idx}>
-          <Team key={idx}>
-            {
-              team.map((champ, i) => {
-                let isSelected = false;
-                selectedChampList.findIndex((champion) => champion.id === champ.id) === -1
-                ? isSelected = false
-                : isSelected = true;
+            let color = getColorByParticipantId(champ.id);
 
-                let color = getColorByParticipantId(champ.id);
-
-                return (
-                  <Champion isSelected={isSelected} key={i}>
-                    <ChampionImg onClick={() => onClickSelectChamp(champ)} key={`${champ.name}_${i}`} src={`/img/champion/${champ.name}.png`} alt="champion-image"/>
-                    <ParticipantColor color={color} />
-                  </Champion>
-                )
-              })
-            }
-          </Team>
-          {
-            idx === 0 && <Vs>vs</Vs>
-          }
-        </React.Fragment>
-      )
-    })
-  )
+            return (
+              <Champion isSelected={isSelected} key={i}>
+                <ChampionImg
+                  onClick={() => onClickSelectChamp(champ)}
+                  key={`${champ.name}_${i}`}
+                  src={`/img/champion/${champ.name}.png`}
+                  alt="champion-image"
+                />
+                <ParticipantColor color={color} />
+              </Champion>
+            );
+          })}
+        </Team>
+        {idx === 0 && <Vs>vs</Vs>}
+      </React.Fragment>
+    );
+  });
 };
 
 export default EtcChampionList;
@@ -45,7 +49,7 @@ const Team = styled.ul`
 `;
 
 const Champion = styled.li`
-  ${props => {
+  ${(props) => {
     if (props.isSelected) {
       return `opacity: 1;`;
     } else {
@@ -64,7 +68,7 @@ const ParticipantColor = styled.div`
   width: 70%;
   height: 10px;
   margin: 0 auto;
-  background-color: ${props => props.color};
+  background-color: ${(props) => props.color};
 `;
 
 const Vs = styled.span`

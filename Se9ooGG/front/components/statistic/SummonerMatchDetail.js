@@ -10,28 +10,37 @@ const SummonerMatchDetail = ({ match, winOrLose }) => {
   const menuItemArr = ['종합', '팀 분석', '빌드', 'etc'];
   // 선택한 메뉴 저장 state
   const [selectedMenu, setSelectedMenu] = useState(0);
-  const onClickMenu = useCallback((idx) => () => {
-    setSelectedMenu(idx)
-  }, []);
+  const onClickMenu = useCallback(
+    (idx) => () => {
+      setSelectedMenu(idx);
+    },
+    []
+  );
   return (
     <>
-      {
-        winOrLose === '무'
-        ? null
-        : <MatchDetailHeader>
-            {
-              menuItemArr.map((item, idx) => {
-                return <MatchDetailMenu key={idx} idx={idx} select={selectedMenu} winOrLose={winOrLose} onClick={onClickMenu(idx)}>{`${item}`}</MatchDetailMenu>
-              })
-            }
-          </MatchDetailHeader>
-      }
-      {
-        (selectedMenu === 0 && <MatchDetailTotal match={match} />)
-        || (selectedMenu === 1 && <MatchDetailAnalysis match={match} />)
-        || (selectedMenu === 2 && <MatchDetailBuild match={match} winOrLose={winOrLose} />)
-        || (selectedMenu === 3 && <MatchDetailEtc match={match} winOrLose={winOrLose} />)
-      }
+      {winOrLose === '무' ? null : (
+        <MatchDetailHeader>
+          {menuItemArr.map((item, idx) => {
+            return (
+              <MatchDetailMenu
+                key={idx}
+                idx={idx}
+                select={selectedMenu}
+                winOrLose={winOrLose}
+                onClick={onClickMenu(idx)}
+              >{`${item}`}</MatchDetailMenu>
+            );
+          })}
+        </MatchDetailHeader>
+      )}
+      {(selectedMenu === 0 && <MatchDetailTotal match={match} />) ||
+        (selectedMenu === 1 && <MatchDetailAnalysis match={match} />) ||
+        (selectedMenu === 2 && (
+          <MatchDetailBuild match={match} winOrLose={winOrLose} />
+        )) ||
+        (selectedMenu === 3 && (
+          <MatchDetailEtc match={match} winOrLose={winOrLose} />
+        ))}
     </>
   );
 };
@@ -48,7 +57,7 @@ const MatchDetailHeader = styled.ul`
 const MatchDetailMenu = styled.li`
   width: 25%;
   padding: 1rem;
-  ${props => {
+  ${(props) => {
     if (props.select === props.idx) {
       return `background-color: #ffffff;`;
     } else {

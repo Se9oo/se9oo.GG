@@ -12,7 +12,7 @@ export function getChampionList() {
   }
 
   return arr;
-};
+}
 
 export function getChampionFullInfoByName(name) {
   const fullData = championFull.data;
@@ -46,7 +46,7 @@ export function getChampionInfoById(id) {
     }
   }
   return null;
-};
+}
 
 export function getChampionNameById(id) {
   const data = champion.data;
@@ -55,13 +55,13 @@ export function getChampionNameById(id) {
     if (data[i].key == id) {
       const nameData = {
         kor: data[i].name,
-        eng: data[i].id
-      }
+        eng: data[i].id,
+      };
       return nameData;
     }
   }
   return null;
-};
+}
 
 export function getSpellNameById(spell1, spell2) {
   const data = spell.data;
@@ -71,18 +71,20 @@ export function getSpellNameById(spell1, spell2) {
     if (data[i].key == spell1 || data[i].key == spell2) {
       spellName.push({
         kor: data[i].name,
-        eng: data[i].id
+        eng: data[i].id,
       });
     }
   }
   return spellName;
-};
+}
 
 export function getRuneImgUrl(perkInfo) {
   const runeImgUrl = {};
 
   // primary Rune 세팅
-  const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
+  const primaryPerk = rune.find(
+    (perk) => perk.id === perkInfo.perkPrimaryStyle
+  );
   runeImgUrl.primaryPerk = primaryPerk.icon;
   primaryPerk.slots.map((slot, i) => {
     if (perkInfo.hasOwnProperty(`perk${i}`)) {
@@ -111,9 +113,10 @@ export function getRuneImgUrl(perkInfo) {
 }
 
 export function getAllRuneImgUrl(perkInfo) {
-
   let allRuneImgUrl = [];
-  const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
+  const primaryPerk = rune.find(
+    (perk) => perk.id === perkInfo.perkPrimaryStyle
+  );
   const subPerk = rune.find((perk) => perk.id === perkInfo.perkSubStyle);
 
   allRuneImgUrl.push(primaryPerk);
@@ -124,7 +127,7 @@ export function getAllRuneImgUrl(perkInfo) {
 
 export function getQueueType(queueId) {
   const queueType = queue.find((v) => v.queueId === queueId);
-  
+
   switch (queueType.queueId) {
     case 420:
       return '솔랭';

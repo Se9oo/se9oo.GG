@@ -4,26 +4,37 @@ import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import { LoginErrorClearRequestAction, LoginRequsetAction } from '../../reducer/user';
+import {
+  LoginErrorClearRequestAction,
+  LoginRequsetAction,
+} from '../../reducer/user';
 import { errorModal } from '../CommonModal';
 import styled from 'styled-components';
 
 const LoginForm = () => {
   const dispatch = useDispatch('');
   // 로그인 성공 여부
-  const { loginDone, loginLoading, loginError } = useSelector((state) => (state.user));
+  const { loginDone, loginLoading, loginError } = useSelector(
+    (state) => state.user
+  );
 
   // email
   const [email, setEmail] = useState('');
-  const onChangeEmail = useCallback((e) => {
-    setEmail(e.target.value);
-  }, [email]);
+  const onChangeEmail = useCallback(
+    (e) => {
+      setEmail(e.target.value);
+    },
+    [email]
+  );
 
   // password
   const [password, setPassword] = useState('');
-  const onChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-  }, [password]);
+  const onChangePassword = useCallback(
+    (e) => {
+      setPassword(e.target.value);
+    },
+    [password]
+  );
 
   // Login Submit
   const onSubmitForm = useCallback(() => {
@@ -37,7 +48,7 @@ const LoginForm = () => {
       return;
     }
 
-    dispatch(LoginRequsetAction({email, password}));
+    dispatch(LoginRequsetAction({ email, password }));
   }, [email, password]);
 
   // isLoginSuccess state 값이 변할 경우
@@ -62,7 +73,7 @@ const LoginForm = () => {
         {/* email */}
         <InputContainer>
           <label htmlFor="user-email">이메일</label>
-          <Input 
+          <Input
             placeholder="이메일을 입력하세요."
             type="email"
             name="user-email"
@@ -79,15 +90,23 @@ const LoginForm = () => {
             name="user-password"
             value={password}
             onChange={onChangePassword}
-            iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
+            iconRender={(visible) =>
+              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+            }
             visibilityToggle
           />
         </InputContainer>
 
         {/* button */}
         <ButtonContainer>
-          <Button><Link href="/signup"><a>회원가입</a></Link></Button>
-          <Button type="primary" htmlType="submit" loading={loginLoading}>로그인</Button>
+          <Button>
+            <Link href="/signup">
+              <a>회원가입</a>
+            </Link>
+          </Button>
+          <Button type="primary" htmlType="submit" loading={loginLoading}>
+            로그인
+          </Button>
         </ButtonContainer>
       </FormContainer>
     </>
@@ -103,7 +122,7 @@ const InputContainer = styled.div`
 
   & label {
     display: block;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
   }
 `;
 

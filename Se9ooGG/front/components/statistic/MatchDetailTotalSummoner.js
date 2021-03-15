@@ -1,7 +1,11 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { getKDA, getListOrder } from '../../util/util';
-import { getChampionNameById, getSpellNameById, getRuneImgUrl } from '../../util/JsonUtil';
+import {
+  getChampionNameById,
+  getSpellNameById,
+  getRuneImgUrl,
+} from '../../util/JsonUtil';
 
 const MatchDetailTotalSummoner = ({ gameInfo }) => {
   // 각 소환사가 선택한 챔피언 고유 id
@@ -17,7 +21,7 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
     perkPrimaryStyle: stats.perkPrimaryStyle,
     perk0: stats.perk0,
     perkSubStyle: stats.perkSubStyle,
-  }
+  };
   // 소환사 rune
   const rune = getRuneImgUrl(runeInfo);
   // 소환사 kda
@@ -29,22 +33,31 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
   }
   // item error alt img
   const onErrorItemImg = useCallback((e) => {
-    e.target.src = "/img/item/0.png";
+    e.target.src = '/img/item/0.png';
   }, []);
-  
+
   return (
     <SummonerListItem order={order}>
       <ChampionImg>
-        <img src={`./img/champion/${championName.eng}.png`} alt="summoner champion image" />
+        <img
+          src={`./img/champion/${championName.eng}.png`}
+          alt="summoner champion image"
+        />
         <Level>{stats.champLevel}</Level>
       </ChampionImg>
       <Spell>
-        <img src={`./img/spell/${spell[0].eng}.png`} alt="summoner-first-spell"/>
-        <img src={`./img/spell/${spell[1].eng}.png`} alt="summoner-second-spell"/>
+        <img
+          src={`./img/spell/${spell[0].eng}.png`}
+          alt="summoner-first-spell"
+        />
+        <img
+          src={`./img/spell/${spell[1].eng}.png`}
+          alt="summoner-second-spell"
+        />
       </Spell>
       <Rune>
-        <img src={`./img/${rune.perk0}`} alt="summoner-primary-rune"/>
-        <img src={`./img/${rune.subPerk}`} alt="summoner-sub-rune"/>
+        <img src={`./img/${rune.perk0}`} alt="summoner-primary-rune" />
+        <img src={`./img/${rune.subPerk}`} alt="summoner-sub-rune" />
       </Rune>
       <Info>
         <Nickname>{gameInfo.summonerName}</Nickname>
@@ -54,11 +67,16 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
         </Stats>
       </Info>
       <Items>
-        {
-          summonerItemsArr.map((v, i) => {
-            return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
-          })
-        }
+        {summonerItemsArr.map((v, i) => {
+          return (
+            <img
+              key={i}
+              src={`/img/item/${v}.png`}
+              alt="summoner-item"
+              onError={onErrorItemImg}
+            />
+          );
+        })}
       </Items>
     </SummonerListItem>
   );
@@ -71,7 +89,7 @@ const SummonerListItem = styled.li`
   align-items: center;
   width: 100%;
   padding: 1% 2% 2% 2%;
-  order: ${props => props.order};
+  order: ${(props) => props.order};
 `;
 
 const ChampionImg = styled.div`
@@ -91,7 +109,7 @@ const Level = styled.span`
   left: -10%;
   padding: 5%;
   border-radius: 999px;
-  background-color: rgba(0, 0, 0, .5);
+  background-color: rgba(0, 0, 0, 0.5);
   color: #ffffff;
 `;
 
@@ -135,7 +153,7 @@ const Stats = styled.div`
   justify-content: space-around;
 
   & span:last-child {
-    color: rgba(51, 51, 51, .5);
+    color: rgba(51, 51, 51, 0.5);
   }
 `;
 
@@ -146,7 +164,7 @@ const Items = styled.div`
   & img {
     width: 14%;
     border: 1px solid #ced4da;
-    border-radius: 20%;    
+    border-radius: 20%;
   }
 
   & img:last-child {

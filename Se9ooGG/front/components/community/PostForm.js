@@ -4,13 +4,13 @@ import Router from 'next/router';
 import { addPostRequestAction } from '../reducer/post';
 import useInput from '../hooks/useInput';
 import CommonModal, { errorModal } from './CommonModal';
-import { Button, Form, Input, } from 'antd';
+import { Button, Form, Input } from 'antd';
 import styled from 'styled-components';
 
 const PostForm = () => {
   const dispatch = useDispatch('');
-  const { me } = useSelector((state) => (state.user));
-  
+  const { me } = useSelector((state) => state.user);
+
   // modal content
   const [modalContent, setModalContent] = useState('');
   // modal show
@@ -33,25 +33,27 @@ const PostForm = () => {
     }
 
     setModalContent({
-      title: "게시글 등록",
+      title: '게시글 등록',
       onOk: onOkAddModal,
       onCancel: onCancelAddModal,
-      content: "등록 하시겠습니까?"
+      content: '등록 하시겠습니까?',
     });
     setShowModal(true);
   }, [postTitle, postContent]);
 
   // 게시글 등록 modal ok
   const onOkAddModal = useCallback(() => {
-    dispatch(addPostRequestAction({
-      email: me.email,
-      nickname: me.nickname,
-      title: postTitle,
-      content: postContent,
-      comments: [],
-    }));
+    dispatch(
+      addPostRequestAction({
+        email: me.email,
+        nickname: me.nickname,
+        title: postTitle,
+        content: postContent,
+        comments: [],
+      })
+    );
     setShowModal(false);
-    Router.push('/community'); 
+    Router.push('/community');
   }, [me, postTitle, postContent]);
 
   // 게시글 등록 modal cancel
@@ -62,10 +64,10 @@ const PostForm = () => {
   // 게시글 등록 취소
   const onClickPostCancel = useCallback(() => {
     setModalContent({
-      title: "게시글 등록 - 취소",
+      title: '게시글 등록 - 취소',
       onOk: onOkCancelModal,
       onCancel: onCancelCancelModal,
-      content: "작성중인 내용은 저장되지 않습니다.\n취소 하시겠습니까?"
+      content: '작성중인 내용은 저장되지 않습니다.\n취소 하시겠습니까?',
     });
     setShowModal(true);
   }, []);
@@ -76,7 +78,7 @@ const PostForm = () => {
     Router.push('/community');
   }, []);
 
-// 게시글 등록 취소 modal cancel
+  // 게시글 등록 취소 modal cancel
   const onCancelCancelModal = useCallback(() => {
     setShowModal(false);
   }, []);
@@ -115,23 +117,16 @@ const PostForm = () => {
           />
         </PostContentContainer>
         {/* 등록 */}
-        <PostButton 
+        <PostButton
           type="primary"
           htmlType="submit"
-          style={{ marginBottom: '1rem'}}
+          style={{ marginBottom: '1rem' }}
         >
           등록
         </PostButton>
-        <PostButton
-          onClick={onClickPostCancel}
-        >
-          취소
-        </PostButton>
+        <PostButton onClick={onClickPostCancel}>취소</PostButton>
       </Form>
-      <CommonModal
-        modalContent={modalContent}
-        visible={showModal}
-      />
+      <CommonModal modalContent={modalContent} visible={showModal} />
     </PostFormContainer>
   );
 };
@@ -147,7 +142,7 @@ const PostContentContainer = styled.div`
 
   & strong {
     display: block;
-    opacity: .5;
+    opacity: 0.5;
   }
 `;
 

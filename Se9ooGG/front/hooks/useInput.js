@@ -7,6 +7,6 @@ const useInput = (initialState = null) => {
   }, []);
 
   return [value, handler];
-}
+};
 
 export default useInput;

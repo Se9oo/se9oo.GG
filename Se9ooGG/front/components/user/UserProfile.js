@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 const UserProfile = () => {
   const dispatch = useDispatch('');
-  const { logoutLoading, logoutDone, me } = useSelector((state) => (state.user));
+  const { logoutLoading, logoutDone, me } = useSelector((state) => state.user);
 
   const onClickLogoutBtn = useCallback(() => {
     dispatch(LogoutRequestAction());
@@ -44,7 +44,9 @@ const UserProfile = () => {
       </UserProfileContent>
       <ProfileButtonGroup>
         <Button type="primary">비밀번호 변경하기</Button>
-        <Button onClick={onClickLogoutBtn} loading={logoutLoading}>로그아웃</Button>
+        <Button onClick={onClickLogoutBtn} loading={logoutLoading}>
+          로그아웃
+        </Button>
       </ProfileButtonGroup>
     </UserProfileContainer>
   );
@@ -54,7 +56,7 @@ const UserProfileContainer = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
 
   & img {
     display: block;
@@ -76,7 +78,7 @@ const UserProfileContent = styled.div`
   align-items: center;
   width: 100%;
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -100,7 +102,7 @@ const UserInfo = styled.dl`
   width: 100%;
   font-size: 1.3rem;
   margin-bottom: 3rem;
-  
+
   & div {
     flex-grow: 1;
     flex-basis: 30%;
@@ -126,7 +128,7 @@ const ProfileButtonGroup = styled.div`
   display: block;
   width: 100%;
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     display: flex;
   }
 `;

@@ -3,14 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import { deletePostRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
-import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
+import {
+  SmileOutlined,
+  EllipsisOutlined,
+  CommentOutlined,
+  SmileTwoTone,
+} from '@ant-design/icons';
 import CommonModal from '../CommonModal';
 import CommentCard from './CommentCard';
 import styled from 'styled-components';
 
 const PostCard = memo(({ data }) => {
   const dispatch = useDispatch('');
-  const { me } = useSelector((state) => (state.user));
+  const { me } = useSelector((state) => state.user);
   // modal content
   const [modalContent, setModalContent] = useState('');
   // modal 노출 여부
@@ -27,7 +32,7 @@ const PostCard = memo(({ data }) => {
     if (window.innerWidth < 500) {
       router.push({
         pathname: '/comment',
-        query: { postId: data.postId }
+        query: { postId: data.postId },
       });
     } else {
       setShowComment((prevShowComment) => !prevShowComment);
@@ -64,39 +69,45 @@ const PostCard = memo(({ data }) => {
   const onCancelDeletePost = useCallback(() => {
     setShowModal(false);
   }, []);
-  
+
   return (
     <>
       <Card
-        style={{ marginTop: '1rem', border: '1px solid rgba(206, 212, 218, .5)' }}
+        style={{
+          marginTop: '1rem',
+          border: '1px solid rgba(206, 212, 218, .5)',
+        }}
         actions={[
-          <CommentOutlined key="comment" onClick={onClickComment}/>,
-          liked
-          ? <SmileTwoTone twoToneColor="#eb2f96" key="heartTwo" onClick={onToggleSmile}/>
-          : <SmileOutlined key="like" onClick={onToggleSmile}/>,
+          <CommentOutlined key="comment" onClick={onClickComment} />,
+          liked ? (
+            <SmileTwoTone
+              twoToneColor="#eb2f96"
+              key="heartTwo"
+              onClick={onToggleSmile}
+            />
+          ) : (
+            <SmileOutlined key="like" onClick={onToggleSmile} />
+          ),
           <Popover
             trigger="click"
             visible={showPopOver}
             onVisibleChange={onChangeShowPopOver}
             content={
               <div>
-                {
-                  me && (me.email === data.email) &&
-                  <> 
+                {me && me.email === data.email && (
+                  <>
                     <Button>수정</Button>
-                    <Button 
-                      onClick={onClickDeletePostBtn}
-                    >
-                      삭제
-                    </Button>
+                    <Button onClick={onClickDeletePostBtn}>삭제</Button>
                   </>
-                }
-                <Button type="primary" danger>신고</Button>
+                )}
+                <Button type="primary" danger>
+                  신고
+                </Button>
               </div>
             }
           >
             <EllipsisOutlined key="ellipsis" />
-          </Popover>
+          </Popover>,
         ]}
       >
         <Card.Meta
@@ -105,25 +116,24 @@ const PostCard = memo(({ data }) => {
           description={data.nickname}
         />
         <PostCardContentContainer>
-          {
-            data && data.content.split('\n').map((list, i) => {
-              return (<span key={i}>{list}<br /></span>)
-            })
-          }
+          {data &&
+            data.content.split('\n').map((list, i) => {
+              return (
+                <span key={i}>
+                  {list}
+                  <br />
+                </span>
+              );
+            })}
           <PostCommentCount>
             {`댓글 ${data.comments.length}개`}
           </PostCommentCount>
         </PostCardContentContainer>
       </Card>
-      {
-        showComment 
-        && data.comments
-        && <CommentCard commentList={data.comments} postId={data.postId} />
-      }
-      <CommonModal
-        modalContent={modalContent}
-        visible={showModal}
-      />
+      {showComment && data.comments && (
+        <CommentCard commentList={data.comments} postId={data.postId} />
+      )}
+      <CommonModal modalContent={modalContent} visible={showModal} />
     </>
   );
 });

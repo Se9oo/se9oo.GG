@@ -22,7 +22,7 @@ function getChartDataName(data) {
     case 'cs':
       return 'CS';
   }
-};
+}
 
 const MatchDetailAnalysis = ({ match }) => {
   // 모든 소환사 정보
@@ -32,19 +32,29 @@ const MatchDetailAnalysis = ({ match }) => {
   // 패배팀 id
   const loseTeamId = match.teams.find((team) => team.win === 'Fail').teamId;
   // 승리팀 소환사 게임 정보
-  const winTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === winTeamId);
+  const winTeamInfo = allSummonerGameInfo.filter(
+    (summoner) => summoner.teamId === winTeamId
+  );
   // 패배팀 소환사 게임 정보
-  const loseTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === loseTeamId);
+  const loseTeamInfo = allSummonerGameInfo.filter(
+    (summoner) => summoner.teamId === loseTeamId
+  );
 
   // 승리팀 라인에 따른 배열 순서 정렬
   winTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
+    summoner.order = getListOrder(
+      summoner.timeline.lane,
+      summoner.timeline.role
+    );
   });
   winTeamInfo.sort((a, b) => a.order - b.order);
 
   // 패배팀 라인에 따른 배열 순서 정렬
   loseTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
+    summoner.order = getListOrder(
+      summoner.timeline.lane,
+      summoner.timeline.role
+    );
   });
   loseTeamInfo.sort((a, b) => a.order - b.order);
 
@@ -52,8 +62,12 @@ const MatchDetailAnalysis = ({ match }) => {
   const [chartData, setChartData] = useState('totalDamageDealtToChampions');
   // chart data 종류
   const chartDataArr = [
-    'totalDamageDealtToChampions','goldEarned', 'kills'
-    , 'wardsPlaced', 'totalDamageTaken', 'cs'
+    'totalDamageDealtToChampions',
+    'goldEarned',
+    'kills',
+    'wardsPlaced',
+    'totalDamageTaken',
+    'cs',
   ];
   // chart data state change
   const onClickChartNextData = useCallback(() => {
@@ -63,7 +77,7 @@ const MatchDetailAnalysis = ({ match }) => {
     }
     setChartData(chartDataArr[nextIdx]);
   }, [chartData]);
-// chart data state change
+  // chart data state change
   const onClickChartPrevData = useCallback(() => {
     let prevIdx = chartDataArr.findIndex((e) => e === chartData) - 1;
     if (prevIdx === -1) {
@@ -83,14 +97,32 @@ const MatchDetailAnalysis = ({ match }) => {
     // champion name
     const championName = getChampionNameById(summoner.championId);
     // data
-    winTeamTotalDamageDealtToChampions.push({ name: championName.eng + '-win', y: summoner.stats.totalDamageDealtToChampions });
-    winTeamGoldEarned.push({ name: championName.eng + '-win', y: summoner.stats.goldEarned });
-    winTeamKills.push({ name: championName.eng + '-win', y: summoner.stats.kills });
-    winWardsPlaced.push({ name: championName.eng + '-win', y: summoner.stats.wardsPlaced });
-    winTotalDamageTaken.push({ name: championName.eng + '-win', y: summoner.stats.totalDamageTaken });
+    winTeamTotalDamageDealtToChampions.push({
+      name: championName.eng + '-win',
+      y: summoner.stats.totalDamageDealtToChampions,
+    });
+    winTeamGoldEarned.push({
+      name: championName.eng + '-win',
+      y: summoner.stats.goldEarned,
+    });
+    winTeamKills.push({
+      name: championName.eng + '-win',
+      y: summoner.stats.kills,
+    });
+    winWardsPlaced.push({
+      name: championName.eng + '-win',
+      y: summoner.stats.wardsPlaced,
+    });
+    winTotalDamageTaken.push({
+      name: championName.eng + '-win',
+      y: summoner.stats.totalDamageTaken,
+    });
     winCs.push({
       name: championName.eng + '-win',
-      y: parseInt(summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled, 10),
+      y: parseInt(
+        summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled,
+        10
+      ),
     });
   });
 
@@ -105,45 +137,70 @@ const MatchDetailAnalysis = ({ match }) => {
     // champion name
     const championName = getChampionNameById(summoner.championId);
     // data
-    loseTeamTotalDamageDealtToChampions.push({ name: championName.eng + '-los', y: summoner.stats.totalDamageDealtToChampions });
-    loseTeamGoldEarned.push({ name: championName.eng + '-los', y: summoner.stats.goldEarned });
-    loseTeamKills.push({ name: championName.eng + '-los', y: summoner.stats.kills });
-    loseWardsPlaced.push({ name: championName.eng + '-los', y: summoner.stats.wardsPlaced });
-    loseTotalDamageTaken.push({ name: championName.eng + '-los', y: summoner.stats.totalDamageTaken });
+    loseTeamTotalDamageDealtToChampions.push({
+      name: championName.eng + '-los',
+      y: summoner.stats.totalDamageDealtToChampions,
+    });
+    loseTeamGoldEarned.push({
+      name: championName.eng + '-los',
+      y: summoner.stats.goldEarned,
+    });
+    loseTeamKills.push({
+      name: championName.eng + '-los',
+      y: summoner.stats.kills,
+    });
+    loseWardsPlaced.push({
+      name: championName.eng + '-los',
+      y: summoner.stats.wardsPlaced,
+    });
+    loseTotalDamageTaken.push({
+      name: championName.eng + '-los',
+      y: summoner.stats.totalDamageTaken,
+    });
     loseCs.push({
       name: championName.eng + '-los',
-      y: parseInt(summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled, 10),
+      y: parseInt(
+        summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled,
+        10
+      ),
     });
   });
 
   // 선택한 chart data chart에 꽂기
-  const getChartData = useCallback((winOrLose) => {
-    switch (chartData) {
-      case 'totalDamageDealtToChampions':
-        return winOrLose === 'win' ? winTeamTotalDamageDealtToChampions : loseTeamTotalDamageDealtToChampions;
-      case 'goldEarned':
-        return winOrLose === 'win' ? winTeamGoldEarned : loseTeamGoldEarned;
-      case 'kills':
-        return winOrLose === 'win' ? winTeamKills : loseTeamKills;
-      case 'wardsPlaced':
-        return winOrLose === 'win' ? winWardsPlaced : loseWardsPlaced;
-      case 'totalDamageTaken':
-        return winOrLose === 'win' ? winTotalDamageTaken : loseTotalDamageTaken;
-      case 'cs':
-        return winOrLose === 'win' ? winCs : loseCs;
-    }
-  }, [chartData]);
+  const getChartData = useCallback(
+    (winOrLose) => {
+      switch (chartData) {
+        case 'totalDamageDealtToChampions':
+          return winOrLose === 'win'
+            ? winTeamTotalDamageDealtToChampions
+            : loseTeamTotalDamageDealtToChampions;
+        case 'goldEarned':
+          return winOrLose === 'win' ? winTeamGoldEarned : loseTeamGoldEarned;
+        case 'kills':
+          return winOrLose === 'win' ? winTeamKills : loseTeamKills;
+        case 'wardsPlaced':
+          return winOrLose === 'win' ? winWardsPlaced : loseWardsPlaced;
+        case 'totalDamageTaken':
+          return winOrLose === 'win'
+            ? winTotalDamageTaken
+            : loseTotalDamageTaken;
+        case 'cs':
+          return winOrLose === 'win' ? winCs : loseCs;
+      }
+    },
+    [chartData]
+  );
 
   // chart options
   const options = {
     chart: {
       type: 'bar',
       style: {
-        fontFamily: `'GmarketSansMedium', 'Sans-serif' !important`
-      }
+        fontFamily: `'GmarketSansMedium', 'Sans-serif' !important`,
+      },
     },
     title: {
-      text: null
+      text: null,
     },
     credits: {
       enabled: false,
@@ -152,44 +209,50 @@ const MatchDetailAnalysis = ({ match }) => {
       type: 'category',
       labels: {
         useHTML: true,
-        formatter: function() {
-          return `<img src="/img/champion/${this.value.slice(0, -4)}.png" alt="champion-img-${this.value.slice(0, -4)}" style="width: 2.5rem; text-align: center;"/>`;
-        }
+        formatter: function () {
+          return `<img src="/img/champion/${this.value.slice(
+            0,
+            -4
+          )}.png" alt="champion-img-${this.value.slice(
+            0,
+            -4
+          )}" style="width: 2.5rem; text-align: center;"/>`;
+        },
       },
     },
     yAxis: {
       title: {
-        text: null
+        text: null,
       },
       labels: {
         enabled: false,
-      }
+      },
     },
     legend: {
-      enabled: false
+      enabled: false,
     },
     tooltip: {
-      enabled: false
+      enabled: false,
     },
     plotOptions: {
       bar: {
         dataLabels: {
           enabled: true,
-          color: 'rgba(0, 0, 0, .5)'
+          color: 'rgba(0, 0, 0, .5)',
         },
-      }
+      },
     },
     series: [
       {
         color: '#339af0',
-        data: getChartData('win')
+        data: getChartData('win'),
       },
       {
         color: '#e03131',
-        data: getChartData('lose')
-      }
-    ]
-  }
+        data: getChartData('lose'),
+      },
+    ],
+  };
 
   return (
     <>
@@ -249,13 +312,13 @@ const GraphInfo = styled.div`
 
 const WinLine = styled.span`
   width: 5%;
-  height: .5rem;
+  height: 0.5rem;
   background-color: #339af0;
 `;
 
 const LoseLine = styled.span`
   width: 5%;
-  height: .5rem;
+  height: 0.5rem;
   background-color: #e03131;
 `;
 

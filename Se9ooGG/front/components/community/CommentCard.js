@@ -8,9 +8,9 @@ import styled from 'styled-components';
 
 const CommentCard = memo(({ commentList, postId }) => {
   const dispatch = useDispatch('');
-  const { me } = useSelector((state) => (state.user));
-  const { addCommentLoading } = useSelector((state) => (state.post));
-  
+  const { me } = useSelector((state) => state.user);
+  const { addCommentLoading } = useSelector((state) => state.post);
+
   // comment form
   const [commentText, setCommentText] = useState('');
   const onChangeCommentText = useCallback((e) => {
@@ -25,26 +25,34 @@ const CommentCard = memo(({ commentList, postId }) => {
     }
 
     // 댓글 등록
-    dispatch(addCommentRequestAction({
-      email: me.email,
-      nickname: me.nickname,
-      content: commentText,
-      postId: postId,
-    }));
+    dispatch(
+      addCommentRequestAction({
+        email: me.email,
+        nickname: me.nickname,
+        content: commentText,
+        postId: postId,
+      })
+    );
     setCommentText('');
   }, [postId, commentText]);
 
   return (
     <CommentContainer>
-      {
-        commentList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 댓글이 없습니다.</Empty>
-      }
-      {        
-       commentList.length > 0 && commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />) 
-      }
-      {
-        me &&
-        <Comment 
+      {commentList.length === 0 && (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>
+          등록된 댓글이 없습니다.
+        </Empty>
+      )}
+      {commentList.length > 0 &&
+        commentList.map((comment) => (
+          <CommentItem
+            key={comment.commentId}
+            comment={comment}
+            postId={postId}
+          />
+        ))}
+      {me && (
+        <Comment
           avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}
           author={me.nickname}
           content={
@@ -58,13 +66,19 @@ const CommentCard = memo(({ commentList, postId }) => {
                   onChange={onChangeCommentText}
                 />
                 <CommentBtn>
-                  <Button type="primary" htmlType="submit" loading={addCommentLoading}>게시</Button>
+                  <Button
+                    type="primary"
+                    htmlType="submit"
+                    loading={addCommentLoading}
+                  >
+                    게시
+                  </Button>
                 </CommentBtn>
               </CommentForm>
             </>
           }
         />
-      }
+      )}
     </CommentContainer>
   );
 });
@@ -72,8 +86,8 @@ const CommentCard = memo(({ commentList, postId }) => {
 const CommentContainer = styled.div`
   padding: 2rem;
   background-color: #ffffff;
-  border: 1px solid rgba(206, 212, 218, .5);
-  @media ${props => props.theme.tablet} {
+  border: 1px solid rgba(206, 212, 218, 0.5);
+  @media ${(props) => props.theme.tablet} {
     border-top: none;
   }
 `;

@@ -6,9 +6,9 @@ import CommonModal from '../CommonModal';
 import { CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const CommentItem = memo(({ comment, postId }) => {  
+const CommentItem = memo(({ comment, postId }) => {
   const dispatch = useDispatch('');
-  const { me } = useSelector((state) => (state.user));
+  const { me } = useSelector((state) => state.user);
 
   // modal content
   const [modalContent, setModalContent] = useState('');
@@ -16,10 +16,12 @@ const CommentItem = memo(({ comment, postId }) => {
   const [showModal, setShowModal] = useState(false);
 
   const onOkDeleteCommentModal = useCallback(() => {
-    dispatch(deleteCommentRequestAction({
-      commentId: comment.commentId,
-      postId: postId,
-    }));
+    dispatch(
+      deleteCommentRequestAction({
+        commentId: comment.commentId,
+        postId: postId,
+      })
+    );
     setShowModal(false);
   }, []);
 
@@ -29,10 +31,10 @@ const CommentItem = memo(({ comment, postId }) => {
 
   const onClickDeleteCommentBtn = useCallback(() => {
     setModalContent({
-      title: "댓글 삭제",
+      title: '댓글 삭제',
       onOk: onOkDeleteCommentModal,
       onCancel: onCancelDeleteCommentModal,
-      content: "삭제 하시겠습니까?"
+      content: '삭제 하시겠습니까?',
     });
     setShowModal(true);
   }, []);
@@ -44,17 +46,20 @@ const CommentItem = memo(({ comment, postId }) => {
           author={comment.nickname}
           avatar={<Avatar>{comment.nickname.slice(0, 1)}</Avatar>}
           content={
-            comment.content && 
+            comment.content &&
             comment.content.split('\n').map((list, i) => {
-              return (<span key={i}>{list}<br /></span>)
+              return (
+                <span key={i}>
+                  {list}
+                  <br />
+                </span>
+              );
             })
           }
         />
-        {
-          me && 
-          me.email === comment.email ? <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
-          : null
-        }
+        {me && me.email === comment.email ? (
+          <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
+        ) : null}
       </CommentItemContainer>
       <CommonModal modalContent={modalContent} visible={showModal} />
     </>

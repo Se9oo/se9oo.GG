@@ -6,16 +6,19 @@ export function errorModal(msg) {
     title: 'ERROR',
     content: (
       <p>
-        {
-          msg 
-          && msg.split('\n').map((line, i) => {
-            return (<span key={i}>{line}<br/></span>)
-          })
-        }
+        {msg &&
+          msg.split('\n').map((line, i) => {
+            return (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            );
+          })}
       </p>
     ),
     okText: '닫기',
-  })
+  });
 }
 
 export function infoModal(msg) {
@@ -23,16 +26,19 @@ export function infoModal(msg) {
     title: 'INFO',
     content: (
       <p>
-        {
-          msg 
-          && msg.split('\n').map((line, i) => {
-            return (<span key={i}>{line}<br/></span>)
-          })
-        }
+        {msg &&
+          msg.split('\n').map((line, i) => {
+            return (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            );
+          })}
       </p>
     ),
     okText: '닫기',
-  })
+  });
 }
 
 const CommonModal = ({ modalContent, visible }) => {
@@ -42,16 +48,19 @@ const CommonModal = ({ modalContent, visible }) => {
       visible={visible}
       onOk={modalContent.onOk}
       onCancel={modalContent.onCancel}
-      okText='예'
-      cancelText='아니요'
+      okText="예"
+      cancelText="아니요"
     >
       <p>
-        {
-          modalContent.content 
-          && modalContent.content.split('\n').map((line, i) => {
-            return (<span key={i}>{line}<br/></span>)
-          })
-        }
+        {modalContent.content &&
+          modalContent.content.split('\n').map((line, i) => {
+            return (
+              <span key={i}>
+                {line}
+                <br />
+              </span>
+            );
+          })}
       </p>
     </Modal>
   );

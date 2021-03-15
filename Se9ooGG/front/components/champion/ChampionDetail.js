@@ -2,21 +2,20 @@ import React from 'react';
 import styled from 'styled-components';
 
 const ChampionDetail = ({ champion }) => {
-
-  console.log(champion);
   return (
     <>
       <Info>
         <Feature>
-          <img src={`/img/champion/${champion.id}.png`} alt={`${champion.id}-img`} />          
+          <img
+            src={`/img/champion/${champion.id}.png`}
+            alt={`${champion.id}-img`}
+          />
         </Feature>
         <Definition>
           <Tags>
-            {
-              champion.tags.map((tag, idx) => {
-                return <span key={idx}>{tag}</span>
-              })
-            }
+            {champion.tags.map((tag, idx) => {
+              return <span key={idx}>{tag}</span>;
+            })}
           </Tags>
           <h1>{champion.name}</h1>
           <strong>{champion.title}</strong>
@@ -33,9 +32,7 @@ const ChampionDetail = ({ champion }) => {
           <article>comments</article>
         </Contents>
       </section>
-      <section>
-        skins
-      </section>
+      <section>skins</section>
     </>
   );
 };
@@ -44,11 +41,11 @@ export default ChampionDetail;
 
 const Info = styled.section`
   background-color: #ffffff;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
   margin-bottom: 1rem;
   padding: 1rem;
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     display: flex;
   }
 `;
@@ -61,7 +58,7 @@ const Feature = styled.div`
     margin: 0 auto;
   }
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     width: 30%;
     margin: 0 auto;
   }
@@ -78,13 +75,13 @@ const Definition = styled.div`
     font-weight: 700;
     font-size: 1.6rem;
     line-height: 1.5;
-    margin-bottom: .5rem;
+    margin-bottom: 0.5rem;
   }
 
   & strong {
     font-size: 1.1rem;
-    color: #868E96;
-    margin-bottom: .5rem;
+    color: #868e96;
+    margin-bottom: 0.5rem;
     line-height: 1.5;
   }
 
@@ -94,7 +91,7 @@ const Definition = styled.div`
     line-height: 1.5;
   }
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     width: 70%;
     align-items: flex-start;
   }
@@ -102,18 +99,18 @@ const Definition = styled.div`
 
 const Tags = styled.div`
   display: flex;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
 
   & span {
     background-color: #dee2e6;
-    margin: 0 .5rem;
-    padding: .5rem;
+    margin: 0 0.5rem;
+    padding: 0.5rem;
     border: 1px solid #ced4da;
   }
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     & span:first-child {
-      margin: 0 .5rem 0 0;
+      margin: 0 0.5rem 0 0;
     }
   }
 `;
@@ -125,7 +122,7 @@ const Contents = styled.div`
   & article {
     width: 49%;
     background-color: #ffffff;
-    border: 1px solid rgba(206, 212, 218, .5);
+    border: 1px solid rgba(206, 212, 218, 0.5);
     padding: 1rem;
   }
 `;

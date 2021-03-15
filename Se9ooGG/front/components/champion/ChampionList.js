@@ -6,35 +6,32 @@ import styled from 'styled-components';
 const ChampionList = ({ champion }) => {
   const router = useRouter();
   // 가나다 순으로 정렬
-  const championArray = [...champion].sort((a, b) => a.name < b.name ? -1 : a.name > b.name ? 1 : 0);
+  const championArray = [...champion].sort((a, b) =>
+    a.name < b.name ? -1 : a.name > b.name ? 1 : 0
+  );
 
   const onClickChampionItem = useCallback((id) => {
     router.push({
       pathname: '/champion/[championName]',
-      query: { championName: `${id}`}
+      query: { championName: `${id}` },
     });
   }, []);
-  
+
   return (
     <>
-      <ChampionSearchInput
-        placeholder="챔피언 검색" 
-        enterButton
-      />
+      <ChampionSearchInput placeholder="챔피언 검색" enterButton />
       <ChampList>
-        {
-          championArray.map((v) => {
-            return (
-              <ChampListItem 
-                key={v.name}
-                onClick={() => onClickChampionItem(v.id)}
-              >
-                <ChampionImg src={`/img/champion/${v.id}.png`} alt={`${v.id}`}/>
-                <ChampionName>{v.name}</ChampionName>
-              </ChampListItem>
-            )
-          })
-        }
+        {championArray.map((v) => {
+          return (
+            <ChampListItem
+              key={v.name}
+              onClick={() => onClickChampionItem(v.id)}
+            >
+              <ChampionImg src={`/img/champion/${v.id}.png`} alt={`${v.id}`} />
+              <ChampionName>{v.name}</ChampionName>
+            </ChampListItem>
+          );
+        })}
       </ChampList>
     </>
   );
@@ -56,33 +53,33 @@ const ChampList = styled.ul`
   max-height: 27rem;
   overflow-y: scroll;
   background-color: #ffffff;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
   padding: 1rem;
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     max-height: 100%;
     overflow: auto;
   }
 `;
 
- const ChampListItem = styled.li`
+const ChampListItem = styled.li`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: .2rem;
+  padding: 0.2rem;
   cursor: pointer;
 `;
 
- const ChampionImg = styled.img`
+const ChampionImg = styled.img`
   display: block;
   width: 5rem;
 `;
 
- const ChampionName = styled.span`
+const ChampionName = styled.span`
   display: block;
   width: 3rem;
-  padding: .5rem 0;
-  font-size: .8rem;
+  padding: 0.5rem 0;
+  font-size: 0.8rem;
   text-align: center;
   text-overflow: ellipsis;
   white-space: nowrap;

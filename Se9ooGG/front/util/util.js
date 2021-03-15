@@ -14,12 +14,12 @@ export function getListOrder(lane, role) {
         return 4;
       }
   }
-};
+}
 
 // KDA 계산
 export function getKDA(kill, death, assist) {
   return death === 0 ? 'perfect' : ((kill + assist) / death).toFixed(2);
-};
+}
 
 // 게임 진행 시간
 export function getGameDuration(duration) {
@@ -40,7 +40,7 @@ export function getGameDuration(duration) {
   };
 
   return gameDuration;
-};
+}
 
 // 게임 생성 시간
 export function getGameCreation(creation) {
@@ -51,7 +51,7 @@ export function getGameCreation(creation) {
   const diffHour = diffMinute / 60;
   const diffDate = diffHour / 24;
   const diffMonth = diffDate / 30;
-  
+
   if (Math.round(diffMonth) > 0) {
     return `${Math.round(diffMonth)}달전`;
   }
@@ -68,12 +68,12 @@ export function getGameCreation(creation) {
     return `${Math.round(diffSecond)}초전`;
   }
   return '-';
-};
+}
 
 // 승률 구하기
 export function getWinRate(win, lose) {
   return lose === 0 ? 100 : Math.floor((win / (win + lose)) * 100);
-};
+}
 
 // etc chart graph color
 export function getColorByParticipantId(id) {
@@ -99,4 +99,4 @@ export function getColorByParticipantId(id) {
     case 10:
       return '#e8590c';
   }
-};
+}

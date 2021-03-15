@@ -9,9 +9,11 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   // 검색한 소환사명
   const { summonerName } = useSelector((state) => state.statistic.summoner);
   // 검색한 소환사의 participantId
-  const summonerParticipantId = match.participantIdentities.filter((summoner) => {
-    return summoner.player.summonerName === summonerName;
-  })[0].participantId;
+  const summonerParticipantId = match.participantIdentities.filter(
+    (summoner) => {
+      return summoner.player.summonerName === summonerName;
+    }
+  )[0].participantId;
   // match의 timeline 추출
   const matchTimelines = match.matchTimelines.frames;
   // 위에서 찾은 participantId로 검색한 소환사의 시간대별 events 추출
@@ -20,7 +22,9 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   });
   // 아이템 (구매,판매 정보)
   const items = events.map((item) => {
-    return item.filter((v) => v.type !== 'SKILL_LEVEL_UP' && v.type !== 'ITEM_DESTROYED');
+    return item.filter(
+      (v) => v.type !== 'SKILL_LEVEL_UP' && v.type !== 'ITEM_DESTROYED'
+    );
   });
 
   // timestamp -> 분으로 변환해서 time property 추가
@@ -29,7 +33,7 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   items.map((item) => {
     if (item.length !== 0) {
       item.map((i) => {
-        i.time = parseInt(i.timestamp / 60000 , 10);
+        i.time = parseInt(i.timestamp / 60000, 10);
         formedItems.push(i);
       });
     }
@@ -63,12 +67,14 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   // 같은 시간에 구매/판매 한 아이템 배열
   let sameTimeArr = [];
   // 최종 빌드 아이템 배열
-  let finalItemArr = [];  
+  let finalItemArr = [];
   secondFormedItems.map((f, i) => {
     if (prevTime === f.time) {
       sameTimeArr.push(f);
       prevTime = f.time;
-      secondFormedItems.length === (i + 1) ? finalItemArr.push(sameTimeArr) : null;
+      secondFormedItems.length === i + 1
+        ? finalItemArr.push(sameTimeArr)
+        : null;
     } else {
       finalItemArr.push(sameTimeArr);
       sameTimeArr = [];
@@ -85,7 +91,7 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
       if (skill.type === 'SKILL_LEVEL_UP') {
         skillArr.push(skill);
       }
-    })
+    });
   });
 
   // summoner game info 추출
@@ -107,25 +113,27 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
     perk5: stats.perk5,
     statPerk0: stats.statPerk0,
     statPerk1: stats.statPerk1,
-    statPerk2: stats.statPerk2
+    statPerk2: stats.statPerk2,
   };
 
   return (
     <>
       <SubTitle title="build">아이템 빌드</SubTitle>
       <Build>
-        {
-          finalItemArr.map((item, i) => {
-            return (
-              <BuildItemsList key={i}>
-                <BuildItems key={i} items={item} idx={i} />
-              </BuildItemsList>
-            )
-          })
-        }
+        {finalItemArr.map((item, i) => {
+          return (
+            <BuildItemsList key={i}>
+              <BuildItems key={i} items={item} idx={i} />
+            </BuildItemsList>
+          );
+        })}
       </Build>
       <SubTitle title="skill">스킬 빌드</SubTitle>
-      <BuildSkills skills={skillArr} winOrLose={winOrLose} championId={championId} />
+      <BuildSkills
+        skills={skillArr}
+        winOrLose={winOrLose}
+        championId={championId}
+      />
       <SubTitle title="rune">룬</SubTitle>
       <BuildRune rune={runeInfo} />
     </>
@@ -136,7 +144,7 @@ export default MatchDetailBuild;
 
 const SubTitle = styled.div`
   padding: 1rem;
-  ${props => {
+  ${(props) => {
     if (props.title === 'build') {
       return `border-bottom: 1px solid rgba(206, 212, 218, .5);`;
     } else {

@@ -1,7 +1,12 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import { CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
+import {
+  CrownOutlined,
+  HomeOutlined,
+  MessageOutlined,
+  UserOutlined,
+} from '@ant-design/icons';
 import styled from 'styled-components';
 
 const AppLayout = ({ children }) => {
@@ -11,32 +16,80 @@ const AppLayout = ({ children }) => {
     <Container>
       {/* desktop nav */}
       <DesktopNav>
-        <h1><Link href="/"><img src="/nav-logo.png" alt="logo"/></Link></h1>
+        <h1>
+          <Link href="/">
+            <img src="/nav-logo.png" alt="logo" />
+          </Link>
+        </h1>
         <ul>
-            {
-              me
-              ? <li><Link href="/profile"><a>프로필</a></Link></li>
-              : <li><Link href="/login"><a>로그인</a></Link></li>
-            }
-            <li><Link href="/community"><a>커뮤니티</a></Link></li>
-            <li><Link href="/champion/"><a>챔피언</a></Link></li>
+          {me ? (
+            <li>
+              <Link href="/profile">
+                <a>프로필</a>
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link href="/login">
+                <a>로그인</a>
+              </Link>
+            </li>
+          )}
+          <li>
+            <Link href="/community">
+              <a>커뮤니티</a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/champion/">
+              <a>챔피언</a>
+            </Link>
+          </li>
         </ul>
       </DesktopNav>
       {/* content */}
-        <ContentContainer>
-          {children}
-        </ContentContainer>
+      <ContentContainer>{children}</ContentContainer>
       {/* mobile nav */}
       <MobileFooter>
         <ul>
-          <li><Link href="/"><a><HomeOutlined /></a></Link></li>
-          {
-            me
-            ? <li><Link href="/profile"><a><UserOutlined /></a></Link></li>
-            : <li><Link href="/login"><a><UserOutlined /></a></Link></li>
-          }
-          <li><Link href="/community"><a><MessageOutlined /></a></Link></li>
-          <li><Link href="/champion"><a><CrownOutlined /></a></Link></li>
+          <li>
+            <Link href="/">
+              <a>
+                <HomeOutlined />
+              </a>
+            </Link>
+          </li>
+          {me ? (
+            <li>
+              <Link href="/profile">
+                <a>
+                  <UserOutlined />
+                </a>
+              </Link>
+            </li>
+          ) : (
+            <li>
+              <Link href="/login">
+                <a>
+                  <UserOutlined />
+                </a>
+              </Link>
+            </li>
+          )}
+          <li>
+            <Link href="/community">
+              <a>
+                <MessageOutlined />
+              </a>
+            </Link>
+          </li>
+          <li>
+            <Link href="/champion">
+              <a>
+                <CrownOutlined />
+              </a>
+            </Link>
+          </li>
         </ul>
       </MobileFooter>
     </Container>
@@ -47,7 +100,7 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
 
-  @media ${props => props.theme.laptop} {
+  @media ${(props) => props.theme.laptop} {
     max-width: 980px;
     margin: 0 auto;
   }
@@ -91,7 +144,7 @@ const DesktopNav = styled.nav`
     padding: 0 2rem;
   }
 
-  @media ${props => props.theme.laptop} {
+  @media ${(props) => props.theme.laptop} {
     display: flex;
   }
 `;
@@ -100,11 +153,11 @@ const ContentContainer = styled.section`
   display: block;
   padding: 10px 10px 80px;
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     padding: 10px 10px 100px;
   }
 
-  @media ${props => props.theme.laptop} {
+  @media ${(props) => props.theme.laptop} {
     padding: 80px 1rem 1rem;
   }
 `;
@@ -137,8 +190,8 @@ const MobileFooter = styled.footer`
     font-size: 2rem;
   }
 
-  @media ${props => props.theme.laptop} {
-    display:none;
+  @media ${(props) => props.theme.laptop} {
+    display: none;
   }
 `;
 

@@ -5,18 +5,19 @@ import styled from 'styled-components';
 const Participant = ({ team }) => {
   return (
     <ul>
-      {
-        team.map((summoner) => {
-          const championName = getChampionNameById(summoner.championId);
+      {team.map((summoner) => {
+        const championName = getChampionNameById(summoner.championId);
 
-          return (
-            <ParticipantItem key={summoner.participantId}>
-              <img src={`/img/champion/${championName.eng}.png`} alt="champion-img" />
-              <span>{summoner.summonerName}</span>
-            </ParticipantItem>
-          )
-        })
-      }
+        return (
+          <ParticipantItem key={summoner.participantId}>
+            <img
+              src={`/img/champion/${championName.eng}.png`}
+              alt="champion-img"
+            />
+            <span>{summoner.summonerName}</span>
+          </ParticipantItem>
+        );
+      })}
     </ul>
   );
 };

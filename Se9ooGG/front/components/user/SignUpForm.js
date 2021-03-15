@@ -4,12 +4,17 @@ import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import CommonModal, { errorModal, infoModal } from './CommonModal';
 import { Button, Form, Input } from 'antd';
-import { SignUpDoneClearRequestAction, SignUpRequestAction } from '../reducer/user';
+import {
+  SignUpDoneClearRequestAction,
+  SignUpRequestAction,
+} from '../reducer/user';
 import styled from 'styled-components';
 
 const SignUpForm = () => {
   const dispatch = useDispatch('');
-  const { signUpLoading, signUpDone, signUpError } = useSelector((state) => (state.user));
+  const { signUpLoading, signUpDone, signUpError } = useSelector(
+    (state) => state.user
+  );
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [passwordError, setPasswordError] = useState(false);
@@ -22,16 +27,22 @@ const SignUpForm = () => {
   const [password, setPassword] = useState('');
   // 비밀번호 확인
   const [passwordCheck, setPasswordCheck] = useState('');
-  
-  const onChangePassword = useCallback((e) => {
-    setPassword(e.target.value);
-    setPasswordError(passwordCheck !== e.target.value);
-  }, [passwordCheck]);
 
-  const onChangePasswordCheck = useCallback((e) => {
-    setPasswordCheck(e.target.value);
-    setPasswordError(password !== e.target.value);
-  }, [password]);
+  const onChangePassword = useCallback(
+    (e) => {
+      setPassword(e.target.value);
+      setPasswordError(passwordCheck !== e.target.value);
+    },
+    [passwordCheck]
+  );
+
+  const onChangePasswordCheck = useCallback(
+    (e) => {
+      setPasswordCheck(e.target.value);
+      setPasswordError(password !== e.target.value);
+    },
+    [password]
+  );
 
   // 회원가입 성공
   useEffect(() => {
@@ -76,12 +87,12 @@ const SignUpForm = () => {
       return;
     }
 
-    if (password && passwordCheck && (password === passwordCheck)) {
+    if (password && passwordCheck && password === passwordCheck) {
       setModalContent({
         title: '회원가입',
         onOk: onOkModal,
         onCancel: onCancelModal,
-        content:'가입 하시겠습니까?'
+        content: '가입 하시겠습니까?',
       });
       setShowModal(true);
     }
@@ -96,14 +107,14 @@ const SignUpForm = () => {
   const onCancelModal = useCallback(() => {
     setShowModal(false);
   }, []);
-  
+
   return (
     <>
       <h2>회원가입</h2>
       <Form onFinish={onSubmitForm}>
         <InputContainer>
           <label htmlFor="user-email">이메일</label>
-          <Input 
+          <Input
             type="text"
             name="user-email"
             placeholder="이메일"
@@ -113,7 +124,7 @@ const SignUpForm = () => {
         </InputContainer>
         <InputContainer>
           <label htmlFor="user-nickname">닉네임</label>
-          <Input 
+          <Input
             type="text"
             name="user-nickname"
             placeholder="닉네임"
@@ -141,15 +152,14 @@ const SignUpForm = () => {
             onChange={onChangePasswordCheck}
           />
         </InputContainer>
-        { passwordError && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage> }
+        {passwordError && <ErrorMessage>비밀번호가 다릅니다.</ErrorMessage>}
         <ButtonContainer>
-          <Button type="primary" htmlType="submit" loading={signUpLoading}>가입하기</Button>
+          <Button type="primary" htmlType="submit" loading={signUpLoading}>
+            가입하기
+          </Button>
         </ButtonContainer>
       </Form>
-      <CommonModal
-        modalContent={modalContent}
-        visible={showModal}
-      />
+      <CommonModal modalContent={modalContent} visible={showModal} />
     </>
   );
 };
@@ -159,7 +169,7 @@ const InputContainer = styled.div`
 
   & label {
     display: block;
-    padding-bottom: .5rem;
+    padding-bottom: 0.5rem;
   }
 `;
 

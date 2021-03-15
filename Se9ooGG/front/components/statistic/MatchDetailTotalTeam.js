@@ -19,21 +19,19 @@ const MatchDetailTotalTeam = ({ index, team, gameInfo }) => {
         </ObjectKillInfo>
       </MatchDetailTotalHeader>
       <MatchDetailTotalSummonersList>
-        {
-          gameInfo.map((info, i) => {
-            return <MatchDetailTotalSummoner key={i} gameInfo={info}/>
-          })
-        }
+        {gameInfo.map((info, i) => {
+          return <MatchDetailTotalSummoner key={i} gameInfo={info} />;
+        })}
       </MatchDetailTotalSummonersList>
     </>
-  )
+  );
 };
 
 const MatchDetailTotalHeader = styled.div`
   display: flex;
   justify-content: space-between;
   padding: 1rem;
-  ${props => {
+  ${(props) => {
     if (props.index === 1) {
       return `border-top: 1px solid rgba(206, 212, 218, .5);`;
     }
@@ -44,7 +42,7 @@ const MatchDetailTotalHeader = styled.div`
 
 const WinOrLose = styled.span`
   width: 50%;
-  ${props => {
+  ${(props) => {
     if (props.winOrLose === 'Win') {
       return `color: #339af0;`;
     } else {
@@ -61,17 +59,18 @@ const ObjectKillInfo = styled.dl`
   & dt:after {
     content: ':';
   }
-  & dt, dd {
-    margin-right: .5rem;
+  & dt,
+  dd {
+    margin-right: 0.5rem;
   }
 `;
 
 const MatchDetailTotalSummonersList = styled.ul`
   display: flex;
   flex-direction: column;
-  
+
   & first-child {
-    border: 1px solid rgba(206, 212, 218, .5);
+    border: 1px solid rgba(206, 212, 218, 0.5);
   }
 `;
 

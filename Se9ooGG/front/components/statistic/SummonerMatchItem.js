@@ -2,20 +2,27 @@ import React, { useCallback, useState } from 'react';
 import { useSelector } from 'react-redux';
 import SummonerMatchDetail from './SummonerMatchDetail';
 import ParticipantList from './ParticipantList';
-import { getChampionNameById, getQueueType, getRuneImgUrl, getSpellNameById } from '../../util/JsonUtil';
+import {
+  getChampionNameById,
+  getQueueType,
+  getRuneImgUrl,
+  getSpellNameById,
+} from '../../util/JsonUtil';
 import { getKDA, getGameDuration, getGameCreation } from '../../util/util';
 import { DownOutlined, UpOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const SummonerMatchItem = ({ match }) => {
   // 검색 소환사 accountId
-  const { accountId } = useSelector((state) => (state.statistic.summoner));
+  const { accountId } = useSelector((state) => state.statistic.summoner);
   // 검색 소환사 accoutId로 소환사 정보 찾기
   const findSummoner = match.participantIdentities.find((summoner) => {
     return summoner.player.accountId === accountId;
-  })
+  });
   // 소환사 id로 찾은 소환사의 게임 정보
-  const summonerInfo = match.participants.find((info) => info.participantId === parseInt(findSummoner.participantId, 10));
+  const summonerInfo = match.participants.find(
+    (info) => info.participantId === parseInt(findSummoner.participantId, 10)
+  );
   // 소환사 게임 stat
   const summonerStats = summonerInfo.stats;
   // 소환사 게임 timeline
@@ -30,17 +37,24 @@ const SummonerMatchItem = ({ match }) => {
   // 소환사 챔피언 이름
   const championName = getChampionNameById(summonerInfo.championId);
   // 소환사 spell
-  const summonerSpell = getSpellNameById(summonerInfo.spell1Id, summonerInfo.spell2Id);
+  const summonerSpell = getSpellNameById(
+    summonerInfo.spell1Id,
+    summonerInfo.spell2Id
+  );
   // 소환사 rune
   const runeInfo = {
     perkPrimaryStyle: summonerStats.perkPrimaryStyle,
     perk0: summonerStats.perk0,
     perkSubStyle: summonerStats.perkSubStyle,
-  }
+  };
   // 소환사 rune img 경로
   const summonerRune = getRuneImgUrl(runeInfo);
   // 소환사 KDA
-  const summonerKDA = getKDA(summonerStats.kills, summonerStats.deaths, summonerStats.assists);
+  const summonerKDA = getKDA(
+    summonerStats.kills,
+    summonerStats.deaths,
+    summonerStats.assists
+  );
   // 소환사 item
   const summonerItemsArr = [];
   for (let i = 0; i < 7; i++) {
@@ -49,7 +63,9 @@ const SummonerMatchItem = ({ match }) => {
   // 게임 진행 시간
   const gameDuration = getGameDuration(match.gameDuration);
   // 게임 생성 시간
-  const gameCreateion = getGameCreation(match.gameCreation + match.gameDuration * 1000);
+  const gameCreateion = getGameCreation(
+    match.gameCreation + match.gameDuration * 1000
+  );
   // Queue 타입
   const queueType = getQueueType(match.queueId);
   // match detail toggle
@@ -59,21 +75,23 @@ const SummonerMatchItem = ({ match }) => {
   }, [showDetail]);
 
   const onErrorItemImg = useCallback((e) => {
-    e.target.src = "/img/item/0.png";
+    e.target.src = '/img/item/0.png';
   }, []);
 
   // 참가자 정보에 이름 추가
   const participants = [...match.participants];
   participants.map((participant) => {
-    const participantInfo = match.participantIdentities.find((summoner) => summoner.participantId === participant.participantId);
+    const participantInfo = match.participantIdentities.find(
+      (summoner) => summoner.participantId === participant.participantId
+    );
     participant[`summonerName`] = participantInfo.player.summonerName;
   });
-  
+
   // 팀 별로 소환사 나누기
   const teamA = participants.filter((summoner) => summoner.teamId === 100);
   const teamB = participants.filter((summoner) => summoner.teamId === 200);
   const teamList = [teamA, teamB];
-  
+
   return (
     <SummonerMatchListItem>
       <SummonerMatchListItemHeader>
@@ -84,16 +102,15 @@ const SummonerMatchItem = ({ match }) => {
           </SummonerMatchInfo>
           <span>{`${gameDuration.minutes}분 ${gameDuration.seconds}초`}</span>
         </SummonerMatch>
-        {
-          showDetail 
-          ? <UpOutlined onClick={onToggleDetailBtn} />
-          : <DownOutlined onClick={onToggleDetailBtn} />
-        }
+        {showDetail ? (
+          <UpOutlined onClick={onToggleDetailBtn} />
+        ) : (
+          <DownOutlined onClick={onToggleDetailBtn} />
+        )}
       </SummonerMatchListItemHeader>
-      {
-        showDetail 
-        ? <SummonerMatchDetail match={match} winOrLose={summonerWinOrLose} />
-        : 
+      {showDetail ? (
+        <SummonerMatchDetail match={match} winOrLose={summonerWinOrLose} />
+      ) : (
         <SummonerMatchListItemContent>
           <SummonerWinOrLose winOrLose={summonerWinOrLose}>
             <span>{summonerWinOrLose}</span>
@@ -102,15 +119,30 @@ const SummonerMatchItem = ({ match }) => {
             <SummonerStat>
               <SummonerStatInfo>
                 <SummonerChampion>
-                  <img src={`./img/champion/${championName.eng}.png`} alt="summoner-champion-image"/>
+                  <img
+                    src={`./img/champion/${championName.eng}.png`}
+                    alt="summoner-champion-image"
+                  />
                 </SummonerChampion>
                 <SummonerSpell>
-                  <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell"/>
-                  <img src={`./img/spell/${summonerSpell[1].eng}.png`} alt="summoner-second-spell"/>
+                  <img
+                    src={`./img/spell/${summonerSpell[0].eng}.png`}
+                    alt="summoner-first-spell"
+                  />
+                  <img
+                    src={`./img/spell/${summonerSpell[1].eng}.png`}
+                    alt="summoner-second-spell"
+                  />
                 </SummonerSpell>
                 <SummonerRune>
-                  <img src={`./img/${summonerRune.perk0}`} alt="summoner-primary-rune"/>
-                  <img src={`./img/${summonerRune.subPerk}`} alt="summoner-sub-rune"/>
+                  <img
+                    src={`./img/${summonerRune.perk0}`}
+                    alt="summoner-primary-rune"
+                  />
+                  <img
+                    src={`./img/${summonerRune.subPerk}`}
+                    alt="summoner-sub-rune"
+                  />
                 </SummonerRune>
                 <SummonerText>
                   <SummonerKDA>
@@ -119,37 +151,44 @@ const SummonerMatchItem = ({ match }) => {
                       <span>{summonerStats.deaths}</span>
                       <span>{summonerStats.assists}</span>
                     </SummonerScore>
-                    <SummonerKDARate>
-                      {`${summonerKDA} : 1`}
-                    </SummonerKDARate>
+                    <SummonerKDARate>{`${summonerKDA} : 1`}</SummonerKDARate>
                   </SummonerKDA>
                   <SummonerStats>
                     <span>{`레벨 ${summonerStats.champLevel}`}</span>
                     <span>
-                      {`${parseInt(summonerStats.totalMinionsKilled + summonerStats.neutralMinionsKilled, 10)} CS`}
+                      {`${parseInt(
+                        summonerStats.totalMinionsKilled +
+                          summonerStats.neutralMinionsKilled,
+                        10
+                      )} CS`}
                     </span>
                   </SummonerStats>
                 </SummonerText>
               </SummonerStatInfo>
               <SummonerItems>
-                {
-                  summonerItemsArr.map((v, i) => {
-                    return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />
-                  })
-                }
+                {summonerItemsArr.map((v, i) => {
+                  return (
+                    <img
+                      key={i}
+                      src={`/img/item/${v}.png`}
+                      alt="summoner-item"
+                      onError={onErrorItemImg}
+                    />
+                  );
+                })}
               </SummonerItems>
             </SummonerStat>
             <ParticipantList teamList={teamList} />
           </SummonerInfo>
         </SummonerMatchListItemContent>
-      }
+      )}
     </SummonerMatchListItem>
-  )
+  );
 };
 
 const SummonerMatchListItem = styled.li`
   background-color: #ffffff;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
   border-top: none;
 `;
 
@@ -158,15 +197,15 @@ const SummonerMatchListItemHeader = styled.div`
   display: flex;
   background-color: #ffffff;
   margin-top: 1rem;
-  padding: .5rem;
-  border: 1px solid rgba(206, 212, 218, .5);
+  padding: 0.5rem;
+  border: 1px solid rgba(206, 212, 218, 0.5);
   border-left: none;
   border-right: none;
 
   & span {
     font-size: 1.2rem;
 
-    @media ${props => props.theme.tablet} {
+    @media ${(props) => props.theme.tablet} {
       font-size: 1rem;
     }
   }
@@ -194,8 +233,8 @@ const SummonerMatchInfo = styled.div`
   }
 
   & span:last-child {
-    font-size: .8rem;
-    color: rgba(51, 51, 51, .5);
+    font-size: 0.8rem;
+    color: rgba(51, 51, 51, 0.5);
   }
 `;
 
@@ -209,11 +248,13 @@ const SummonerWinOrLose = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  ${props => {
+  ${(props) => {
     if (props.winOrLose == '무') {
       return `background-color: #adb5bd;`;
     } else {
-      return `background-color: ${props.winOrLose == '승' ? '#339af0' : '#e03131'};`;
+      return `background-color: ${
+        props.winOrLose == '승' ? '#339af0' : '#e03131'
+      };`;
     }
   }}
   color: #ffffff;
@@ -223,16 +264,16 @@ const SummonerWinOrLose = styled.div`
 const SummonerInfo = styled.div`
   width: 100%;
   display: flex;
-`
+`;
 
 const SummonerStat = styled.div`
   width: 100%;
-  padding: .5rem;
+  padding: 0.5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     width: 70%;
   }
 `;
@@ -252,11 +293,11 @@ const SummonerChampion = styled.div`
   & img {
     width: 100%;
     margin: 0;
-    padding: .5rem;
+    padding: 0.5rem;
     border-radius: 999px;
   }
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     width: 13%;
   }
 `;
@@ -270,14 +311,14 @@ const SummonerSpell = styled.div`
     border-radius: 20%;
   }
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     width: 5%;
   }
 `;
 
 const SummonerRune = styled.div`
   width: 7.5%;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 
   & img {
     width: 100%;
@@ -287,7 +328,7 @@ const SummonerRune = styled.div`
     border-radius: 999px;
   }
 
-  @media ${props => props.theme.tablet} {
+  @media ${(props) => props.theme.tablet} {
     width: 5%;
   }
 `;
@@ -297,7 +338,7 @@ const SummonerText = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-`
+`;
 
 const SummonerKDA = styled.div`
   width: 20%;
@@ -306,9 +347,9 @@ const SummonerKDA = styled.div`
 `;
 
 const SummonerScore = styled.div`
-  margin-bottom: .7rem;
+  margin-bottom: 0.7rem;
 
-  & span:nth-child(-n+2):after {
+  & span:nth-child(-n + 2):after {
     diplay: block;
     content: ' / ';
   }
@@ -322,25 +363,25 @@ const SummonerStats = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 .5rem;
+  margin: 0 0.5rem;
 
   & span:first-child {
-    margin-bottom: .7rem;
+    margin-bottom: 0.7rem;
   }
 `;
 
 const SummonerItems = styled.div`
   width: 100%;
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
   display: flex;
 
   & img {
     width: 12%;
-    padding: .1rem;
+    padding: 0.1rem;
     border: 1px solid #ced4da;
     border-radius: 20%;
 
-    @media ${props => props.theme.tablet} {
+    @media ${(props) => props.theme.tablet} {
       width: 8%;
     }
   }

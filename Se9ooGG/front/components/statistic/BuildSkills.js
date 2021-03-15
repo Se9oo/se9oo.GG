@@ -4,21 +4,20 @@ import { ArrowRightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const BuildSkills = ({ skills, winOrLose, championId }) => {
-
   // 스킬 키 배열
   const key = ['Q', 'W', 'E', 'R'];
   // 선택한 챔피언 정보
   const champion = getChampionFullInfoById(championId);
   // 챔피언 스킬 QWE 만 가져옴
   const championSkill = champion.spells.slice(0, 3);
-  // 챔피언 스킬 QWE 
+  // 챔피언 스킬 QWE
   const championSkillMaxrank = championSkill.map((skill) => {
-    return { id: skill.id, maxrank: skill.maxrank }
+    return { id: skill.id, maxrank: skill.maxrank };
   });
-  
+
   // skill master 순서
   let skillMasterOrder = [];
-  
+
   skills.map((skill) => {
     // R 스킬 제외한 나머지 스킬만 체크
     if (skill.skillSlot !== 4) {
@@ -29,53 +28,57 @@ const BuildSkills = ({ skills, winOrLose, championId }) => {
         skillMasterOrder.push(championSkillMaxrank[skill.skillSlot - 1]);
       }
     }
-  })
+  });
 
   // 순서가 모두 세팅되지 않았다면
   if (skillMasterOrder.length !== 3) {
     // maxrank 도달 순서 대로 오름차순으로 정렬
-    championSkillMaxrank.sort((a, b) => a.maxrank - b.maxrank).map((skill) => {
-      // 이미 push 된 skill을 제외한 나머지 skill push
-      if (skill.maxrank !== 0) {
-        skillMasterOrder.push(skill);
-      }
-    })
+    championSkillMaxrank
+      .sort((a, b) => a.maxrank - b.maxrank)
+      .map((skill) => {
+        // 이미 push 된 skill을 제외한 나머지 skill push
+        if (skill.maxrank !== 0) {
+          skillMasterOrder.push(skill);
+        }
+      });
   }
-  
+
   return (
     <Skill>
       <SkillMasterOrder>
-        {
-          skillMasterOrder.map((skill, idx) => {
-            return (
-              <React.Fragment key={`${skill.id}_fragment`}>
-                <img key={skill.id} src={`/img/spell/${skill.id}.png`}/>
-                { skillMasterOrder.length === idx + 1 ? null : <RightArrow key={skill.id + idx}/> }
-              </React.Fragment>
-            )
-          })
-        }
+        {skillMasterOrder.map((skill, idx) => {
+          return (
+            <React.Fragment key={`${skill.id}_fragment`}>
+              <img key={skill.id} src={`/img/spell/${skill.id}.png`} />
+              {skillMasterOrder.length === idx + 1 ? null : (
+                <RightArrow key={skill.id + idx} />
+              )}
+            </React.Fragment>
+          );
+        })}
       </SkillMasterOrder>
       <SkillTable>
         <tbody>
-          {
-            key.map((k, idx) => {
-              return (
-                <tr key={k}>
-                  <th scope="row" key={`${k + idx}`}>{k}</th>
-                  {
-                    skills.map((skill, i) => {
-                      if (skill.skillSlot === idx + 1) {
-                        return <SkillTd key={i} winOrLose={winOrLose}>{i + 1}</SkillTd>      
-                      } else {
-                        return <td key={i}></td>
-                      }
-                    })
+          {key.map((k, idx) => {
+            return (
+              <tr key={k}>
+                <th scope="row" key={`${k + idx}`}>
+                  {k}
+                </th>
+                {skills.map((skill, i) => {
+                  if (skill.skillSlot === idx + 1) {
+                    return (
+                      <SkillTd key={i} winOrLose={winOrLose}>
+                        {i + 1}
+                      </SkillTd>
+                    );
+                  } else {
+                    return <td key={i}></td>;
                   }
-                </tr>
-              );
-            })
-          }
+                })}
+              </tr>
+            );
+          })}
         </tbody>
       </SkillTable>
     </Skill>
@@ -99,22 +102,23 @@ const SkillMasterOrder = styled.ol`
 `;
 
 const RightArrow = styled(ArrowRightOutlined)`
-  padding: 0 .5rem;
+  padding: 0 0.5rem;
 `;
 
 const SkillTable = styled.table`
   width: 100%;
 
-  & td, th {
+  & td,
+  th {
     width: 5.5%;
-    padding: .8rem 0;
+    padding: 0.8rem 0;
     border: 1px solid #e5e5e5;
     text-align: center;
   }
 `;
 
 const SkillTd = styled.td`
-  ${props => {
+  ${(props) => {
     if (props.winOrLose === '승') {
       return `background-color: #339af0;`;
     } else {
