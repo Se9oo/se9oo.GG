@@ -50,9 +50,7 @@ const BuildSkills = ({ skills, winOrLose, championId }) => {
           return (
             <React.Fragment key={`${skill.id}_fragment`}>
               <img key={skill.id} src={`/img/spell/${skill.id}.png`} />
-              {skillMasterOrder.length === idx + 1 ? null : (
-                <RightArrow key={skill.id + idx} />
-              )}
+              {skillMasterOrder.length === idx + 1 ? null : <RightArrow key={skill.id + idx} />}
             </React.Fragment>
           );
         })}

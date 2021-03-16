@@ -6,15 +6,9 @@ const SummonerRankItem = ({ rank }) => {
   return (
     <SummonerRankListItem sort={rank.sort}>
       <h3>{rank.queueType}</h3>
-      <img
-        src={`./img/ranked-emblems/${rank.tier}.png`}
-        alt="summoner-tier-img"
-      />
+      <img src={`./img/ranked-emblems/${rank.tier}.png`} alt="summoner-tier-img" />
       <span>{`${rank.tier} ${rank.rank}`}</span>
-      <span>{`${rank.wins}승 ${rank.losses}패 ${getWinRate(
-        rank.wins,
-        rank.losses
-      )}%`}</span>
+      <span>{`${rank.wins}승 ${rank.losses}패 ${getWinRate(rank.wins, rank.losses)}%`}</span>
     </SummonerRankListItem>
   );
 };

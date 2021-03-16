@@ -57,9 +57,7 @@ const CommentItem = memo(({ comment, postId }) => {
             })
           }
         />
-        {me && me.email === comment.email ? (
-          <CommentDeleteBtn onClick={onClickDeleteCommentBtn} />
-        ) : null}
+        {me && me.email === comment.email ? <CommentDeleteBtn onClick={onClickDeleteCommentBtn} /> : null}
       </CommentItemContainer>
       <CommonModal modalContent={modalContent} visible={showModal} />
     </>

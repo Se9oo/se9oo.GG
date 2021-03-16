@@ -8,7 +8,7 @@ import styled from 'styled-components';
 
 const Comment = () => {
   const router = useRouter();
-  const { postList } = useSelector((state) => (state.post));
+  const { postList } = useSelector((state) => state.post);
   let commentList = [];
   commentList = postList.filter((v) => v.postId === parseInt(router.query.postId))[0].comments;
 
@@ -19,10 +19,10 @@ const Comment = () => {
   return (
     <AppLayout>
       <CommentHeader>
-        <LeftOutlined onClick={onClickBackBtn}/>
+        <LeftOutlined onClick={onClickBackBtn} />
         <h2>댓글</h2>
       </CommentHeader>
-      <CommentCard commentList={commentList} postId={router.query.postId}/>
+      <CommentCard commentList={commentList} postId={router.query.postId} />
     </AppLayout>
   );
 };

@@ -1,9 +1,20 @@
 import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
-import { 
-  ADD_POST_SUCCESS, ADD_POST_FAILURE, ADD_POST_REQUEST, 
-  DELETE_POST_FAILURE, DELETE_POST_SUCCESS, DELETE_POST_REQUEST, 
-  ADD_COMMENT_SUCCESS, ADD_COMMENT_FAILURE, ADD_COMMENT_REQUEST,
-  DELETE_COMMENT_FAILURE, DELETE_COMMENT_SUCCESS, DELETE_COMMENT_REQUEST, LOAD_POST_REQUEST, LOAD_POST_SUCCESS, LOAD_POST_FAILURE 
+import {
+  ADD_POST_SUCCESS,
+  ADD_POST_FAILURE,
+  ADD_POST_REQUEST,
+  DELETE_POST_FAILURE,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_REQUEST,
+  ADD_COMMENT_SUCCESS,
+  ADD_COMMENT_FAILURE,
+  ADD_COMMENT_REQUEST,
+  DELETE_COMMENT_FAILURE,
+  DELETE_COMMENT_SUCCESS,
+  DELETE_COMMENT_REQUEST,
+  LOAD_POST_REQUEST,
+  LOAD_POST_SUCCESS,
+  LOAD_POST_FAILURE,
 } from '../reducer/post';
 import axios from 'axios';
 
@@ -38,7 +49,7 @@ function* loadPost() {
     yield put({
       type: LOAD_POST_FAILURE,
       data: err.response.data,
-    })
+    });
   }
 }
 
@@ -54,7 +65,7 @@ function* addPost(action) {
     yield put({
       type: ADD_POST_FAILURE,
       data: err.response.data,
-    })
+    });
   }
 }
 
@@ -104,7 +115,7 @@ function* deleteComment(action) {
 }
 
 function* watchLoadPost() {
-  yield takeLatest(LOAD_POST_REQUEST, loadPost)
+  yield takeLatest(LOAD_POST_REQUEST, loadPost);
 }
 
 function* watchAddPost() {
@@ -130,5 +141,5 @@ export default function* postSaga() {
     fork(watchDeletePost),
     fork(watchAddComment),
     fork(watchDeleteComment),
-  ])
+  ]);
 }

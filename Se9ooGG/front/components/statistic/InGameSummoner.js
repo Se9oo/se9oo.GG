@@ -33,10 +33,7 @@ const InGameSummoner = ({ summoner }) => {
   return (
     <>
       <ListItem>
-        <ChampionImg
-          src={`/img/champion/${champName.eng}.png`}
-          alt="champion-image"
-        />
+        <ChampionImg src={`/img/champion/${champName.eng}.png`} alt="champion-image" />
         <Spell>
           <img src={`/img/spell/${spell[0].eng}.png`} alt="spell1" />
           <img src={`/img/spell/${spell[1].eng}.png`} alt="spell2" />

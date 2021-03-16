@@ -22,19 +22,9 @@ const BuildRune = ({ rune }) => {
       {selectAllRuneImg.map((rune, idx) => {
         return (
           <Rune key={idx}>
-            <MainRuneImg
-              key={selectAllRuneImg[idx].id}
-              src={`/img/${selectAllRuneImg[idx].icon}`}
-              alt="primary-rune"
-            />
+            <MainRuneImg key={selectAllRuneImg[idx].id} src={`/img/${selectAllRuneImg[idx].icon}`} alt="primary-rune" />
             {rune.slots.map((perk, i) => {
-              return (
-                <BuildRunePerks
-                  key={i}
-                  perks={perk}
-                  selectPerks={selectPerks}
-                />
-              );
+              return <BuildRunePerks key={i} perks={perk} selectPerks={selectPerks} />;
             })}
           </Rune>
         );
@@ -43,11 +33,7 @@ const BuildRune = ({ rune }) => {
         {selectStatPerk.map((statPerk, i) => {
           return (
             <li key={i}>
-              <img
-                key={`${statPerk}_${i}`}
-                src={`/img/perk-images/StatMods/${statPerk}.png`}
-                alt="statPerk-image"
-              />
+              <img key={`${statPerk}_${i}`} src={`/img/perk-images/StatMods/${statPerk}.png`} alt="statPerk-image" />
             </li>
           );
         })}

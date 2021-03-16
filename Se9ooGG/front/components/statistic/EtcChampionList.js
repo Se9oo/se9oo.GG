@@ -2,20 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { getColorByParticipantId } from '../../util/util';
 
-const EtcChampionList = ({
-  teamList,
-  selectedChampList,
-  onClickSelectChamp,
-}) => {
+const EtcChampionList = ({ teamList, selectedChampList, onClickSelectChamp }) => {
   return teamList.map((team, idx) => {
     return (
       <React.Fragment key={idx}>
         <Team key={idx}>
           {team.map((champ, i) => {
             let isSelected = false;
-            selectedChampList.findIndex(
-              (champion) => champion.id === champ.id
-            ) === -1
+            selectedChampList.findIndex((champion) => champion.id === champ.id) === -1
               ? (isSelected = false)
               : (isSelected = true);
 

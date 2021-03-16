@@ -21,10 +21,12 @@ const Se9oogg = ({ Component }) => {
     <>
       <ThemeProvider theme={theme}>
         <Head>
-          <meta charSet="utf-8"/>
-          <meta name="viewport" 
-          content="initial-scale=1.0, width=device-width,
-           maximum-scale=1, minimum-scale=1, user-scalable=no" />
+          <meta charSet="utf-8" />
+          <meta
+            name="viewport"
+            content="initial-scale=1.0, width=device-width,
+           maximum-scale=1, minimum-scale=1, user-scalable=no"
+          />
           <title>se9oo.GG</title>
         </Head>
         <GlobalStyles />
@@ -58,7 +60,7 @@ const GlobalStyles = createGlobalStyle`
   html {
     font-size: 10px;
 
-    @media ${props => props.theme.tablet} {
+    @media ${(props) => props.theme.tablet} {
       font-size: 12px;
     } 
   }
@@ -124,11 +126,11 @@ const size = {
   tablet: '767px',
   laptop: '980px',
   desktop: '1024px',
-}
+};
 
 const theme = {
   mobile: `(min-width: ${size.mobile})`,
   tablet: `(min-width: ${size.tablet})`,
   laptop: `(min-width: ${size.laptop})`,
   desktop: `(min-width: ${size.desktop})`,
-}
+};

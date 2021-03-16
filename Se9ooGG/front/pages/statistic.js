@@ -1,10 +1,13 @@
 import React, { useCallback, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { LoadMyInfoRequestAction } from '../reducer/user';
-import { 
-    loadSummonerDoneClearAction, loadSummonerErrorClearAction
-  , loadSummonerRequestAction, loadSummonerInGameRequestAction, loadSummonerInGameErrorClearAction
- } from '../reducer/statistic';
+import {
+  loadSummonerDoneClearAction,
+  loadSummonerErrorClearAction,
+  loadSummonerRequestAction,
+  loadSummonerInGameRequestAction,
+  loadSummonerInGameErrorClearAction,
+} from '../reducer/statistic';
 import Router from 'next/router';
 import Head from 'next/head';
 import wrapper from '../store/configureStore';
@@ -22,9 +25,11 @@ import styled from 'styled-components';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
-  const { summoner, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector((state) => state.statistic);
+  const { summoner, loadSummonerDone, loadSummonerError, loadSummonerInGameError } = useSelector(
+    (state) => state.statistic
+  );
   const [search, onSearchInput] = useInput('');
-  
+
   // 소환사 검색 중 에러가 존재하는 경우
   useEffect(() => {
     if (loadSummonerError !== null) {
@@ -35,14 +40,14 @@ const Statistic = () => {
       // index 페이지로 이동
       Router.push('/');
     }
-  }, [loadSummonerError])
+  }, [loadSummonerError]);
 
   // 사용자 전적 검색 후 loadSummonerDone state 초기화
   useEffect(() => {
     if (loadSummonerDone) {
       dispatch(loadSummonerDoneClearAction());
     }
-  }, [loadSummonerDone])
+  }, [loadSummonerDone]);
 
   // 인게임 정보 없는 경우 메세지 처리
   useEffect(() => {
@@ -66,16 +71,20 @@ const Statistic = () => {
 
   // 전적 새로고침
   const onClickRefresh = useCallback(() => {
-    dispatch(loadSummonerRequestAction({
-      summonerName: summoner.summonerName
-    }));
+    dispatch(
+      loadSummonerRequestAction({
+        summonerName: summoner.summonerName,
+      })
+    );
   }, [summoner]);
 
   // 인게임 정보
   const onClickInGame = useCallback(() => {
-    dispatch(loadSummonerInGameRequestAction({
-      summonerName: summoner.summonerName
-    }));
+    dispatch(
+      loadSummonerInGameRequestAction({
+        summonerName: summoner.summonerName,
+      })
+    );
   }, [summoner]);
 
   return (
@@ -83,11 +92,9 @@ const Statistic = () => {
       <Head>
         <title>se9oo | {`${summoner.summonerName}`}</title>
       </Head>
-      {
-        Object.keys(summoner).length !== 0
-        ?
+      {Object.keys(summoner).length !== 0 ? (
         <>
-          <UserSearchInput 
+          <UserSearchInput
             placeholder="사용자명을 입력하세요."
             onSearch={onSubmitInput}
             onChange={onSearchInput}
@@ -95,40 +102,35 @@ const Statistic = () => {
             enterButton
           />
           <Summoner>
-            <img src={`./img/profileicon/${summoner.profileIconId}.png`} alt="summoner-profile-icon"/>
+            <img src={`./img/profileicon/${summoner.profileIconId}.png`} alt="summoner-profile-icon" />
             <strong>{summoner.summonerName}</strong>
             <Button onClick={onClickRefresh}>전적 새로고침</Button>
-            <Button type="primary" onClick={onClickInGame}>인게임 정보</Button>
+            <Button type="primary" onClick={onClickInGame}>
+              인게임 정보
+            </Button>
           </Summoner>
           <SummonerInGame />
           <SummonerRank>
             <ul>
-              {
-                summoner.tier 
-                ? summoner.tier.map((rank) => <SummonerRankItem key={rank.queueType} rank={rank}/>)
-                : null
-              }
+              {summoner.tier
+                ? summoner.tier.map((rank) => <SummonerRankItem key={rank.queueType} rank={rank} />)
+                : null}
             </ul>
           </SummonerRank>
           <SummonerMostChampion>
             <ul>
-              {
-                summoner.proficiencyTop3
+              {summoner.proficiencyTop3
                 ? summoner.proficiencyTop3.map((most) => <SummonerMostChampionItem key={most.championId} most={most} />)
-                : null
-              }
+                : null}
             </ul>
           </SummonerMostChampion>
           <ul>
-            {
-              summoner.match
+            {summoner.match
               ? summoner.match.map((match) => <SummonerMatchItem key={match.gameId} match={match} />)
-              : null
-            }
+              : null}
           </ul>
         </>
-        : null
-      }
+      ) : null}
     </AppLayout>
   );
 };
@@ -142,9 +144,11 @@ export const getServerSideProps = wrapper.getServerSideProps(async (context) => 
   }
 
   if (context.query.summonerName) {
-    context.store.dispatch(loadSummonerRequestAction({
-      summonerName: context.query.summonerName,
-    }));
+    context.store.dispatch(
+      loadSummonerRequestAction({
+        summonerName: context.query.summonerName,
+      })
+    );
   }
 
   context.store.dispatch(LoadMyInfoRequestAction());
@@ -171,7 +175,7 @@ const Summoner = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
 
   & img {
     width: 5rem;
@@ -184,7 +188,7 @@ const Summoner = styled.div`
     font-size: 2rem;
     margin: 1rem 0;
 
-    @media ${props => props.theme.tablet} {
+    @media ${(props) => props.theme.tablet} {
       font-size: 1.5rem;
     }
   }
@@ -198,7 +202,7 @@ const SummonerRank = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
 
   & ul {
     display: flex;
@@ -211,7 +215,7 @@ const SummonerMostChampion = styled.div`
   background-color: #ffffff;
   margin-top: 1rem;
   padding: 1rem;
-  border: 1px solid rgba(206, 212, 218, .5);
+  border: 1px solid rgba(206, 212, 218, 0.5);
 
   & ul {
     display: flex;

@@ -11,20 +11,12 @@ const SummonerInGame = () => {
   let teamArr = [];
   let bannedListArr = [];
   if (Object.keys(inGame).length !== 0) {
-    const team1 = inGame.participants.filter(
-      (summoner) => summoner.teamId === 100
-    );
-    const team2 = inGame.participants.filter(
-      (summoner) => summoner.teamId === 200
-    );
+    const team1 = inGame.participants.filter((summoner) => summoner.teamId === 100);
+    const team2 = inGame.participants.filter((summoner) => summoner.teamId === 200);
     teamArr = [team1, team2];
 
-    const team1BannedList = inGame.bannedChampions.filter(
-      (item) => item.teamId === 100
-    );
-    const team2BannedList = inGame.bannedChampions.filter(
-      (item) => item.teamId === 200
-    );
+    const team1BannedList = inGame.bannedChampions.filter((item) => item.teamId === 100);
+    const team2BannedList = inGame.bannedChampions.filter((item) => item.teamId === 200);
     bannedListArr = [team1BannedList, team2BannedList];
   }
 
@@ -38,23 +30,13 @@ const SummonerInGame = () => {
     <InGame showInGame={isShowInGame}>
       <SubTitle>
         <span>인게임 정보</span>
-        {isShowInGame ? (
-          <UpOutlined onClick={onToggleShowInGame} />
-        ) : (
-          <DownOutlined onClick={onToggleShowInGame} />
-        )}
+        {isShowInGame ? <UpOutlined onClick={onToggleShowInGame} /> : <DownOutlined onClick={onToggleShowInGame} />}
       </SubTitle>
       {isShowInGame &&
         (Object.keys(inGame).length !== 0 ? (
           <div>
             {teamArr.map((team, i) => {
-              return (
-                <InGameSummonerList
-                  key={i}
-                  team={team}
-                  bannedList={bannedListArr[i]}
-                />
-              );
+              return <InGameSummonerList key={i} team={team} bannedList={bannedListArr[i]} />;
             })}
           </div>
         ) : (

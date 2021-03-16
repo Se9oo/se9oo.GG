@@ -6,9 +6,7 @@ const MatchDetailTotalTeam = ({ index, team, gameInfo }) => {
   return (
     <>
       <MatchDetailTotalHeader index={index}>
-        <WinOrLose winOrLose={team.win}>
-          {team.win === 'Win' ? '승리' : '패배'}
-        </WinOrLose>
+        <WinOrLose winOrLose={team.win}>{team.win === 'Win' ? '승리' : '패배'}</WinOrLose>
         <ObjectKillInfo>
           <dt>타워</dt>
           <dd>{`${team.towerKills}`}</dd>

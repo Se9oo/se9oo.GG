@@ -15,19 +15,11 @@ const BuildItems = ({ items, idx }) => {
             return (
               <Item key={`${i.itemId + idx}`}>
                 {i.type === 'ITEM_PURCHASED' && (
-                  <PurchasedItem
-                    key={idx}
-                    src={`/img/item/${i.itemId}.png`}
-                    alt="purchased item"
-                  />
+                  <PurchasedItem key={idx} src={`/img/item/${i.itemId}.png`} alt="purchased item" />
                 )}
                 {i.type === 'ITEM_SOLD' && (
                   <>
-                    <SoldItem
-                      key={idx}
-                      src={`/img/item/${i.itemId}.png`}
-                      alt="sold item"
-                    />
+                    <SoldItem key={idx} src={`/img/item/${i.itemId}.png`} alt="sold item" />
                     <SoldIcon />
                   </>
                 )}

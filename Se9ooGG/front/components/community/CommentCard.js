@@ -38,19 +38,9 @@ const CommentCard = memo(({ commentList, postId }) => {
 
   return (
     <CommentContainer>
-      {commentList.length === 0 && (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>
-          등록된 댓글이 없습니다.
-        </Empty>
-      )}
+      {commentList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 댓글이 없습니다.</Empty>}
       {commentList.length > 0 &&
-        commentList.map((comment) => (
-          <CommentItem
-            key={comment.commentId}
-            comment={comment}
-            postId={postId}
-          />
-        ))}
+        commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />)}
       {me && (
         <Comment
           avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}
@@ -66,11 +56,7 @@ const CommentCard = memo(({ commentList, postId }) => {
                   onChange={onChangeCommentText}
                 />
                 <CommentBtn>
-                  <Button
-                    type="primary"
-                    htmlType="submit"
-                    loading={addCommentLoading}
-                  >
+                  <Button type="primary" htmlType="submit" loading={addCommentLoading}>
                     게시
                   </Button>
                 </CommentBtn>

@@ -1,12 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import {
-  CrownOutlined,
-  HomeOutlined,
-  MessageOutlined,
-  UserOutlined,
-} from '@ant-design/icons';
+import { CrownOutlined, HomeOutlined, MessageOutlined, UserOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const AppLayout = ({ children }) => {

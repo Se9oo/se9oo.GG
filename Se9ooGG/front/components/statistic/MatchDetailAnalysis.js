@@ -32,43 +32,26 @@ const MatchDetailAnalysis = ({ match }) => {
   // 패배팀 id
   const loseTeamId = match.teams.find((team) => team.win === 'Fail').teamId;
   // 승리팀 소환사 게임 정보
-  const winTeamInfo = allSummonerGameInfo.filter(
-    (summoner) => summoner.teamId === winTeamId
-  );
+  const winTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === winTeamId);
   // 패배팀 소환사 게임 정보
-  const loseTeamInfo = allSummonerGameInfo.filter(
-    (summoner) => summoner.teamId === loseTeamId
-  );
+  const loseTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === loseTeamId);
 
   // 승리팀 라인에 따른 배열 순서 정렬
   winTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(
-      summoner.timeline.lane,
-      summoner.timeline.role
-    );
+    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
   });
   winTeamInfo.sort((a, b) => a.order - b.order);
 
   // 패배팀 라인에 따른 배열 순서 정렬
   loseTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(
-      summoner.timeline.lane,
-      summoner.timeline.role
-    );
+    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
   });
   loseTeamInfo.sort((a, b) => a.order - b.order);
 
   // chart에 꽂을 데이터명 state
   const [chartData, setChartData] = useState('totalDamageDealtToChampions');
   // chart data 종류
-  const chartDataArr = [
-    'totalDamageDealtToChampions',
-    'goldEarned',
-    'kills',
-    'wardsPlaced',
-    'totalDamageTaken',
-    'cs',
-  ];
+  const chartDataArr = ['totalDamageDealtToChampions', 'goldEarned', 'kills', 'wardsPlaced', 'totalDamageTaken', 'cs'];
   // chart data state change
   const onClickChartNextData = useCallback(() => {
     let nextIdx = chartDataArr.findIndex((e) => e === chartData) + 1;
@@ -119,10 +102,7 @@ const MatchDetailAnalysis = ({ match }) => {
     });
     winCs.push({
       name: championName.eng + '-win',
-      y: parseInt(
-        summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled,
-        10
-      ),
+      y: parseInt(summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled, 10),
     });
   });
 
@@ -159,10 +139,7 @@ const MatchDetailAnalysis = ({ match }) => {
     });
     loseCs.push({
       name: championName.eng + '-los',
-      y: parseInt(
-        summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled,
-        10
-      ),
+      y: parseInt(summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled, 10),
     });
   });
 
@@ -171,9 +148,7 @@ const MatchDetailAnalysis = ({ match }) => {
     (winOrLose) => {
       switch (chartData) {
         case 'totalDamageDealtToChampions':
-          return winOrLose === 'win'
-            ? winTeamTotalDamageDealtToChampions
-            : loseTeamTotalDamageDealtToChampions;
+          return winOrLose === 'win' ? winTeamTotalDamageDealtToChampions : loseTeamTotalDamageDealtToChampions;
         case 'goldEarned':
           return winOrLose === 'win' ? winTeamGoldEarned : loseTeamGoldEarned;
         case 'kills':
@@ -181,9 +156,7 @@ const MatchDetailAnalysis = ({ match }) => {
         case 'wardsPlaced':
           return winOrLose === 'win' ? winWardsPlaced : loseWardsPlaced;
         case 'totalDamageTaken':
-          return winOrLose === 'win'
-            ? winTotalDamageTaken
-            : loseTotalDamageTaken;
+          return winOrLose === 'win' ? winTotalDamageTaken : loseTotalDamageTaken;
         case 'cs':
           return winOrLose === 'win' ? winCs : loseCs;
       }
@@ -210,10 +183,7 @@ const MatchDetailAnalysis = ({ match }) => {
       labels: {
         useHTML: true,
         formatter: function () {
-          return `<img src="/img/champion/${this.value.slice(
-            0,
-            -4
-          )}.png" alt="champion-img-${this.value.slice(
+          return `<img src="/img/champion/${this.value.slice(0, -4)}.png" alt="champion-img-${this.value.slice(
             0,
             -4
           )}" style="width: 2.5rem; text-align: center;"/>`;

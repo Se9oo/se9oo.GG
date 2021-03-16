@@ -4,17 +4,12 @@ import Router from 'next/router';
 import useInput from '../hooks/useInput';
 import CommonModal, { errorModal, infoModal } from './CommonModal';
 import { Button, Form, Input } from 'antd';
-import {
-  SignUpDoneClearRequestAction,
-  SignUpRequestAction,
-} from '../reducer/user';
+import { SignUpDoneClearRequestAction, SignUpRequestAction } from '../reducer/user';
 import styled from 'styled-components';
 
 const SignUpForm = () => {
   const dispatch = useDispatch('');
-  const { signUpLoading, signUpDone, signUpError } = useSelector(
-    (state) => state.user
-  );
+  const { signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
   const [passwordError, setPasswordError] = useState(false);
@@ -114,23 +109,11 @@ const SignUpForm = () => {
       <Form onFinish={onSubmitForm}>
         <InputContainer>
           <label htmlFor="user-email">이메일</label>
-          <Input
-            type="text"
-            name="user-email"
-            placeholder="이메일"
-            value={email}
-            onChange={onChangeEmail}
-          />
+          <Input type="text" name="user-email" placeholder="이메일" value={email} onChange={onChangeEmail} />
         </InputContainer>
         <InputContainer>
           <label htmlFor="user-nickname">닉네임</label>
-          <Input
-            type="text"
-            name="user-nickname"
-            placeholder="닉네임"
-            value={nickname}
-            onChange={onChangeNickname}
-          />
+          <Input type="text" name="user-nickname" placeholder="닉네임" value={nickname} onChange={onChangeNickname} />
         </InputContainer>
         <InputContainer>
           <label htmlFor="user-password">비밀번호</label>

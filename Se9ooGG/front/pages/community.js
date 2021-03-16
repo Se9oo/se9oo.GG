@@ -10,8 +10,8 @@ import styled from 'styled-components';
 
 const Community = () => {
   const dispatch = useDispatch('');
-  const { me } = useSelector((state) => (state.user));
-  const { postList } = useSelector((state) => (state.post));
+  const { me } = useSelector((state) => state.user);
+  const { postList } = useSelector((state) => state.post);
 
   const onClickAddPostBtn = useCallback(() => {
     Router.push('/editPost');
@@ -20,29 +20,19 @@ const Community = () => {
   useEffect(() => {
     dispatch(loadPostRequestAction());
   }, []);
-  
+
   return (
     <AppLayout>
       <Head>
         <title>se9oo | 커뮤니티</title>
       </Head>
-      <PostSearchInput
-        placeholder="제목 검색"
-        enterButton
-      />
-      {
-          me 
-          ? <PostAddBtn 
-            type="primary"
-            onClick={onClickAddPostBtn}
-            >
-              글쓰기
-            </PostAddBtn> 
-          : null
-      }
-      {
-        postList && postList.map((v) => <PostCard data={v} key={v.postId} />)
-      }
+      <PostSearchInput placeholder="제목 검색" enterButton />
+      {me ? (
+        <PostAddBtn type="primary" onClick={onClickAddPostBtn}>
+          글쓰기
+        </PostAddBtn>
+      ) : null}
+      {postList && postList.map((v) => <PostCard data={v} key={v.postId} />)}
     </AppLayout>
   );
 };

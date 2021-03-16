@@ -13,13 +13,7 @@ const InGameSummonerList = ({ team, bannedList }) => {
       <BannedChampionList>
         {bannedList.map((item, i) => {
           const championName = getChampionNameById(item.championId);
-          return (
-            <img
-              key={i}
-              src={`/img/champion/${championName.eng}.png`}
-              alt="banned-Champion-image"
-            />
-          );
+          return <img key={i} src={`/img/champion/${championName.eng}.png`} alt="banned-Champion-image" />;
         })}
       </BannedChampionList>
     </SummonerList>

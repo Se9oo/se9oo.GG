@@ -7,11 +7,7 @@ import EtcChart from './EtcChart';
 import styled from 'styled-components';
 
 const MatchDetailEtc = memo(({ match, winOrLose }) => {
-  const navItems = [
-    '챔피언별 골드 획득',
-    '챔피언별 경험치 획득',
-    '챔피언별 CS',
-  ];
+  const navItems = ['챔피언별 골드 획득', '챔피언별 경험치 획득', '챔피언별 CS'];
   // 선택한 nav state
   const [selectedNav, setSelectedNav] = useState(1);
   const onClickNavList = useCallback(
@@ -29,29 +25,19 @@ const MatchDetailEtc = memo(({ match, winOrLose }) => {
   // 패배팀 id
   const loseTeamId = match.teams.find((team) => team.win === 'Fail').teamId;
   // 승리팀 소환사 게임 정보
-  const winTeamInfo = allSummonerGameInfo.filter(
-    (summoner) => summoner.teamId === winTeamId
-  );
+  const winTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === winTeamId);
   // 패배팀 소환사 게임 정보
-  const loseTeamInfo = allSummonerGameInfo.filter(
-    (summoner) => summoner.teamId === loseTeamId
-  );
+  const loseTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === loseTeamId);
 
   // 승리팀 라인에 따른 배열 순서 정렬
   winTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(
-      summoner.timeline.lane,
-      summoner.timeline.role
-    );
+    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
   });
   winTeamInfo.sort((a, b) => a.order - b.order);
 
   // 패배팀 라인에 따른 배열 순서 정렬
   loseTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(
-      summoner.timeline.lane,
-      summoner.timeline.role
-    );
+    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
   });
   loseTeamInfo.sort((a, b) => a.order - b.order);
   // 승리팀 챔피언 이미지
@@ -73,9 +59,7 @@ const MatchDetailEtc = memo(({ match, winOrLose }) => {
   // 검색 소환사 이름
   const { summonerName } = useSelector((state) => state.statistic.summoner);
   // 검색 소환사 정보
-  const findSummonerInfo = allSummonerGameInfo.find(
-    (summoner) => summoner.summonerName == summonerName
-  );
+  const findSummonerInfo = allSummonerGameInfo.find((summoner) => summoner.summonerName == summonerName);
   // 선택한 챔피언 state (초기값은 검색 소환사)
   const [selectChampList, setSelectChampList] = useState([
     {
@@ -86,9 +70,7 @@ const MatchDetailEtc = memo(({ match, winOrLose }) => {
   // 정보를 조회할 챔피언 선택시 setState 처리
   const onClickSelectChamp = useCallback(
     (champ) => {
-      const idx = selectChampList.findIndex(
-        (selectedChamp) => selectedChamp.id === champ.id
-      );
+      const idx = selectChampList.findIndex((selectedChamp) => selectedChamp.id === champ.id);
       if (idx === -1) {
         setSelectChampList([...selectChampList, champ]);
       } else {
@@ -119,11 +101,7 @@ const MatchDetailEtc = memo(({ match, winOrLose }) => {
           onClickSelectChamp={onClickSelectChamp}
         />
       </ChampSelect>
-      <EtcChart
-        matchTimelines={matchTimelines}
-        selectedChampList={selectChampList}
-        selectedNav={selectedNav}
-      />
+      <EtcChart matchTimelines={matchTimelines} selectedChampList={selectChampList} selectedNav={selectedNav} />
     </>
   );
 });

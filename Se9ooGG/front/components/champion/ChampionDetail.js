@@ -1,15 +1,16 @@
 import React from 'react';
 import styled from 'styled-components';
+import ChampionStats from './ChampionStats';
 
 const ChampionDetail = ({ champion }) => {
+  // champion stat 정보
+  const stats = champion.stats;
+
   return (
     <>
       <Info>
         <Feature>
-          <img
-            src={`/img/champion/${champion.id}.png`}
-            alt={`${champion.id}-img`}
-          />
+          <img src={`/img/champion/${champion.id}.png`} alt={`${champion.id}-img`} />
         </Feature>
         <Definition>
           <Tags>
@@ -24,7 +25,7 @@ const ChampionDetail = ({ champion }) => {
       </Info>
       <section>
         <Contents>
-          <article>stats</article>
+          <ChampionStats stats={stats} />
           <article>skills</article>
         </Contents>
         <Contents>
@@ -116,13 +117,20 @@ const Tags = styled.div`
 `;
 
 const Contents = styled.div`
-  display: flex;
-  justify-content: space-between;
+  display: block;
 
   & article {
-    width: 49%;
     background-color: #ffffff;
     border: 1px solid rgba(206, 212, 218, 0.5);
     padding: 1rem;
+  }
+
+  @media ${(props) => props.theme.tablet} {
+    display: flex;
+    justify-content: space-between;
+
+    & article {
+      width: 49%;
+    }
   }
 `;

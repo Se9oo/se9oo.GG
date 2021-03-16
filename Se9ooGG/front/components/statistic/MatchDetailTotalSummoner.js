@@ -1,11 +1,7 @@
 import React, { useCallback } from 'react';
 import styled from 'styled-components';
 import { getKDA, getListOrder } from '../../util/util';
-import {
-  getChampionNameById,
-  getSpellNameById,
-  getRuneImgUrl,
-} from '../../util/JsonUtil';
+import { getChampionNameById, getSpellNameById, getRuneImgUrl } from '../../util/JsonUtil';
 
 const MatchDetailTotalSummoner = ({ gameInfo }) => {
   // 각 소환사가 선택한 챔피언 고유 id
@@ -39,21 +35,12 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
   return (
     <SummonerListItem order={order}>
       <ChampionImg>
-        <img
-          src={`./img/champion/${championName.eng}.png`}
-          alt="summoner champion image"
-        />
+        <img src={`./img/champion/${championName.eng}.png`} alt="summoner champion image" />
         <Level>{stats.champLevel}</Level>
       </ChampionImg>
       <Spell>
-        <img
-          src={`./img/spell/${spell[0].eng}.png`}
-          alt="summoner-first-spell"
-        />
-        <img
-          src={`./img/spell/${spell[1].eng}.png`}
-          alt="summoner-second-spell"
-        />
+        <img src={`./img/spell/${spell[0].eng}.png`} alt="summoner-first-spell" />
+        <img src={`./img/spell/${spell[1].eng}.png`} alt="summoner-second-spell" />
       </Spell>
       <Rune>
         <img src={`./img/${rune.perk0}`} alt="summoner-primary-rune" />
@@ -68,14 +55,7 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
       </Info>
       <Items>
         {summonerItemsArr.map((v, i) => {
-          return (
-            <img
-              key={i}
-              src={`/img/item/${v}.png`}
-              alt="summoner-item"
-              onError={onErrorItemImg}
-            />
-          );
+          return <img key={i} src={`/img/item/${v}.png`} alt="summoner-item" onError={onErrorItemImg} />;
         })}
       </Items>
     </SummonerListItem>

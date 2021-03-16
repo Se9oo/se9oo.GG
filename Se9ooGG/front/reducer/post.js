@@ -57,20 +57,20 @@ export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
 export const loadPostRequestAction = () => {
   return {
     type: LOAD_POST_REQUEST,
-  }
-}
+  };
+};
 
 export const addPostRequestAction = (data) => {
   return {
     type: ADD_POST_REQUEST,
-    data
+    data,
   };
 };
 
 export const deletePostRequestAction = (data) => {
   return {
     type: DELETE_POST_REQUEST,
-    data
+    data,
   };
 };
 
@@ -85,8 +85,8 @@ export const deleteCommentRequestAction = (data) => {
   return {
     type: DELETE_COMMENT_REQUEST,
     data,
-  }
-}
+  };
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -94,58 +94,58 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loadPostError: false,
-      }
+      };
     case LOAD_POST_SUCCESS:
       return {
         ...state,
         loadPostDone: true,
         postList: action.data,
-      }
+      };
     case LOAD_POST_FAILURE:
       return {
         ...state,
         loadPostDone: false,
         loadPostError: true,
-      }
+      };
     // 글등록
     case ADD_POST_REQUEST:
       return {
         ...state,
         addPostLoading: true,
-      }
+      };
     case ADD_POST_SUCCESS:
       return {
         ...state,
         postList: [...state.postList, action.data],
         addPostLoading: false,
-      }
+      };
     case ADD_POST_FAILURE:
       return {
         ...state,
         addPostLoading: false,
-      }
+      };
     // 글삭제
     case DELETE_POST_REQUEST:
       return {
         ...state,
         deletePostLoading: true,
-      }
+      };
     case DELETE_POST_SUCCESS:
       return {
         ...state,
         postList: [...state.postList].filter((v) => v.postId !== action.data.postId),
         deletePostLoading: false,
-      }
+      };
     case DELETE_POST_FAILURE:
       return {
         ...state,
         deletePostLoading: false,
-      }
+      };
     case ADD_COMMENT_REQUEST:
       return {
         ...state,
         addCommentLoading: true,
-      }
+      };
     case ADD_COMMENT_SUCCESS:
       const addPostIndex = state.postList.findIndex((v) => v.postId === parseInt(action.data.postId));
       const addPost = { ...state.postList[addPostIndex] };
@@ -157,15 +157,15 @@ const reducer = (state = initialState, action) => {
         ...state,
         postList: addPostList,
         addCommentLoading: false,
-      }
+      };
     case ADD_COMMENT_FAILURE:
       return {
         addCommentLoading: false,
-      }
+      };
     case DELETE_COMMENT_REQUEST:
       return {
-        ...state, 
-      }
+        ...state,
+      };
     case DELETE_COMMENT_SUCCESS:
       const deletePostIndex = state.postList.findIndex((v) => v.postId === parseInt(action.data.postId));
       const deletePost = { ...state.postList[deletePostIndex] };
@@ -176,11 +176,11 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         postList: deletePostList,
-      }
+      };
     case DELETE_COMMENT_FAILURE:
       return {
         ...state,
-      }
+      };
     default:
       return state;
   }

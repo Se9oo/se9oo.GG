@@ -3,12 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import { deletePostRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
-import {
-  SmileOutlined,
-  EllipsisOutlined,
-  CommentOutlined,
-  SmileTwoTone,
-} from '@ant-design/icons';
+import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
 import CommonModal from '../CommonModal';
 import CommentCard from './CommentCard';
 import styled from 'styled-components';
@@ -80,11 +75,7 @@ const PostCard = memo(({ data }) => {
         actions={[
           <CommentOutlined key="comment" onClick={onClickComment} />,
           liked ? (
-            <SmileTwoTone
-              twoToneColor="#eb2f96"
-              key="heartTwo"
-              onClick={onToggleSmile}
-            />
+            <SmileTwoTone twoToneColor="#eb2f96" key="heartTwo" onClick={onToggleSmile} />
           ) : (
             <SmileOutlined key="like" onClick={onToggleSmile} />
           ),
@@ -125,14 +116,10 @@ const PostCard = memo(({ data }) => {
                 </span>
               );
             })}
-          <PostCommentCount>
-            {`댓글 ${data.comments.length}개`}
-          </PostCommentCount>
+          <PostCommentCount>{`댓글 ${data.comments.length}개`}</PostCommentCount>
         </PostCardContentContainer>
       </Card>
-      {showComment && data.comments && (
-        <CommentCard commentList={data.comments} postId={data.postId} />
-      )}
+      {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} />}
       <CommonModal modalContent={modalContent} visible={showModal} />
     </>
   );

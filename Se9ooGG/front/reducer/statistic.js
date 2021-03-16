@@ -30,27 +30,27 @@ export const loadSummonerRequestAction = (data) => {
 export const loadSummonerDoneClearAction = () => {
   return {
     type: LOAD_SUMMONER_DONE_CLEAR,
-  }
+  };
 };
 
 export const loadSummonerErrorClearAction = () => {
   return {
     type: LOAD_SUMMONER_ERROR_CLEAR,
-  }
+  };
 };
 
 export const loadSummonerInGameRequestAction = (data) => {
   return {
     type: LOAD_SUMMONER_INGAME_REQUEST,
-    data
-  }
+    data,
+  };
 };
 
 export const loadSummonerInGameErrorClearAction = () => {
   return {
     type: LOAD_SUMMONER_INGAME_ERROR_CLEAR,
-  }
-}
+  };
+};
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -70,7 +70,7 @@ const reducer = (state = initialState, action) => {
         loadSummonerDone: true,
         loadSummonerError: null,
       };
-    
+
     case LOAD_SUMMONER_FAILURE:
       return {
         ...state,
@@ -99,7 +99,7 @@ const reducer = (state = initialState, action) => {
         loadSummonerInGameLoading: false,
         loadSummonerInGameDone: false,
         loadSummonerInGameError: action.data,
-      }
+      };
     case LOAD_SUMMONER_DONE_CLEAR:
       return {
         ...state,
@@ -109,15 +109,15 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loadSummonerError: null,
-      }
+      };
     case LOAD_SUMMONER_INGAME_ERROR_CLEAR:
       return {
         ...state,
         loadSummonerInGameError: null,
-      }
+      };
     default:
       return state;
-  };
+  }
 };
 
 export default reducer;

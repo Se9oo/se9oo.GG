@@ -18,7 +18,7 @@ const Home = () => {
       pathname: '/statistic',
       query: `summonerName=${search.replace(/ /gi, '+')}`,
     });
-  }, [search])
+  }, [search]);
 
   return (
     <AppLayout>

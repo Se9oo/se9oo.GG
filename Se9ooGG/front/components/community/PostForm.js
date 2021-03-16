@@ -117,11 +117,7 @@ const PostForm = () => {
           />
         </PostContentContainer>
         {/* 등록 */}
-        <PostButton
-          type="primary"
-          htmlType="submit"
-          style={{ marginBottom: '1rem' }}
-        >
+        <PostButton type="primary" htmlType="submit" style={{ marginBottom: '1rem' }}>
           등록
         </PostButton>
         <PostButton onClick={onClickPostCancel}>취소</PostButton>

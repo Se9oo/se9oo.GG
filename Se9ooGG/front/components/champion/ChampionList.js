@@ -6,9 +6,7 @@ import styled from 'styled-components';
 const ChampionList = ({ champion }) => {
   const router = useRouter();
   // 가나다 순으로 정렬
-  const championArray = [...champion].sort((a, b) =>
-    a.name < b.name ? -1 : a.name > b.name ? 1 : 0
-  );
+  const championArray = [...champion].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 
   const onClickChampionItem = useCallback((id) => {
     router.push({
@@ -23,10 +21,7 @@ const ChampionList = ({ champion }) => {
       <ChampList>
         {championArray.map((v) => {
           return (
-            <ChampListItem
-              key={v.name}
-              onClick={() => onClickChampionItem(v.id)}
-            >
+            <ChampListItem key={v.name} onClick={() => onClickChampionItem(v.id)}>
               <ChampionImg src={`/img/champion/${v.id}.png`} alt={`${v.id}`} />
               <ChampionName>{v.name}</ChampionName>
             </ChampListItem>

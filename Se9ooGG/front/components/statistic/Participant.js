@@ -10,10 +10,7 @@ const Participant = ({ team }) => {
 
         return (
           <ParticipantItem key={summoner.participantId}>
-            <img
-              src={`/img/champion/${championName.eng}.png`}
-              alt="champion-img"
-            />
+            <img src={`/img/champion/${championName.eng}.png`} alt="champion-img" />
             <span>{summoner.summonerName}</span>
           </ParticipantItem>
         );

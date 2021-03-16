@@ -1,10 +1,17 @@
 import axios from 'axios';
 import { all, call, fork, put, takeLatest } from 'redux-saga/effects';
-import { LOAD_SUMMONER_FAILURE, LOAD_SUMMONER_INGAME_FAILURE, LOAD_SUMMONER_INGAME_REQUEST, LOAD_SUMMONER_INGAME_SUCCESS, LOAD_SUMMONER_REQUEST, LOAD_SUMMONER_SUCCESS } from '../reducer/statistic';
+import {
+  LOAD_SUMMONER_FAILURE,
+  LOAD_SUMMONER_INGAME_FAILURE,
+  LOAD_SUMMONER_INGAME_REQUEST,
+  LOAD_SUMMONER_INGAME_SUCCESS,
+  LOAD_SUMMONER_REQUEST,
+  LOAD_SUMMONER_SUCCESS,
+} from '../reducer/statistic';
 
 // 사용자 전적 가져오기
-function loadSummonerAPI (data) {
-  return axios.get('/statistic/loadSummoner', { params: data })
+function loadSummonerAPI(data) {
+  return axios.get('/statistic/loadSummoner', { params: data });
 }
 
 function* loadSummoner(action) {
@@ -23,7 +30,7 @@ function* loadSummoner(action) {
 }
 
 // 사용자 인게임 정보 가져오기
-function loadSummonerInGameAPI (data) {
+function loadSummonerInGameAPI(data) {
   return axios.get(`/statistic/loadSummonerInGame/${data.summonerName}`);
 }
 
@@ -38,7 +45,7 @@ function* loadSummonerInGame(action) {
     yield put({
       type: LOAD_SUMMONER_INGAME_FAILURE,
       data: err.response.data,
-    })
+    });
   }
 }
 
@@ -51,8 +58,5 @@ function* watchLoadSummonerInGame() {
 }
 
 export default function* statisticSaga() {
-  yield all([
-    fork(watchLoadSummonerInfo),
-    fork(watchLoadSummonerInGame),
-  ])
+  yield all([fork(watchLoadSummonerInfo), fork(watchLoadSummonerInGame)]);
 }

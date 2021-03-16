@@ -12,7 +12,7 @@ export const initialState = {
   loadMyInfoDone: false,
   loadMyInfoError: false,
   me: null,
-}
+};
 
 // 로그인
 export const LOG_IN_REQUEST = 'LOG_IN_REQUEST';
@@ -36,14 +36,14 @@ export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 export const LoginRequsetAction = (data) => {
   return {
     type: LOG_IN_REQUEST,
-    data
+    data,
   };
 };
 
 export const LoginErrorClearRequestAction = () => {
   return {
     type: LOG_IN_FAILURE_CLEAR,
-  }
+  };
 };
 
 export const LogoutRequestAction = () => {
@@ -55,20 +55,20 @@ export const LogoutRequestAction = () => {
 export const SignUpRequestAction = (data) => {
   return {
     type: SIGN_UP_REQUEST,
-    data
+    data,
   };
 };
 
 export const SignUpDoneClearRequestAction = () => {
   return {
     type: SIGN_UP_DONE_CLEAR,
-  }
+  };
 };
 
 export const LoadMyInfoRequestAction = () => {
   return {
     type: LOAD_MY_INFO_REQUEST,
-  }
+  };
 };
 
 const reducer = (state = initialState, action) => {
@@ -98,7 +98,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         loginError: null,
-      }
+      };
     case LOG_OUT_REQUEST:
       return {
         ...state,
@@ -124,30 +124,30 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         signUpLoading: true,
-      }
+      };
     case SIGN_UP_SUCCESS:
       return {
         ...state,
         signUpLoading: false,
         signUpDone: true,
         signUpError: false,
-      }
+      };
     case SIGN_UP_FAILURE:
       return {
         ...state,
         signUpLoading: false,
         signUpError: true,
-      }
+      };
     case SIGN_UP_DONE_CLEAR:
       return {
         ...state,
         signUpDone: false,
-      }
+      };
     case LOAD_MY_INFO_REQUEST:
       return {
         ...state,
         loadMyInfoLoading: true,
-      }
+      };
     case LOAD_MY_INFO_SUCCESS:
       const me = action.data === null ? null : action.data[0];
       return {
@@ -155,14 +155,14 @@ const reducer = (state = initialState, action) => {
         loadMyInfoLoading: false,
         loadMyInfoDone: true,
         me: me,
-      }
+      };
     case LOAD_MY_INFO_FAILURE:
       return {
         ...state,
         loadMyInfoLoading: false,
         loadMyInfoDone: false,
         loadMyInfoError: true,
-      }
+      };
     default:
       return state;
   }

@@ -4,19 +4,14 @@ import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, Form, Input } from 'antd';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
-import {
-  LoginErrorClearRequestAction,
-  LoginRequsetAction,
-} from '../../reducer/user';
+import { LoginErrorClearRequestAction, LoginRequsetAction } from '../../reducer/user';
 import { errorModal } from '../CommonModal';
 import styled from 'styled-components';
 
 const LoginForm = () => {
   const dispatch = useDispatch('');
   // 로그인 성공 여부
-  const { loginDone, loginLoading, loginError } = useSelector(
-    (state) => state.user
-  );
+  const { loginDone, loginLoading, loginError } = useSelector((state) => state.user);
 
   // email
   const [email, setEmail] = useState('');
@@ -90,9 +85,7 @@ const LoginForm = () => {
             name="user-password"
             value={password}
             onChange={onChangePassword}
-            iconRender={(visible) =>
-              visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-            }
+            iconRender={(visible) => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             visibilityToggle
           />
         </InputContainer>

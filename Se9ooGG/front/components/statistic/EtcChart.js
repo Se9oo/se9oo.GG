@@ -18,9 +18,7 @@ function getValueName(selectedNav) {
 
 const EtcChart = ({ matchTimelines, selectedChampList, selectedNav }) => {
   // 소환사별 타임라인 배열 생성
-  let eachParticipantsTimeLines = Array.from(Array(10), () =>
-    Array(1).fill(null)
-  );
+  let eachParticipantsTimeLines = Array.from(Array(10), () => Array(1).fill(null));
   // 할당
   let categories = [];
   matchTimelines.map((timeLine, i) => {
@@ -33,9 +31,7 @@ const EtcChart = ({ matchTimelines, selectedChampList, selectedNav }) => {
 
   let totalData = [];
   eachParticipantsTimeLines.map((participant, idx) => {
-    let selectedChampionIdx = selectedChampList.findIndex(
-      (champion) => champion.id === participant[idx].participantId
-    );
+    let selectedChampionIdx = selectedChampList.findIndex((champion) => champion.id === participant[idx].participantId);
     if (selectedChampionIdx !== -1) {
       let eachTotalData = [];
       participant.map((summoner) => {
@@ -44,9 +40,7 @@ const EtcChart = ({ matchTimelines, selectedChampList, selectedNav }) => {
         } else if (selectedNav === 2) {
           eachTotalData.push(summoner.xp);
         } else {
-          eachTotalData.push(
-            summoner.minionsKilled + summoner.jungleMinionsKilled
-          );
+          eachTotalData.push(summoner.minionsKilled + summoner.jungleMinionsKilled);
         }
       });
 

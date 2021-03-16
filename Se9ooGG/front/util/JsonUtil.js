@@ -82,9 +82,7 @@ export function getRuneImgUrl(perkInfo) {
   const runeImgUrl = {};
 
   // primary Rune 세팅
-  const primaryPerk = rune.find(
-    (perk) => perk.id === perkInfo.perkPrimaryStyle
-  );
+  const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
   runeImgUrl.primaryPerk = primaryPerk.icon;
   primaryPerk.slots.map((slot, i) => {
     if (perkInfo.hasOwnProperty(`perk${i}`)) {
@@ -114,9 +112,7 @@ export function getRuneImgUrl(perkInfo) {
 
 export function getAllRuneImgUrl(perkInfo) {
   let allRuneImgUrl = [];
-  const primaryPerk = rune.find(
-    (perk) => perk.id === perkInfo.perkPrimaryStyle
-  );
+  const primaryPerk = rune.find((perk) => perk.id === perkInfo.perkPrimaryStyle);
   const subPerk = rune.find((perk) => perk.id === perkInfo.perkSubStyle);
 
   allRuneImgUrl.push(primaryPerk);

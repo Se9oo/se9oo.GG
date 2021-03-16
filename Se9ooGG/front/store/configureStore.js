@@ -9,9 +9,10 @@ import rootSaga from '../sagas';
 const configureStore = () => {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [sagaMiddleware, logger];
-  const enhancer = process.env.NODE_ENV === 'production'
-  ? compose(applyMiddleware(...middlewares))
-  : composeWithDevTools(applyMiddleware(...middlewares))
+  const enhancer =
+    process.env.NODE_ENV === 'production'
+      ? compose(applyMiddleware(...middlewares))
+      : composeWithDevTools(applyMiddleware(...middlewares));
 
   const store = createStore(reducer, enhancer);
   store.sagaTask = sagaMiddleware.run(rootSaga);
@@ -19,7 +20,7 @@ const configureStore = () => {
 };
 
 const wrapper = createWrapper(configureStore, {
-  debug: process.env.NODE_ENV === 'development'
+  debug: process.env.NODE_ENV === 'development',
 });
 
 export default wrapper;

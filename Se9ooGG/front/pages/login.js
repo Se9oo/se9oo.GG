@@ -10,7 +10,7 @@ const Login = () => {
         <title>se9oo.GG | 로그인</title>
       </Head>
       <LoginForm />
-    </AppLayout>    
+    </AppLayout>
   );
 };
 
