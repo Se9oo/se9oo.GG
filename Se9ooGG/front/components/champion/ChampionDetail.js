@@ -1,10 +1,12 @@
 import React from 'react';
-import styled from 'styled-components';
+import ChampionSpells from './ChampionSpells';
 import ChampionStats from './ChampionStats';
+import styled from 'styled-components';
 
 const ChampionDetail = ({ champion }) => {
   // champion stat 정보
   const stats = champion.stats;
+  const spells = champion.spells;
 
   return (
     <>
@@ -25,7 +27,7 @@ const ChampionDetail = ({ champion }) => {
       </Info>
       <section>
         <Contents>
-          <article>skills</article>
+          <ChampionSpells spells={spells} />
           <ChampionStats stats={stats} />
         </Contents>
         <Contents>
