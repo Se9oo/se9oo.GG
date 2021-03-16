@@ -25,8 +25,8 @@ const ChampionDetail = ({ champion }) => {
       </Info>
       <section>
         <Contents>
-          <ChampionStats stats={stats} />
           <article>skills</article>
+          <ChampionStats stats={stats} />
         </Contents>
         <Contents>
           <article>tip</article>
@@ -122,7 +122,7 @@ const Contents = styled.div`
   & article {
     background-color: #ffffff;
     border: 1px solid rgba(206, 212, 218, 0.5);
-    padding: 1rem;
+    margin-bottom: 1rem;
   }
 
   @media ${(props) => props.theme.tablet} {
