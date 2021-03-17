@@ -1,12 +1,11 @@
 import React, { useCallback } from 'react';
 import { useRouter } from 'next/router';
-import { Input } from 'antd';
 import styled from 'styled-components';
 
-const ChampionList = ({ champion }) => {
+const ChampionList = ({ list }) => {
   const router = useRouter();
   // 가나다 순으로 정렬
-  const championArray = [...champion].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+  const championList = [...list].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 
   const onClickChampionItem = useCallback((id) => {
     router.push({
@@ -16,31 +15,20 @@ const ChampionList = ({ champion }) => {
   }, []);
 
   return (
-    <>
-      <ChampionSearchInput placeholder="챔피언 검색" enterButton />
-      <ChampList>
-        {championArray.map((v) => {
-          return (
-            <ChampListItem key={v.name} onClick={() => onClickChampionItem(v.id)}>
-              <ChampionImg src={`/img/champion/${v.id}.png`} alt={`${v.id}`} />
-              <ChampionName>{v.name}</ChampionName>
-            </ChampListItem>
-          );
-        })}
-      </ChampList>
-    </>
+    <ChampList>
+      {championList.map((champion) => {
+        return (
+          <ChampListItem key={champion.name} onClick={() => onClickChampionItem(champion.id)}>
+            <ChampionImg src={`/img/champion/${champion.id}.png`} alt={`${champion.id}`} />
+            <ChampionName>{champion.name}</ChampionName>
+          </ChampListItem>
+        );
+      })}
+    </ChampList>
   );
 };
 
 export default ChampionList;
-
-const ChampionSearchInput = styled(Input.Search)`
-  margin: 1rem 0;
-
-  & ::placeholder {
-    font-size: 1.2rem;
-  }
-`;
 
 const ChampList = styled.ul`
   display: flex;
