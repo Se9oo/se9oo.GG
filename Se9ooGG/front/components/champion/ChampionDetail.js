@@ -1,12 +1,13 @@
 import React from 'react';
 import ChampionSpells from './ChampionSpells';
 import ChampionStats from './ChampionStats';
+import ChampionTips from './ChampionTips';
 import styled from 'styled-components';
 
 const ChampionDetail = ({ champion }) => {
-  // champion stat 정보
-  const stats = champion.stats;
-  const spells = champion.spells;
+  // champion 정보
+  const { stats, spells, allytips, enemytips } = champion;
+  const tips = [allytips, enemytips];
 
   return (
     <>
@@ -31,7 +32,7 @@ const ChampionDetail = ({ champion }) => {
           <ChampionStats stats={stats} />
         </Contents>
         <Contents>
-          <article>tip</article>
+          <ChampionTips tips={tips} />
           <article>comments</article>
         </Contents>
       </section>
