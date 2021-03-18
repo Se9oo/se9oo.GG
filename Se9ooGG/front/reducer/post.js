@@ -1,27 +1,5 @@
 export const initialState = {
-  postList: [
-    // {
-    //   email: 'se9oo@kakao.com',
-    //   nickname: '세구'
-    //   postId: shortId.generate(),
-    //   title: '여기는 제목이다',
-    //   content: '내용이야!',
-    //   comments: [
-    //      {
-    //       email: 'hong@kakao.com',
-    //       nickname: '홍구'
-    //       commentId: shortId.generate(),
-    //       content: '재밌어'
-    //     },
-    //     {
-    //       email: 'hing@kakao.com',
-    //       nickname: '힝구'
-    //       commentId: shortId.generate(),
-    //       content: '댓글은 두개여야지'
-    //     }
-    //   ]
-    // }
-  ],
+  postList: [],
   loadPostDone: false,
   loadPostError: false,
   addPostLoading: false,
