@@ -2,6 +2,7 @@ import React from 'react';
 import ChampionSpells from './ChampionSpells';
 import ChampionStats from './ChampionStats';
 import ChampionTips from './ChampionTips';
+import ChampionComments from './ChampionComments';
 import styled from 'styled-components';
 
 const ChampionDetail = ({ champion }) => {
@@ -33,7 +34,7 @@ const ChampionDetail = ({ champion }) => {
         </Contents>
         <Contents>
           <ChampionTips tips={tips} />
-          <article>comments</article>
+          <ChampionComments name={champion.id} />
         </Contents>
       </section>
       <section>skins</section>

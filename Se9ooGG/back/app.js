@@ -8,6 +8,7 @@ const dotenv = require('dotenv');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const statisticRouter = require('./routes/statistic');
+const championRouter = require('./routes/champion');
 
 const app = express();
 
@@ -42,6 +43,8 @@ app.use(postRouter);
 app.use(userRouter);
 // 전적
 app.use(statisticRouter);
+// 챔피언 한줄평
+app.use(championRouter);
 
 app.listen(3065, () => {
   console.log('se9oo.GG back start');
