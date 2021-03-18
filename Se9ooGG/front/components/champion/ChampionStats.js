@@ -61,7 +61,8 @@ const ChampionStats = ({ stats }) => {
 
 export default ChampionStats;
 
-const SubTitle = styled.div`
+const SubTitle = styled.h2`
+  display: block;
   margin-bottom: 1rem;
   padding: 1rem;
   border-bottom: 1px solid rgba(206, 212, 218, 0.5);
