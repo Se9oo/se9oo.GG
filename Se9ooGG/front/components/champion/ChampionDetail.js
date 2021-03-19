@@ -34,7 +34,7 @@ const ChampionDetail = ({ champion }) => {
         </Contents>
         <Contents>
           <ChampionTips tips={tips} />
-          <ChampionComments name={champion.id} />
+          <ChampionComments championName={champion.id} />
         </Contents>
       </section>
       <section>skins</section>

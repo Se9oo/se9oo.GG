@@ -6,7 +6,7 @@ import { Empty, Pagination } from 'antd';
 import styled from 'styled-components';
 import ChampionWriteComments from './ChampionWriteComments';
 
-const ChampionComments = ({ name }) => {
+const ChampionComments = ({ championName }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
   const { championCommentsList, totalCommentsCount } = useSelector((state) => state.champion);
@@ -14,7 +14,7 @@ const ChampionComments = ({ name }) => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    dispatch(loadChampionCommentsAction({ name, page: currentPage }));
+    dispatch(loadChampionCommentsAction({ championName, page: currentPage }));
   }, [currentPage]);
 
   const onChangePaging = useCallback((page) => {
