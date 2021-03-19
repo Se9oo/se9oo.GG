@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 const ChampionStats = ({ stats }) => {
   // stat data
-  const statsData = [stats.armor, stats.attackdamage, stats.spellblock, stats.hp, stats.mp, stats.attackrange];
+  const statsData = [stats.attackdamage, stats.armor, stats.spellblock, stats.hp, stats.mp, stats.attackrange];
 
   const options = {
     chart: {
@@ -21,7 +21,7 @@ const ChampionStats = ({ stats }) => {
       enabled: false,
     },
     xAxis: {
-      categories: ['방어', '공격', '마법방어', '체력', '마나', '사거리'],
+      categories: ['공격', '방어', '마법방어', '체력', '마나', '사거리'],
       width: '95%',
     },
     yAxis: {
