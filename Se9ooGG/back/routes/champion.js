@@ -1,9 +1,39 @@
 const express = require('express');
 const pool = require('../config/pool');
-const { selectChampionComments, selectTotalChampionCommentsCount } = require('./query/champion');
+const { selectChampionComments, selectTotalChampionCommentsCount, insertChampionComment } = require('./query/champion');
 
 const router = express.Router();
 
+// 챔피언 한줄평 등록
+router.post('/champion/comment', async (req, res, next) => {
+  const { championName, content, userEmail } = req.body;
+
+  const connection = await pool.getConnection();
+
+  try {
+    await connection.beginTransaction();
+
+    if (championName && content) {
+      const [result] = await connection.execute(insertChampionComment, [championName, content, userEmail]);
+
+      await connection.commit();
+
+      return res.status(200).json(result.insertId);
+    } else {
+      return res.status(401).json('입력값을 확인해주세요.');
+    }
+  } catch (err) {
+    await connection.rollback();
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
+// 챔피언 한줄평 조회
 router.get('/champion/comments/:championName/:page', async (req, res, next) => {
   const { championName, page } = req.params;
 

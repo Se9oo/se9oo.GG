@@ -4,6 +4,9 @@ export const initialState = {
   loadChampionCommentsLoading: false,
   loadChampionCommentsSuccess: false,
   loadChampionCommentsError: false,
+  addChampionCommentLoading: false,
+  addChampionCommentSuccess: false,
+  addChampionCommentError: false,
 };
 
 // 챔피언 한줄평 불러오기
@@ -11,9 +14,21 @@ export const LOAD_CHAMPION_COMMENTS_REQUEST = 'LOAD_CHAMPION_COMMENTS_REQUEST';
 export const LOAD_CHAMPION_COMMENTS_SUCCESS = 'LOAD_CHAMPION_COMMENTS_SUCCESS';
 export const LOAD_CHAMPION_COMMENTS_FAILURE = 'LOAD_CHAMPION_COMMENTS_FAILURE';
 
+// 챔피언 한줄평 등록
+export const ADD_CHAMPION_COMMENT_REQUEST = 'ADD_CHAMPION_COMMENT_REQUEST';
+export const ADD_CHAMPION_COMMENT_SUCCESS = 'ADD_CHAMPION_COMMENT_SUCCESS';
+export const ADD_CHAMPION_COMMENT_FAILURE = 'ADD_CHAMPION_COMMENT_FAILURE';
+
 export const loadChampionCommentsAction = (data) => {
   return {
     type: LOAD_CHAMPION_COMMENTS_REQUEST,
+    data,
+  };
+};
+
+export const addChampionCommentAction = (data) => {
+  return {
+    type: ADD_CHAMPION_COMMENT_REQUEST,
     data,
   };
 };
@@ -43,6 +58,27 @@ const reducer = (state = initialState, action) => {
         loadChampionCommentsLoading: false,
         loadChampionCommentsSuccess: false,
         loadChampionCommentsError: true,
+      };
+    case ADD_CHAMPION_COMMENT_REQUEST:
+      return {
+        ...state,
+        addChampionCommentLoading: true,
+        addChampionCommentSuccess: false,
+        addChampionCOmmentError: false,
+      };
+    case ADD_CHAMPION_COMMENT_SUCCESS:
+      return {
+        ...state,
+        addChampionCommentLoading: false,
+        addChampionCommentSuccess: true,
+        addChampionCommentError: false,
+      };
+    case ADD_CHAMPION_COMMENT_FAILURE:
+      return {
+        ...state,
+        addChampionCommentLoading: false,
+        addChampionCommentSuccess: false,
+        addChampionCommentError: true,
       };
     default:
       return state;

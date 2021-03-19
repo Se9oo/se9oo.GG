@@ -27,3 +27,11 @@ exports.selectTotalChampionCommentsCount = `
     champion_name = ?
     AND status = 1
 `;
+
+// 챔피언 한줄평 등록
+exports.insertChampionComment = `
+  INSERT INTO champion_comment
+    (champion_name, content, user_email, reg_dt, status)
+  VALUES 
+    (?, ?, ?, now(), 1);
+`;

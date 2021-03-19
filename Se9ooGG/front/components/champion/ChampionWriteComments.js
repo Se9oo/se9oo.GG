@@ -1,9 +1,13 @@
 import React, { useCallback, useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { errorModal } from '../CommonModal';
+import { useDispatch, useSelector } from 'react-redux';
+import { addChampionCommentAction } from '../../reducer/champion';
 import styled from 'styled-components';
 
-const ChampionWriteComments = () => {
+const ChampionWriteComments = ({ championName }) => {
+  const dispatch = useDispatch('');
+  const { me } = useSelector((state) => state.user);
   const [commentText, setCommentText] = useState('');
 
   const onChangeCommentText = useCallback((e) => {
@@ -16,7 +20,19 @@ const ChampionWriteComments = () => {
       return;
     }
 
-    //setCommentText('');
+    if (me) {
+      dispatch(
+        addChampionCommentAction({
+          championName,
+          content: commentText,
+          userEmail: me.email,
+        })
+      );
+    } else {
+      errorModal('다시 로그인 해주세요.');
+    }
+
+    setCommentText('');
   }, [commentText]);
 
   return (
