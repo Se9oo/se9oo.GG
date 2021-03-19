@@ -1,5 +1,6 @@
 export const initialState = {
   championCommentsList: [],
+  totalCommentsCount: 0,
   loadChampionCommentsLoading: false,
   loadChampionCommentsSuccess: false,
   loadChampionCommentsError: false,
@@ -30,7 +31,8 @@ const reducer = (state = initialState, action) => {
       console.log(action.data);
       return {
         ...state,
-        championCommentsList: action.data,
+        championCommentsList: [...action.data.championCommentsList],
+        totalCommentsCount: action.data.totalCommentsCount,
         loadChampionCommentsLoading: false,
         loadChampionCommentsSuccess: true,
         loadChampionCommentsError: false,

@@ -14,9 +14,7 @@ export default ChampionCommentsItem;
 
 const Comment = styled.li`
   position: relative;
-  padding: 1rem;
   border-bottom: 1px solid rgba(206, 212, 218, 0.5);
-  overflow-y: auto;
   font-size: 1.1rem;
 `;
 

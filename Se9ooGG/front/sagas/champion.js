@@ -7,7 +7,7 @@ import {
 import axios from 'axios';
 
 function loadChampionCommentsAPI(data) {
-  return axios.get(`/champion/comments/${data}`);
+  return axios.get(`/champion/comments/${data.name}/${data.page}`);
 }
 
 function* loadChampionComments(action) {

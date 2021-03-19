@@ -15,6 +15,15 @@ exports.selectChampionComments = `
   WHERE
     cmt.champion_name = ?
     AND cmt.status = 1
-  ORDER BY
-    cmt.comment_id DESC
+  LIMIT ? OFFSET ?
+`;
+
+exports.selectTotalChampionCommentsCount = `
+  SELECT
+    COUNT(*) AS count
+  FROM
+    champion_comment
+  WHERE
+    champion_name = ?
+    AND status = 1
 `;
