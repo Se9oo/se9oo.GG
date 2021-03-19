@@ -1,10 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
-import useInput from '../hooks/useInput';
-import CommonModal, { errorModal, infoModal } from './CommonModal';
+import useInput from '../../hooks/useInput';
+import { SignUpDoneClearRequestAction, SignUpRequestAction } from '../../reducer/user';
+import CommonModal, { errorModal, infoModal } from '../CommonModal';
 import { Button, Form, Input } from 'antd';
-import { SignUpDoneClearRequestAction, SignUpRequestAction } from '../reducer/user';
 import styled from 'styled-components';
 
 const SignUpForm = () => {
@@ -105,7 +105,6 @@ const SignUpForm = () => {
 
   return (
     <>
-      <h2>회원가입</h2>
       <Form onFinish={onSubmitForm}>
         <InputContainer>
           <label htmlFor="user-email">이메일</label>
