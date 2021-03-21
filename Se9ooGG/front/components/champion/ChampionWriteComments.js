@@ -1,14 +1,25 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Form, Input, Button } from 'antd';
 import { errorModal } from '../CommonModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { addChampionCommentAction } from '../../reducer/champion';
+import { addChampionCommentAction, loadChampionCommentsAction } from '../../reducer/champion';
 import styled from 'styled-components';
 
-const ChampionWriteComments = ({ championName }) => {
+const ChampionWriteComments = ({ championName, changeMode }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
+  const { addChampionCommentSuccess } = useSelector((state) => state.champion);
   const [commentText, setCommentText] = useState('');
+
+  // 한줄평이 등록되면
+  useEffect(() => {
+    if (addChampionCommentSuccess) {
+      // 다시 목록을 읽음
+      dispatch(loadChampionCommentsAction({ championName, page: 1 }));
+      // 한줄평 입력에서 목록으로 변경
+      changeMode('list');
+    }
+  }, [addChampionCommentSuccess]);
 
   const onChangeCommentText = useCallback((e) => {
     setCommentText(e.target.value);

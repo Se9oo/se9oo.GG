@@ -33,7 +33,7 @@ const ChampionComments = ({ championName }) => {
           {showMode === 'list' ? '한줄평 작성하기' : '목록보기'}
         </WriteComment>
       )}
-      {showMode === 'edit' && <ChampionWriteComments championName={championName} />}
+      {showMode === 'edit' && <ChampionWriteComments championName={championName} changeMode={setShowMode} />}
       {championCommentsList.length === 0 && showMode === 'list' && (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 한줄평이 없습니다.</Empty>
       )}

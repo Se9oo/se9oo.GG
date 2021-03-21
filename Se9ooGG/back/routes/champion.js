@@ -1,11 +1,12 @@
 const express = require('express');
 const pool = require('../config/pool');
+const { isLoggedIn } = require('./middlewares');
 const { selectChampionComments, selectTotalChampionCommentsCount, insertChampionComment } = require('./query/champion');
 
 const router = express.Router();
 
 // 챔피언 한줄평 등록
-router.post('/champion/comment', async (req, res, next) => {
+router.post('/champion/comment', isLoggedIn, async (req, res, next) => {
   const { championName, content, userEmail } = req.body;
 
   const connection = await pool.getConnection();
@@ -49,6 +50,11 @@ router.get('/champion/comments/:championName/:page', async (req, res, next) => {
       // 챔피언 한줄평 없을 경우 null return
       if (championCommentsListCount.length === 0) {
         res.status(200).json(null);
+      }
+
+      // 예외처리
+      if (page <= 0) {
+        page = 1;
       }
 
       // offset 설정
