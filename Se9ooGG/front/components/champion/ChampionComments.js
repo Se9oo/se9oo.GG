@@ -2,20 +2,31 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadChampionCommentsAction } from '../../reducer/champion';
 import ChampionCommentsItem from './ChampionCommentsItem';
+import ChampionWriteComments from './ChampionWriteComments';
+import { infoModal } from '../CommonModal';
 import { Empty, Pagination } from 'antd';
 import styled from 'styled-components';
-import ChampionWriteComments from './ChampionWriteComments';
 
 const ChampionComments = ({ championName }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
-  const { championCommentsList, totalCommentsCount } = useSelector((state) => state.champion);
+  const { championCommentsList, totalCommentsCount, cancelChampionCommentSuccess } = useSelector(
+    (state) => state.champion
+  );
   const [showMode, setShowMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     dispatch(loadChampionCommentsAction({ championName, page: currentPage }));
   }, [currentPage]);
+
+  // 한줄평 취소시 목록 다시 조회
+  useEffect(() => {
+    if (cancelChampionCommentSuccess) {
+      infoModal('성공적으로 삭제되었습니다.');
+      dispatch(loadChampionCommentsAction({ championName, page: 1 }));
+    }
+  }, [cancelChampionCommentSuccess]);
 
   const onChangePaging = useCallback((page) => {
     setCurrentPage(page);

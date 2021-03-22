@@ -37,3 +37,12 @@ exports.insertChampionComment = `
   VALUES 
     (?, ?, ?, now(), 1);
 `;
+
+// 챔피언 한줄평 취소
+exports.cancelChampionComment = `
+  UPDATE champion_comment SET
+    status = 0
+    , cancel_dt = now()
+  WHERE
+    comment_id = ?
+`;
