@@ -10,15 +10,29 @@ import styled from 'styled-components';
 const ChampionComments = ({ championName }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
-  const { championCommentsList, totalCommentsCount, cancelChampionCommentSuccess } = useSelector(
-    (state) => state.champion
-  );
+  const {
+    championCommentsList,
+    totalCommentsCount,
+    addChampionCommentSuccess,
+    cancelChampionCommentSuccess,
+  } = useSelector((state) => state.champion);
   const [showMode, setShowMode] = useState('list');
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     dispatch(loadChampionCommentsAction({ championName, page: currentPage }));
   }, [currentPage]);
+
+  // 한줄평이 등록되면
+  useEffect(() => {
+    if (addChampionCommentSuccess) {
+      infoModal('성공적으로 등록되었습니다.');
+      // 다시 목록을 읽음
+      dispatch(loadChampionCommentsAction({ championName, page: 1 }));
+      // 한줄평 입력에서 목록으로 변경
+      setShowMode('list');
+    }
+  }, [addChampionCommentSuccess]);
 
   // 한줄평 취소시 목록 다시 조회
   useEffect(() => {
@@ -44,7 +58,7 @@ const ChampionComments = ({ championName }) => {
           {showMode === 'list' ? '한줄평 작성하기' : '목록보기'}
         </WriteComment>
       )}
-      {showMode === 'edit' && <ChampionWriteComments championName={championName} changeMode={setShowMode} />}
+      {showMode === 'edit' && <ChampionWriteComments championName={championName} />}
       {championCommentsList.length === 0 && showMode === 'list' && (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 한줄평이 없습니다.</Empty>
       )}
