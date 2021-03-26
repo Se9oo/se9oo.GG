@@ -1,10 +1,14 @@
 export const initialState = {
   postList: [],
+  myPostList: [],
   loadPostDone: false,
   loadPostError: false,
   addPostLoading: false,
   deletePostLoading: false,
   addCommentLoading: false,
+  loadMyPostLoading: false,
+  loadMyPostDone: false,
+  loadMyPostError: false,
 };
 
 // 글목록 불러오기
@@ -31,6 +35,11 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
+
+// 내 게시글 불러오기
+export const LOAD_MY_POST_REQUEST = 'LOAD_MY_POST_REQUEST';
+export const LOAD_MY_POST_SUCCESS = 'LOAD_MY_POST_SUCCESS';
+export const LOAD_MY_POST_FAILURE = 'LOAD_MY_POST_FAILURE';
 
 export const loadPostRequestAction = () => {
   return {
@@ -62,6 +71,13 @@ export const addCommentRequestAction = (data) => {
 export const deleteCommentRequestAction = (data) => {
   return {
     type: DELETE_COMMENT_REQUEST,
+    data,
+  };
+};
+
+export const loadMyPostRequestAction = (data) => {
+  return {
+    type: LOAD_MY_POST_REQUEST,
     data,
   };
 };
@@ -158,6 +174,28 @@ const reducer = (state = initialState, action) => {
     case DELETE_COMMENT_FAILURE:
       return {
         ...state,
+      };
+    case LOAD_MY_POST_REQUEST:
+      return {
+        ...state,
+        loadMyPostLoading: true,
+        loadMyPostDone: false,
+        loadMyPostError: false,
+      };
+    case LOAD_MY_POST_SUCCESS:
+      return {
+        ...state,
+        myPostList: action.data,
+        loadMyPostLoading: false,
+        loadMyPostDone: true,
+        loadMyPostError: false,
+      };
+    case LOAD_MY_POST_FAILURE:
+      return {
+        ...state,
+        loadMyPostLoading: false,
+        loadMyPostDone: false,
+        loadMyPostError: true,
       };
     default:
       return state;

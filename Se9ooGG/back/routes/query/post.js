@@ -9,6 +9,21 @@ exports.selectPostList = `
   ORDER BY pst.post_id DESC
 `;
 
+// 내 게시글 조회
+exports.selectMyPostList = `
+  SELECT
+    pst.post_id AS postId
+    , pst.post_title AS title
+    , pst.post_content AS content
+    , usr.user_email AS email
+    , usr.user_nickname AS nickname
+  FROM post pst
+  INNER JOIN user usr on pst.user_email = usr.user_email
+  WHERE
+    pst.user_email = ?
+  ORDER BY pst.post_id DESC
+`;
+
 // 게시글 등록
 exports.insertPost = `
   INSERT INTO post

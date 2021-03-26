@@ -52,9 +52,9 @@ const UserProfile = () => {
   );
 };
 
-const UserProfileContainer = styled.div`
+const UserProfileContainer = styled.section`
   background-color: #ffffff;
-  margin-top: 1rem;
+  margin: 1rem 0;
   padding: 1rem;
   border: 1px solid rgba(206, 212, 218, 0.5);
 
