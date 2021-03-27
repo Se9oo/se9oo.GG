@@ -3,13 +3,15 @@ import ChampionSpells from './ChampionSpells';
 import ChampionStats from './ChampionStats';
 import ChampionTips from './ChampionTips';
 import ChampionComments from './ChampionComments';
+import ChampionSkins from './ChampionSkins';
 import styled from 'styled-components';
 
 const ChampionDetail = ({ champion }) => {
   // champion 정보
-  const { stats, spells, allytips, enemytips } = champion;
+  const { stats, spells, allytips, enemytips, skins } = champion;
   const tips = [allytips, enemytips];
 
+  console.log(champion);
   return (
     <>
       <Info>
@@ -37,7 +39,9 @@ const ChampionDetail = ({ champion }) => {
           <ChampionComments championName={champion.id} />
         </Contents>
       </section>
-      <section>skins</section>
+      <Skins>
+        <ChampionSkins championName={champion.id} skins={skins} />
+      </Skins>
     </>
   );
 };
@@ -137,4 +141,10 @@ const Contents = styled.div`
       width: 49%;
     }
   }
+`;
+
+const Skins = styled.section`
+  background-color: #ffffff;
+  border: 1px solid rgba(206, 212, 218, 0.5);
+  margin-bottom: 1rem;
 `;
