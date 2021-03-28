@@ -33,16 +33,9 @@ export default ChampionList;
 const ChampList = styled.ul`
   display: flex;
   flex-wrap: wrap;
-  max-height: 27rem;
-  overflow-y: scroll;
   background-color: #ffffff;
   border: 1px solid rgba(206, 212, 218, 0.5);
   padding: 1rem;
-
-  @media ${(props) => props.theme.tablet} {
-    max-height: 100%;
-    overflow: auto;
-  }
 `;
 
 const ChampListItem = styled.li`
