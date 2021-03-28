@@ -17,7 +17,7 @@ const MyPost = () => {
         })
       );
     }
-  }, [myPostList]);
+  }, [me]);
 
   return (
     <Container>
