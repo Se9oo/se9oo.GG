@@ -31,7 +31,6 @@ exports.selectCountIsExUserByEmail = `
 // 사용자 등록
 exports.insertUser = `
   INSERT INTO user 
-    (user_email, user_password, user_nickname, reg_dt)
+    (user_email, user_password, user_nickname, user_level, reg_dt)
   VALUES 
-    (?, ?, ?, NOW())`;
-
+    (?, ?, ?, 1, NOW())`;
