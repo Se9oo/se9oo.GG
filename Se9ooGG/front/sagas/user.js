@@ -1,5 +1,8 @@
 import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
 import {
+  CHANGE_PASSWORD_FAILURE,
+  CHANGE_PASSWORD_REQUEST,
+  CHANGE_PASSWORD_SUCCESS,
   LOAD_MY_INFO_FAILURE,
   LOAD_MY_INFO_REQUEST,
   LOAD_MY_INFO_SUCCESS,
@@ -92,6 +95,25 @@ function* loadMyInfo() {
   }
 }
 
+// 비밀번호 변경하기
+function changePasswordAPI(data) {
+  return axios.put('/user/password', data);
+}
+
+function* changePassword(action) {
+  try {
+    yield call(changePasswordAPI, action.data);
+    yield put({
+      type: CHANGE_PASSWORD_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: CHANGE_PASSWORD_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function* watchLogin() {
   yield takeLatest(LOG_IN_REQUEST, login);
 }
@@ -108,6 +130,10 @@ function* watchLoadMyInfo() {
   yield takeLatest(LOAD_MY_INFO_REQUEST, loadMyInfo);
 }
 
+function* watchChangePassword() {
+  yield takeLatest(CHANGE_PASSWORD_REQUEST, changePassword);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLogin), fork(watchLogout), fork(watchSignUp), fork(watchLoadMyInfo)]);
+  yield all([fork(watchLogin), fork(watchLogout), fork(watchSignUp), fork(watchLoadMyInfo), fork(watchChangePassword)]);
 }

@@ -11,6 +11,9 @@ export const initialState = {
   loadMyInfoLoading: false,
   loadMyInfoDone: false,
   loadMyInfoError: false,
+  changePasswordLoading: false,
+  changePasswordDone: false,
+  changePasswordError: false,
   me: null,
 };
 
@@ -32,6 +35,10 @@ export const SIGN_UP_DONE_CLEAR = 'SIGN_UP_DONE_CLEAR';
 export const LOAD_MY_INFO_REQUEST = 'LOAD_MY_INFO_REQUEST';
 export const LOAD_MY_INFO_SUCCESS = 'LOAD_MY_INFO_SUCCESS';
 export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
+// 비밀번호 변경하기
+export const CHANGE_PASSWORD_REQUEST = 'CHANGE_PASSWORD_REQUEST';
+export const CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS';
+export const CHANGE_PASSWORD_FAILURE = 'CHANGE_PASSWORD_FAILURE';
 
 export const LoginRequsetAction = (data) => {
   return {
@@ -68,6 +75,13 @@ export const SignUpDoneClearRequestAction = () => {
 export const LoadMyInfoRequestAction = () => {
   return {
     type: LOAD_MY_INFO_REQUEST,
+  };
+};
+
+export const ChangePasswordRequestAction = (data) => {
+  return {
+    type: CHANGE_PASSWORD_REQUEST,
+    data,
   };
 };
 
@@ -162,6 +176,27 @@ const reducer = (state = initialState, action) => {
         loadMyInfoLoading: false,
         loadMyInfoDone: false,
         loadMyInfoError: true,
+      };
+    case CHANGE_PASSWORD_REQUEST:
+      return {
+        ...state,
+        changePasswordLoading: true,
+        changePasswordDone: false,
+        changePasswordError: false,
+      };
+    case CHANGE_PASSWORD_SUCCESS:
+      return {
+        ...state,
+        changePasswordLoading: false,
+        changePasswordDone: true,
+        changePasswordError: false,
+      };
+    case CHANGE_PASSWORD_FAILURE:
+      return {
+        ...state,
+        changePasswordLoading: false,
+        changePasswordDone: false,
+        changePasswordError: true,
       };
     default:
       return state;

@@ -26,11 +26,21 @@ exports.selectCountIsExUserByEmail = `
     COUNT(*) AS cnt 
   FROM user 
   WHERE 
-    user_email = ?`;
+    user_email = ?
+`;
 
 // 사용자 등록
 exports.insertUser = `
   INSERT INTO user 
     (user_email, user_password, user_nickname, user_level, reg_dt)
   VALUES 
-    (?, ?, ?, 1, NOW())`;
+    (?, ?, ?, 1, NOW())
+`;
+
+// 비밀번호 변경
+exports.updatePassword = `
+  UPDATE user SET
+    user_password = ?
+  WHERE
+    user_email = ?
+`;

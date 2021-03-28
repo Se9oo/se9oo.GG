@@ -1,24 +1,39 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutRequestAction } from '../../reducer/user';
+import { errorModal } from '../CommonModal';
+import EditForm from './EditForm';
 import { Button } from 'antd';
 import styled from 'styled-components';
 
 const UserProfile = () => {
   const dispatch = useDispatch('');
-  const { logoutLoading, logoutDone, me } = useSelector((state) => state.user);
+  const { logoutLoading, logoutDone, loadMyInfoDone, changePasswordDone, me } = useSelector((state) => state.user);
+  const [showChangePassword, setShowChangePassword] = useState(false);
 
   const onClickLogoutBtn = useCallback(() => {
     dispatch(LogoutRequestAction());
   }, []);
 
+  const onClickChangePassword = useCallback(() => {
+    setShowChangePassword((prevState) => !prevState);
+  }, []);
+
   // 로그아웃
   useEffect(() => {
-    if (!me && logoutDone) {
+    if ((!me && logoutDone) || (!me && loadMyInfoDone)) {
+      errorModal('로그인 정보가 없습니다.\n로그인 창으로 이동합니다.');
       Router.push('/login');
     }
-  }, [me, logoutDone]);
+  }, [me, logoutDone, loadMyInfoDone]);
+
+  // 비밀번호 변경
+  useEffect(() => {
+    if (changePasswordDone) {
+      setShowChangePassword(false);
+    }
+  }, [changePasswordDone]);
 
   return (
     <UserProfileContainer>
@@ -43,11 +58,14 @@ const UserProfile = () => {
         </UserDetail>
       </UserProfileContent>
       <ProfileButtonGroup>
-        <Button type="primary">비밀번호 변경하기</Button>
+        <Button type="primary" onClick={onClickChangePassword}>
+          비밀번호 변경하기
+        </Button>
         <Button onClick={onClickLogoutBtn} loading={logoutLoading}>
           로그아웃
         </Button>
       </ProfileButtonGroup>
+      {showChangePassword && <EditForm />}
     </UserProfileContainer>
   );
 };

@@ -78,7 +78,7 @@ const SignUpForm = () => {
     }
 
     if (password !== passwordCheck) {
-      errorModal(`'비밀번호가 다릅니다.'`);
+      errorModal(`비밀번호가 다릅니다.`);
       return;
     }
 

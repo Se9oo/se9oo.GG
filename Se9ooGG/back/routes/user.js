@@ -2,11 +2,7 @@ const express = require('express');
 const pool = require('../config/pool');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
-const {
-  selectCountIsExUserByEmail,
-  selectFullUserInfo,
-  insertUser,
-} = require('./query/user');
+const { selectCountIsExUserByEmail, selectFullUserInfo, insertUser, updatePassword } = require('./query/user');
 const { isNotLoggedIn, isLoggedIn } = require('./middlewares');
 
 const router = express.Router();
@@ -18,9 +14,7 @@ router.get('/user/loadMyInfo', async (req, res, next) => {
 
   try {
     if (req.user) {
-      const [result] = await connection.query(selectFullUserInfo, [
-        req.user[0].email,
-      ]);
+      const [result] = await connection.query(selectFullUserInfo, [req.user[0].email]);
 
       return res.status(200).json(result);
     } else {
@@ -88,17 +82,48 @@ router.post('/user/signup', isNotLoggedIn, async (req, res, next) => {
 
     const hashedPassword = await bcrypt.hash(password, 12);
     // 회원가입
-    [result] = await connection.execute(insertUser, [
-      email,
-      hashedPassword,
-      nickname,
-    ]);
+    [result] = await connection.execute(insertUser, [email, hashedPassword, nickname]);
 
     // commit
     await connection.commit();
 
     // success
     return res.status(200).json('insert success');
+  } catch (err) {
+    // rollback
+    await connection.rollback();
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
+// 비밀번호 변경
+router.put('/user/password', isLoggedIn, async (req, res, next) => {
+  const { email, password } = req.body;
+
+  // connection pool;
+  const connection = await pool.getConnection();
+
+  try {
+    const hashedPassword = await bcrypt.hash(password, 12);
+
+    if (!email || !password || !hashedPassword) {
+      return res.status(401).json('입력값 확인');
+    }
+    // transaction
+    await connection.beginTransaction();
+
+    const [result] = await connection.execute(updatePassword, [hashedPassword, email]);
+
+    // commit
+    await connection.commit();
+
+    // success
+    return res.status(200).json(result);
   } catch (err) {
     // rollback
     await connection.rollback();
