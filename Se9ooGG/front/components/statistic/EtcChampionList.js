@@ -56,13 +56,21 @@ const ChampionImg = styled.img`
   width: 70%;
   margin: 0 auto;
   cursor: pointer;
+
+  @media ${(props) => props.theme.tablet} {
+    width: 50%;
+  }
 `;
 
 const ParticipantColor = styled.div`
   width: 70%;
-  height: 10px;
+  height: 1rem;
   margin: 0 auto;
   background-color: ${(props) => props.color};
+
+  @media ${(props) => props.theme.tablet} {
+    width: 50%;
+  }
 `;
 
 const Vs = styled.span`

@@ -95,7 +95,7 @@ const SkillMasterOrder = styled.ol`
   margin-bottom: 1rem;
 
   & img {
-    width: 10%;
+    width: 3.5rem;
   }
 `;
 

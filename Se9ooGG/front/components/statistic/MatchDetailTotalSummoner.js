@@ -81,6 +81,10 @@ const ChampionImg = styled.div`
     width: 100%;
     border-radius: 999px;
   }
+
+  @media ${(props) => props.theme.tablet} {
+    width: 7%;
+  }
 `;
 
 const Level = styled.span`
@@ -91,6 +95,11 @@ const Level = styled.span`
   border-radius: 999px;
   background-color: rgba(0, 0, 0, 0.5);
   color: #ffffff;
+
+  @media ${(props) => props.theme.tablet} {
+    bottom: -7%;
+    left: -7%;
+  }
 `;
 
 const Spell = styled.div`
@@ -100,6 +109,10 @@ const Spell = styled.div`
     width: 100%;
     margin: 10%;
     border-radius: 20%;
+  }
+
+  @media ${(props) => props.theme.tablet} {
+    width: 3.5%;
   }
 `;
 
@@ -113,6 +126,10 @@ const Rune = styled.div`
     padding: 10%;
     background-color: #000000;
     border-radius: 999px;
+  }
+
+  @media ${(props) => props.theme.tablet} {
+    width: 3.5%;
   }
 `;
 
