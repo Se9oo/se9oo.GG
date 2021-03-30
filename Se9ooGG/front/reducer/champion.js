@@ -58,7 +58,6 @@ const reducer = (state = initialState, action) => {
         loadChampionCommentsError: false,
       };
     case LOAD_CHAMPION_COMMENTS_SUCCESS:
-      console.log(action.data);
       return {
         ...state,
         championCommentsList: [...action.data.championCommentsList],

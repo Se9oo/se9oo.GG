@@ -11,7 +11,6 @@ const ChampionDetail = ({ champion }) => {
   const { stats, spells, allytips, enemytips, skins } = champion;
   const tips = [allytips, enemytips];
 
-  console.log(champion);
   return (
     <>
       <Info>

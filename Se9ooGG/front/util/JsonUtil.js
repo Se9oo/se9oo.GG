@@ -28,7 +28,6 @@ export function getChampionFullInfoByName(name) {
 export function getChampionFullInfoById(id) {
   const fullData = championFull.data;
 
-  console.log(id);
   for (let i in fullData) {
     if (fullData[i].key == id) {
       return fullData[i];
