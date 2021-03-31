@@ -9,6 +9,7 @@ const {
   insertComment,
   deleteComment,
   deletePost,
+  selectCommentInfoByCommentId,
 } = require('./query/post');
 
 const router = express.Router();
@@ -142,11 +143,16 @@ router.post('/post/:postId/addComment', isLoggedIn, async (req, res, next) => {
     await connection.beginTransaction();
 
     if (email && content && postId) {
-      await connection.execute(insertComment, [email, content, postId]);
+      const [insert] = await connection.execute(insertComment, [email, content, postId]);
 
       await connection.commit();
 
-      return res.status(200).json('addComment Success');
+      const commentId = insert.insertId;
+
+      const [comment] = await connection.query(selectCommentInfoByCommentId, [commentId]);
+      comment[0].postId = parseInt(postId);
+
+      return res.status(200).json(comment);
     } else {
       return res.status(401).json('입력값을 확인해주세요.');
     }

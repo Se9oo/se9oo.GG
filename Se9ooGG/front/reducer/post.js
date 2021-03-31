@@ -154,6 +154,7 @@ const reducer = (state = initialState, action) => {
       };
     case ADD_COMMENT_FAILURE:
       return {
+        ...state,
         addCommentLoading: false,
       };
     case DELETE_COMMENT_REQUEST:

@@ -50,6 +50,21 @@ exports.deletePost = `
   WHERE post_id = ?
 `;
 
+// 댓글 조회 (댓글 id로)
+exports.selectCommentInfoByCommentId = `
+  SELECT
+    cmt.comment_id AS commentId
+    , cmt.user_email AS email
+    , usr.user_nickname AS nickname
+    , cmt.comment_content AS content
+    , cmt.reg_dt AS regDt
+  FROM
+    comment cmt
+  LEFT OUTER JOIN user usr ON cmt.user_email = usr.user_email
+  WHERE
+    cmt.comment_id = ?
+`;
+
 // 댓글 등록
 exports.insertComment = `
   INSERT INTO comment

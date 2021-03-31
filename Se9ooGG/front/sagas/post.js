@@ -93,10 +93,10 @@ function* deletePost(action) {
 
 function* addComment(action) {
   try {
-    yield call(addCommentAPI, action.data);
+    const result = yield call(addCommentAPI, action.data);
     yield put({
       type: ADD_COMMENT_SUCCESS,
-      data: action.data,
+      data: result.data[0],
     });
   } catch (err) {
     yield put({

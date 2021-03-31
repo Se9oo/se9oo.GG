@@ -1,16 +1,23 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AppLayout from '../components/AppLayout';
 import CommentCard from '../components/community/CommentCard';
 import { LeftOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+import { loadPostRequestAction } from '../reducer/post';
 
 const Comment = () => {
   const router = useRouter();
+  const dispatch = useDispatch('');
   const { postList } = useSelector((state) => state.post);
-  let commentList = [];
-  commentList = postList.filter((v) => v.postId === parseInt(router.query.postId))[0].comments;
+  const commentList = postList.filter((v) => v.postId === parseInt(router.query.postId))[0];
+
+  useEffect(() => {
+    if (postList.length === 0) {
+      dispatch(loadPostRequestAction());
+    }
+  }, []);
 
   const onClickBackBtn = useCallback(() => {
     router.back();
@@ -22,7 +29,7 @@ const Comment = () => {
         <LeftOutlined onClick={onClickBackBtn} />
         <h2>댓글</h2>
       </CommentHeader>
-      <CommentCard commentList={commentList} postId={router.query.postId} />
+      {commentList && <CommentCard commentList={commentList.comments} postId={router.query.postId} />}
     </AppLayout>
   );
 };
