@@ -1,9 +1,9 @@
 import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
-import { addPostRequestAction } from '../reducer/post';
-import useInput from '../hooks/useInput';
-import CommonModal, { errorModal } from './CommonModal';
+import { addPostRequestAction } from '../../reducer/post';
+import useInput from '../../hooks/useInput';
+import CommonModal, { errorModal } from '../CommonModal';
 import { Button, Form, Input } from 'antd';
 import styled from 'styled-components';
 
