@@ -22,27 +22,27 @@ import {
 import axios from 'axios';
 
 function loadPostAPI() {
-  return axios.get('/post/loadPost');
+  return axios.get('/post/posts');
 }
 
 function addPostAPI(data) {
-  return axios.post('/post/addPost', data);
+  return axios.post('/post/post', data);
 }
 
 function deletePostAPI(data) {
-  return axios.delete(`/post/deletePost/${data.postId}`);
+  return axios.delete(`/post/post/${data.postId}`);
 }
 
 function addCommentAPI(data) {
-  return axios.post(`/post/${data.postId}/addComment`, data);
+  return axios.post(`/post/${data.postId}/comment`, data);
 }
 
 function deleteCommentAPI(data) {
-  return axios.delete(`/post/${data.postId}/deleteComment/${data.commentId}`);
+  return axios.delete(`/post/${data.postId}/comment/${data.commentId}`);
 }
 
 function loadMyPostAPI(data) {
-  return axios.get(`/post/mypost/${data.userEmail}`);
+  return axios.get(`/post/myposts/${data.userEmail}`);
 }
 
 function* loadPost() {

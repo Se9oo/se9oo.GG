@@ -15,7 +15,7 @@ const {
 const router = express.Router();
 
 // 모든 게시글 조회
-router.get('/post/loadPost', async (req, res, next) => {
+router.get('/post/posts', async (req, res, next) => {
   const connection = await pool.getConnection();
 
   try {
@@ -43,7 +43,7 @@ router.get('/post/loadPost', async (req, res, next) => {
   }
 });
 
-router.get(`/post/mypost/:userEmail`, isLoggedIn, async (req, res, next) => {
+router.get(`/post/myposts/:userEmail`, isLoggedIn, async (req, res, next) => {
   const { userEmail } = req.params;
 
   const connection = await pool.getConnection();
@@ -75,7 +75,7 @@ router.get(`/post/mypost/:userEmail`, isLoggedIn, async (req, res, next) => {
 });
 
 // 게시글 등록
-router.post('/post/addPost', isLoggedIn, async (req, res, next) => {
+router.post('/post/post', isLoggedIn, async (req, res, next) => {
   const { email, title, content } = req.body;
 
   const connection = await pool.getConnection();
@@ -104,7 +104,7 @@ router.post('/post/addPost', isLoggedIn, async (req, res, next) => {
 });
 
 // 게시글 삭제
-router.delete('/post/deletePost/:postId', isLoggedIn, async (req, res, next) => {
+router.delete('/post/post/:postId', isLoggedIn, async (req, res, next) => {
   const { postId } = req.params;
 
   const connection = await pool.getConnection();
@@ -134,7 +134,7 @@ router.delete('/post/deletePost/:postId', isLoggedIn, async (req, res, next) => 
 });
 
 // 댓글 등록
-router.post('/post/:postId/addComment', isLoggedIn, async (req, res, next) => {
+router.post('/post/:postId/comment', isLoggedIn, async (req, res, next) => {
   const { email, content, postId } = req.body;
 
   const connection = await pool.getConnection();
@@ -168,7 +168,7 @@ router.post('/post/:postId/addComment', isLoggedIn, async (req, res, next) => {
 });
 
 // 댓글 삭제
-router.delete('/post/:postId/deleteComment/:commentId', isLoggedIn, async (req, res, next) => {
+router.delete('/post/:postId/comment/:commentId', isLoggedIn, async (req, res, next) => {
   const { commentId } = req.params;
 
   const connection = await pool.getConnection();
