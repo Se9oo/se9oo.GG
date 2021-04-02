@@ -1,7 +1,8 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import PostCard from '../community/PostCard';
 import { loadMyPostRequestAction } from '../../reducer/post';
+import PostCard from '../community/PostCard';
+import { Empty } from 'antd';
 import styled from 'styled-components';
 
 const MyPost = () => {
@@ -22,7 +23,13 @@ const MyPost = () => {
   return (
     <Container>
       <SubTitle>내 게시글</SubTitle>
-      <PostList>{myPostList && myPostList.map((v) => <PostCard data={v} key={v.postId} />)}</PostList>
+      <PostList>
+        {myPostList.length === 0 ? (
+          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 게시글이 없습니다.</Empty>
+        ) : (
+          myPostList.map((v) => <PostCard data={v} key={v.postId} />)
+        )}
+      </PostList>
     </Container>
   );
 };
