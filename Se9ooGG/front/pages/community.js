@@ -5,7 +5,7 @@ import AppLayout from '../components/AppLayout';
 import PostCard from '../components/community/PostCard';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadPostRequestAction } from '../reducer/post';
-import { Button, Input } from 'antd';
+import { Button, Input, Empty } from 'antd';
 import styled from 'styled-components';
 
 const Community = () => {
@@ -32,7 +32,11 @@ const Community = () => {
           글쓰기
         </PostAddBtn>
       ) : null}
-      {postList && postList.map((v) => <PostCard data={v} key={v.postId} />)}
+      {postList.length === 0 ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 게시글이 없습니다.</Empty>
+      ) : (
+        postList.map((v) => <PostCard data={v} key={v.postId} />)
+      )}
     </AppLayout>
   );
 };
