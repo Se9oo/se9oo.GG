@@ -59,7 +59,7 @@ const UserProfile = () => {
       </UserProfileContent>
       <ProfileButtonGroup>
         <Button type="primary" onClick={onClickChangePassword}>
-          비밀번호 변경하기
+          {showChangePassword ? '닫기' : '비밀번호 변경하기'}
         </Button>
         <Button onClick={onClickLogoutBtn} loading={logoutLoading}>
           로그아웃
