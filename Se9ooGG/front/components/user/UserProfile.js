@@ -3,6 +3,7 @@ import Router from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
 import { LogoutRequestAction } from '../../reducer/user';
 import { errorModal } from '../CommonModal';
+import ProfileImage from './ProfileImage';
 import EditForm from './EditForm';
 import { Button } from 'antd';
 import styled from 'styled-components';
@@ -38,7 +39,8 @@ const UserProfile = () => {
   return (
     <UserProfileContainer>
       <UserProfileContent>
-        <img src="/img/champion/Blitzcrank.png" alt="user-icon" />
+        {/* <img src="/img/champion/Blitzcrank.png" alt="user-icon" /> */}
+        <ProfileImage />
         <UserDetail>
           <UserNickname>{me && me.nickname}</UserNickname>
           <UserInfo>
@@ -83,10 +85,6 @@ const UserProfileContainer = styled.section`
     margin-bottom: 1rem;
     border-radius: 999px;
     padding: 1rem;
-  }
-
-  & button {
-    width: 100%;
   }
 `;
 
@@ -145,6 +143,10 @@ const UserInfo = styled.dl`
 const ProfileButtonGroup = styled.div`
   display: block;
   width: 100%;
+
+  & button {
+    width: 100%;
+  }
 
   @media ${(props) => props.theme.tablet} {
     display: flex;
