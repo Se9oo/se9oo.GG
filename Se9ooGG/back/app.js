@@ -20,14 +20,21 @@ passportConfig();
 if (process.env.NODE_ENV === 'production') {
   app.use(hpp());
   app.use(helmet());
+  app.use(
+    cors({
+      origin: ['http://se9oogg.com', 'http://www.se9oogg.com'],
+      credentials: true,
+    })
+  );
+} else {
+  app.use(
+    cors({
+      origin: 'http://localhost:3000',
+      credentials: true,
+    })
+  );
 }
 
-app.use(
-  cors({
-    origin: ['http://localhost:3000', 'http://se9oogg.com', 'http://www.se9oogg.com'],
-    credentials: true,
-  })
-);
 // json post 방식
 app.use(express.json());
 // form submit -> url encoded 방식
