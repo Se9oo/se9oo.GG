@@ -24,7 +24,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://3.36.59.247'],
+    origin: ['http://localhost:3000', 'http://se9oogg.com'],
     credentials: true,
   })
 );
@@ -39,6 +39,11 @@ app.use(
     saveUninitialized: false,
     resave: false,
     secret: process.env.COOKIE_SECRET,
+    cookie: {
+      httpOnly: true,
+      secure: false,
+      domain: process.env.NODE_ENV === 'production' && '.se9oogg.com',
+    },
   })
 );
 app.use(passport.initialize());
@@ -53,6 +58,6 @@ app.use(statisticRouter);
 // 챔피언 한줄평
 app.use(championRouter);
 
-app.listen(3065, () => {
+app.listen(80, () => {
   console.log('se9oo.GG back start');
 });
