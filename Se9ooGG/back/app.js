@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const passportConfig = require('./passport');
 const dotenv = require('dotenv');
+const hpp = require('hpp');
+const helmet = require('helmet');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const statisticRouter = require('./routes/statistic');
@@ -14,6 +16,11 @@ const app = express();
 
 dotenv.config();
 passportConfig();
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(hpp());
+  app.use(helmet());
+}
 
 app.use(
   cors({
