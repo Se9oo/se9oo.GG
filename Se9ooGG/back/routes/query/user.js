@@ -12,6 +12,7 @@ exports.selectFullUserInfo = `
   SELECT
     usr.user_id AS id, usr.user_email AS email,
     usr.user_nickname AS nickname, usr.user_level AS level,
+    profile_image AS profileImage,
     DATE_FORMAT(usr.reg_dt, '%Y.%m.%d') AS regDt,
     COUNT(pst.post_id) AS postCount
   FROM user usr
