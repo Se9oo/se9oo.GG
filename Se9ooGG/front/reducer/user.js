@@ -14,6 +14,9 @@ export const initialState = {
   changePasswordLoading: false,
   changePasswordDone: false,
   changePasswordError: false,
+  uploadProfileImageLoading: false,
+  uploadProfileImageDone: false,
+  uploadProfileImageError: false,
   me: null,
 };
 
@@ -39,6 +42,10 @@ export const LOAD_MY_INFO_FAILURE = 'LOAD_MY_INFO_FAILURE';
 export const CHANGE_PASSWORD_REQUEST = 'CHANGE_PASSWORD_REQUEST';
 export const CHANGE_PASSWORD_SUCCESS = 'CHANGE_PASSWORD_SUCCESS';
 export const CHANGE_PASSWORD_FAILURE = 'CHANGE_PASSWORD_FAILURE';
+// 프로필 이미지 등록하기
+export const UPLOAD_PROFILE_IMAGE_REQUEST = 'UPLOAD_PROFILE_IMAGE_REQUEST';
+export const UPLOAD_PROFILE_IMAGE_SUCCESS = 'UPLOAD_PROFILE_IMAGE_SUCCESS';
+export const UPLOAD_PROFILE_IMAGE_FAILURE = 'UPLOAD_PROFILE_IMAGE_FAILURE';
 
 export const LoginRequsetAction = (data) => {
   return {
@@ -81,6 +88,13 @@ export const LoadMyInfoRequestAction = () => {
 export const ChangePasswordRequestAction = (data) => {
   return {
     type: CHANGE_PASSWORD_REQUEST,
+    data,
+  };
+};
+
+export const uploadProfileImageRequestAction = (data) => {
+  return {
+    type: UPLOAD_PROFILE_IMAGE_REQUEST,
     data,
   };
 };
@@ -197,6 +211,27 @@ const reducer = (state = initialState, action) => {
         changePasswordLoading: false,
         changePasswordDone: false,
         changePasswordError: true,
+      };
+    case UPLOAD_PROFILE_IMAGE_REQUEST:
+      return {
+        ...state,
+        uploadProfileImageLoading: true,
+        uploadProfileImageDone: false,
+        uploadProfileImageError: false,
+      };
+    case UPLOAD_PROFILE_IMAGE_SUCCESS:
+      return {
+        ...state,
+        uploadProfileImageLoading: false,
+        uploadProfileImageDone: true,
+        uploadProfileImageError: false,
+      };
+    case UPLOAD_PROFILE_IMAGE_FAILURE:
+      return {
+        ...state,
+        uploadProfileImageLoading: false,
+        uploadProfileImageDone: false,
+        uploadProfileImageError: true,
       };
     default:
       return state;

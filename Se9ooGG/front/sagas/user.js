@@ -15,6 +15,9 @@ import {
   SIGN_UP_FAILURE,
   SIGN_UP_REQUEST,
   SIGN_UP_SUCCESS,
+  UPLOAD_PROFILE_IMAGE_FAILURE,
+  UPLOAD_PROFILE_IMAGE_REQUEST,
+  UPLOAD_PROFILE_IMAGE_SUCCESS,
 } from '../reducer/user';
 import axios from 'axios';
 
@@ -114,6 +117,25 @@ function* changePassword(action) {
   }
 }
 
+// 프로필 이미지 등록하기
+function uploadProfileImageAPI(data) {
+  return axios.post('/user/profile-image', data);
+}
+
+function* uploadProfileImage(action) {
+  try {
+    yield call(uploadProfileImageAPI, action.data);
+    yield put({
+      type: UPLOAD_PROFILE_IMAGE_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: UPLOAD_PROFILE_IMAGE_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function* watchLogin() {
   yield takeLatest(LOG_IN_REQUEST, login);
 }
@@ -134,6 +156,17 @@ function* watchChangePassword() {
   yield takeLatest(CHANGE_PASSWORD_REQUEST, changePassword);
 }
 
+function* watchUploadProfileImage() {
+  yield takeLatest(UPLOAD_PROFILE_IMAGE_REQUEST, uploadProfileImage);
+}
+
 export default function* userSaga() {
-  yield all([fork(watchLogin), fork(watchLogout), fork(watchSignUp), fork(watchLoadMyInfo), fork(watchChangePassword)]);
+  yield all([
+    fork(watchLogin),
+    fork(watchLogout),
+    fork(watchSignUp),
+    fork(watchLoadMyInfo),
+    fork(watchChangePassword),
+    fork(watchUploadProfileImage),
+  ]);
 }

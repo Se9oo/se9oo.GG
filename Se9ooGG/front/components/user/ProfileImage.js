@@ -1,29 +1,36 @@
 import React, { useCallback, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { uploadProfileImageRequestAction } from '../../reducer/user';
 import { Form } from 'antd';
 import { UserOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
 const ProfileImage = () => {
+  const dispatch = useDispatch('');
+  const { me } = useSelector((state) => state.user);
   const imageInput = useRef();
-  const submitButton = useRef();
-
-  const onSubmitProfileImg = useCallback(() => {}, []);
 
   const onClickImageUpload = useCallback(() => {
     imageInput.current.click();
   }, [imageInput.current]);
 
-  const onChangeProfileImg = useCallback((e) => {
-    const imageFormData = new FormData();
-    [].forEach.call(e.target.files, (file) => {
-      imageFormData.append('profile-image', file);
-    });
-  }, []);
+  const onChangeProfileImg = useCallback(
+    (e) => {
+      if (e.target.files !== null) {
+        const formData = new FormData();
+        formData.append('profile-image', e.target.files[0]);
+        formData.append('email', me.email);
+
+        dispatch(uploadProfileImageRequestAction(formData));
+      }
+    },
+    [me]
+  );
 
   return (
     <ProfileIcon>
       <ProfileImg />
-      <Form encType="multipart/form-data" onFinish={onSubmitProfileImg}>
+      <Form encType="multipart/form-data">
         <input
           type="file"
           accept="images/*"
@@ -36,7 +43,6 @@ const ProfileImage = () => {
         <AddProfileImageButton onClick={onClickImageUpload}>
           <Plus />
         </AddProfileImageButton>
-        <button htmlType="submit" hidden ref={submitButton}></button>
       </Form>
     </ProfileIcon>
   );

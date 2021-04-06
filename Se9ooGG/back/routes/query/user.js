@@ -44,3 +44,11 @@ exports.updatePassword = `
   WHERE
     user_email = ?
 `;
+
+// 이미지 이름 등록
+exports.updateProfileImage = `
+  UPDATE user SET
+    profile_image = ?
+  WHERE
+    user_email = ?
+`;
