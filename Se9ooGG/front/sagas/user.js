@@ -124,9 +124,10 @@ function uploadProfileImageAPI(data) {
 
 function* uploadProfileImage(action) {
   try {
-    yield call(uploadProfileImageAPI, action.data);
+    const result = yield call(uploadProfileImageAPI, action.data);
     yield put({
       type: UPLOAD_PROFILE_IMAGE_SUCCESS,
+      data: result.data,
     });
   } catch (err) {
     yield put({

@@ -220,11 +220,15 @@ const reducer = (state = initialState, action) => {
         uploadProfileImageError: false,
       };
     case UPLOAD_PROFILE_IMAGE_SUCCESS:
+      const changedMe = { ...state.me };
+      changedMe['profileImage'] = action.data;
+
       return {
         ...state,
         uploadProfileImageLoading: false,
         uploadProfileImageDone: true,
         uploadProfileImageError: false,
+        me: { ...changedMe },
       };
     case UPLOAD_PROFILE_IMAGE_FAILURE:
       return {

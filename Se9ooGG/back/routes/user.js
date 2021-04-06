@@ -190,7 +190,7 @@ router.post('/user/profile-image', isLoggedIn, upload.single('profile-image'), a
     await connection.commit();
 
     // success
-    return res.status(200).json('upload image success');
+    return res.status(200).json(profileImage);
   } catch (err) {
     // rollback
     await connection.rollback();

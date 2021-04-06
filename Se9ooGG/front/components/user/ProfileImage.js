@@ -1,6 +1,7 @@
 import React, { useCallback, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { uploadProfileImageRequestAction } from '../../reducer/user';
+import { backURL } from '../../config/config';
 import { Form } from 'antd';
 import { UserOutlined, PlusOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -29,7 +30,11 @@ const ProfileImage = () => {
 
   return (
     <ProfileIcon>
-      <ProfileImg />
+      {me && me.profileImage ? (
+        <ProfileImg src={`${backURL}/${me.profileImage}`} alt="profile-image" />
+      ) : (
+        <ProfileNoneImg />
+      )}
       <Form encType="multipart/form-data">
         <input
           type="file"
@@ -52,16 +57,18 @@ export default ProfileImage;
 
 const ProfileIcon = styled.div`
   position: relative;
-  background-color: #e9ecef;
-  border-radius: 9999px;
   margin-bottom: 1rem;
-  padding: 2rem;
 `;
 
-const ProfileImg = styled(UserOutlined)`
+const ProfileImg = styled.img`
+  width: 10rem;
+  border-radius: 9999px;
+`;
+
+const ProfileNoneImg = styled(UserOutlined)`
   display: block;
   font-size: 10rem;
-  border-radius: 999px;
+  border-radius: 9999px;
 `;
 
 const AddProfileImageButton = styled.button`

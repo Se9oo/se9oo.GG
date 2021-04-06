@@ -77,15 +77,6 @@ const UserProfileContainer = styled.section`
   margin: 1rem 0;
   padding: 1rem;
   border: 1px solid rgba(206, 212, 218, 0.5);
-
-  & img {
-    display: block;
-    width: 30%;
-    height: 30%;
-    margin-bottom: 1rem;
-    border-radius: 999px;
-    padding: 1rem;
-  }
 `;
 
 const UserProfileContent = styled.div`

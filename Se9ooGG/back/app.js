@@ -7,6 +7,7 @@ const passportConfig = require('./passport');
 const dotenv = require('dotenv');
 const hpp = require('hpp');
 const helmet = require('helmet');
+const path = require('path');
 const postRouter = require('./routes/post');
 const userRouter = require('./routes/user');
 const statisticRouter = require('./routes/statistic');
@@ -55,6 +56,8 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use('/', express.static(path.join(__dirname, 'uploads')));
 
 // 게시글
 app.use(postRouter);
