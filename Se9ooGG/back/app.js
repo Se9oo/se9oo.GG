@@ -68,6 +68,7 @@ app.use(statisticRouter);
 // 챔피언 한줄평
 app.use(championRouter);
 
-app.listen(80, () => {
-  console.log('se9oo.GG back start');
+const port = process.env.NODE_ENV === 'production' ? 80 : 3060;
+app.listen(port, () => {
+  console.log(`se9oo.GG ${port === 80 ? 'prod' : 'dev'} back start`);
 });
