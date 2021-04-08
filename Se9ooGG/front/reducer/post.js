@@ -5,6 +5,8 @@ export const initialState = {
   loadPostDone: false,
   loadPostError: false,
   addPostLoading: false,
+  addPostDone: false,
+  addPostError: false,
   deletePostLoading: false,
   addCommentLoading: false,
   loadMyPostLoading: false,
