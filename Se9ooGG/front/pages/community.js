@@ -18,9 +18,11 @@ const Community = () => {
     Router.push('/editPost');
   }, []);
 
+  // 페이지 초기 실행시에만 postList 조회
   useEffect(() => {
-    const postId = postList.length === 0 ? 0 : postList.length;
-    dispatch(loadPostRequestAction(postId));
+    if (postList.length === 0) {
+      dispatch(loadPostRequestAction(0));
+    }
   }, []);
 
   // infinite scroll
