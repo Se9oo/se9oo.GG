@@ -57,11 +57,12 @@ export default ProfileImage;
 
 const ProfileIcon = styled.div`
   position: relative;
+  width: 10rem;
   margin-bottom: 1rem;
 `;
 
 const ProfileImg = styled.img`
-  width: 10rem;
+  width: 100%;
   border-radius: 9999px;
 `;
 
