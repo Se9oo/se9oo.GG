@@ -84,7 +84,8 @@ router.get(`/post/myposts/:userEmail`, isLoggedIn, async (req, res, next) => {
 
 // 게시글 등록
 router.post('/post/post', isLoggedIn, async (req, res, next) => {
-  const { email, title, content } = req.body;
+  const { title, content } = req.body;
+  const { email, nickname } = req.user[0];
 
   const connection = await pool.getConnection();
 
@@ -96,7 +97,15 @@ router.post('/post/post', isLoggedIn, async (req, res, next) => {
 
       await connection.commit();
 
-      return res.status(200).json(result.insertId);
+      const data = {
+        postId: result.insertId,
+        title,
+        content,
+        email,
+        nickname,
+        comments: [],
+      };
+      return res.status(200).json(data);
     } else {
       return res.status(401).json('입력값을 확인해주세요.');
     }

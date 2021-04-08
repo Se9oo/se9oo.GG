@@ -63,10 +63,10 @@ function* loadPost(action) {
 function* addPost(action) {
   try {
     const result = yield call(addPostAPI, action.data);
-    action.data.postId = result;
+
     yield put({
       type: ADD_POST_SUCCESS,
-      data: action.data,
+      data: result.data,
     });
   } catch (err) {
     yield put({

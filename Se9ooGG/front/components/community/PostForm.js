@@ -45,11 +45,8 @@ const PostForm = () => {
   const onOkAddModal = useCallback(() => {
     dispatch(
       addPostRequestAction({
-        email: me.email,
-        nickname: me.nickname,
         title: postTitle,
         content: postContent,
-        comments: [],
       })
     );
     setShowModal(false);

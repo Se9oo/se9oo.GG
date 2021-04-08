@@ -116,17 +116,23 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addPostLoading: true,
+        addPostDone: false,
+        addPostError: false,
       };
     case ADD_POST_SUCCESS:
       return {
         ...state,
-        postList: [...state.postList, action.data],
         addPostLoading: false,
+        addPostDone: true,
+        addPostError: false,
+        postList: [action.data, ...state.postList],
       };
     case ADD_POST_FAILURE:
       return {
         ...state,
         addPostLoading: false,
+        addPostDone: false,
+        addPostError: true,
       };
     // 글삭제
     case DELETE_POST_REQUEST:
