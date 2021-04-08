@@ -1,6 +1,7 @@
 export const initialState = {
   postList: [],
   myPostList: [],
+  loadPostLoading: false,
   loadPostDone: false,
   loadPostError: false,
   addPostLoading: false,
@@ -9,6 +10,7 @@ export const initialState = {
   loadMyPostLoading: false,
   loadMyPostDone: false,
   loadMyPostError: false,
+  existMorePosts: true,
 };
 
 // 글목록 불러오기
@@ -41,9 +43,10 @@ export const LOAD_MY_POST_REQUEST = 'LOAD_MY_POST_REQUEST';
 export const LOAD_MY_POST_SUCCESS = 'LOAD_MY_POST_SUCCESS';
 export const LOAD_MY_POST_FAILURE = 'LOAD_MY_POST_FAILURE';
 
-export const loadPostRequestAction = () => {
+export const loadPostRequestAction = (lastPostId) => {
   return {
     type: LOAD_POST_REQUEST,
+    lastPostId,
   };
 };
 
@@ -87,17 +90,24 @@ const reducer = (state = initialState, action) => {
     case LOAD_POST_REQUEST:
       return {
         ...state,
+        loadPostLoading: true,
+        loadPostDone: false,
         loadPostError: false,
       };
     case LOAD_POST_SUCCESS:
+      const newPostList = [...state.postList, ...action.data];
       return {
         ...state,
+        loadPostLoading: false,
         loadPostDone: true,
-        postList: action.data,
+        loadPostError: false,
+        postList: newPostList,
+        existMorePosts: action.data.length !== 0,
       };
     case LOAD_POST_FAILURE:
       return {
         ...state,
+        loadPostLoading: false,
         loadPostDone: false,
         loadPostError: true,
       };

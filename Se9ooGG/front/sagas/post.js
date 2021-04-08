@@ -1,4 +1,4 @@
-import { all, call, delay, fork, put, takeLatest } from 'redux-saga/effects';
+import { all, call, delay, fork, put, takeLatest, throttle } from 'redux-saga/effects';
 import {
   ADD_POST_SUCCESS,
   ADD_POST_FAILURE,
@@ -21,8 +21,8 @@ import {
 } from '../reducer/post';
 import axios from 'axios';
 
-function loadPostAPI() {
-  return axios.get('/post/posts');
+function loadPostAPI(lastPostId) {
+  return axios.get(`/post/posts?lastPostId=${lastPostId}`);
 }
 
 function addPostAPI(data) {
@@ -45,9 +45,9 @@ function loadMyPostAPI(data) {
   return axios.get(`/post/myposts/${data.userEmail}`);
 }
 
-function* loadPost() {
+function* loadPost(action) {
   try {
-    const result = yield call(loadPostAPI);
+    const result = yield call(loadPostAPI, action.lastPostId);
     yield put({
       type: LOAD_POST_SUCCESS,
       data: result.data,
@@ -137,7 +137,7 @@ function* loadMyPost(action) {
 }
 
 function* watchLoadPost() {
-  yield takeLatest(LOAD_POST_REQUEST, loadPost);
+  yield throttle(2000, LOAD_POST_REQUEST, loadPost);
 }
 
 function* watchAddPost() {

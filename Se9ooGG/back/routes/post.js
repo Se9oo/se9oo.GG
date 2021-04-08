@@ -10,17 +10,25 @@ const {
   deleteComment,
   deletePost,
   selectCommentInfoByCommentId,
+  selectMaxPostId,
 } = require('./query/post');
 
 const router = express.Router();
 
 // 모든 게시글 조회
 router.get('/post/posts', async (req, res, next) => {
+  let lastPostId = parseInt(req.query.lastPostId, 10);
+  const LOAD_MAX_POSTS_COUNT = 4;
   const connection = await pool.getConnection();
 
   try {
+    if (lastPostId === 0) {
+      const [result] = await connection.query(selectMaxPostId);
+      lastPostId = result[0].maxPostId + 1;
+    }
+
     // 모든 게시글 조회
-    const [postList] = await connection.query(selectPostList);
+    const [postList] = await connection.query(selectPostList, [lastPostId, LOAD_MAX_POSTS_COUNT]);
 
     // 조회한 게시글 id로 해당 게시글의 댓글 조회
     await Promise.all(

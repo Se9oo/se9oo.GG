@@ -1,3 +1,11 @@
+// 게시글의 가장 마지막 postId 조회
+exports.selectMaxPostId = `
+  SELECT
+    MAX(post_id) AS maxPostId
+  FROM
+    post
+`;
+
 // 모든 게시글 조회
 exports.selectPostList = `
   SELECT 
@@ -6,7 +14,10 @@ exports.selectPostList = `
     usr.user_nickname AS nickname
   FROM post pst
   INNER JOIN user usr on pst.user_email = usr.user_email
+  WHERE
+    pst.post_id < ?
   ORDER BY pst.post_id DESC
+  LIMIT ?
 `;
 
 // 내 게시글 조회
