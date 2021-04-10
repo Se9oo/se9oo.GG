@@ -12,11 +12,7 @@ const MyPost = () => {
 
   useEffect(() => {
     if (me) {
-      dispatch(
-        loadMyPostRequestAction({
-          userEmail: me.email,
-        })
-      );
+      dispatch(loadMyPostRequestAction());
     }
   }, [me]);
 

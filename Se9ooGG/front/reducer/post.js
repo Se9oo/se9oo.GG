@@ -80,10 +80,9 @@ export const deleteCommentRequestAction = (data) => {
   };
 };
 
-export const loadMyPostRequestAction = (data) => {
+export const loadMyPostRequestAction = () => {
   return {
     type: LOAD_MY_POST_REQUEST,
-    data,
   };
 };
 

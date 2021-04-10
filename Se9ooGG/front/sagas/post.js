@@ -41,8 +41,8 @@ function deleteCommentAPI(data) {
   return axios.delete(`/post/${data.postId}/comment/${data.commentId}`);
 }
 
-function loadMyPostAPI(data) {
-  return axios.get(`/post/myposts/${data.userEmail}`);
+function loadMyPostAPI() {
+  return axios.get(`/post/myposts`);
 }
 
 function* loadPost(action) {
@@ -121,9 +121,9 @@ function* deleteComment(action) {
   }
 }
 
-function* loadMyPost(action) {
+function* loadMyPost() {
   try {
-    const result = yield call(loadMyPostAPI, action.data);
+    const result = yield call(loadMyPostAPI);
     yield put({
       type: LOAD_MY_POST_SUCCESS,
       data: result.data,

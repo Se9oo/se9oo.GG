@@ -51,17 +51,17 @@ router.get('/post/posts', async (req, res, next) => {
   }
 });
 
-router.get(`/post/myposts/:userEmail`, isLoggedIn, async (req, res, next) => {
-  const { userEmail } = req.params;
+router.get(`/post/myposts/`, isLoggedIn, async (req, res, next) => {
+  const { email } = req.user[0];
 
   const connection = await pool.getConnection();
 
   try {
-    if (!userEmail) {
+    if (!email) {
       return res.status(401).json('입력값을 확인해주세요.');
     }
 
-    const [myPostList] = await connection.query(selectMyPostList, [userEmail]);
+    const [myPostList] = await connection.query(selectMyPostList, [email]);
 
     // 조회한 게시글 id로 해당 게시글의 댓글 조회
     await Promise.all(
