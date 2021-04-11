@@ -4,6 +4,8 @@ exports.selectMaxPostId = `
     MAX(post_id) AS maxPostId
   FROM
     post
+  WHERE
+    status = 1
 `;
 
 // 모든 게시글 조회
@@ -16,6 +18,7 @@ exports.selectPostList = `
   INNER JOIN user usr on pst.user_email = usr.user_email
   WHERE
     pst.post_id < ?
+    AND pst.status = 1
   ORDER BY pst.post_id DESC
   LIMIT ?
 `;
@@ -32,15 +35,16 @@ exports.selectMyPostList = `
   INNER JOIN user usr on pst.user_email = usr.user_email
   WHERE
     pst.user_email = ?
+    AND pst.status = 1
   ORDER BY pst.post_id DESC
 `;
 
 // 게시글 등록
 exports.insertPost = `
   INSERT INTO post
-    (post_title, post_content, user_email, reg_dt)
+    (post_title, post_content, user_email, reg_dt, status)
   VALUES
-    (?, ?, ?, NOW())
+    (?, ?, ?, NOW(), 1)
 `;
 
 // 게시글 id에 해당하는 댓글 조회
@@ -57,8 +61,10 @@ exports.selectCommentInfoByPostId = `
 
 // 게시글 삭제
 exports.deletePost = `
-  DELETE FROM post
-  WHERE post_id = ?
+  UPDATE post SET
+    status = 0
+  WHERE
+    post_id = ?
 `;
 
 // 댓글 조회 (댓글 id로)
