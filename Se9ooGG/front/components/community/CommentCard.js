@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Avatar, Button, Comment, Empty, Form, Input } from 'antd';
-import { addCommentRequestAction } from '../../reducer/post';
+import { addCommentRequestAction, addMyPostCommentRequestAction } from '../../reducer/post';
 import { errorModal } from '../CommonModal';
 import CommentItem from './CommentItem';
 import styled from 'styled-components';
 
-const CommentCard = memo(({ commentList, postId }) => {
+const CommentCard = memo(({ commentList, postId, page }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
   const { addCommentLoading } = useSelector((state) => state.post);
@@ -26,12 +26,15 @@ const CommentCard = memo(({ commentList, postId }) => {
 
     // 댓글 등록
     dispatch(
-      addCommentRequestAction({
-        email: me.email,
-        nickname: me.nickname,
-        content: commentText,
-        postId: postId,
-      })
+      page === 'community'
+        ? addCommentRequestAction({
+            content: commentText,
+            postId: postId,
+          })
+        : addMyPostCommentRequestAction({
+            content: commentText,
+            postId: postId,
+          })
     );
     setCommentText('');
   }, [postId, commentText]);

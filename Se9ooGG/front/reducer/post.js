@@ -9,6 +9,11 @@ export const initialState = {
   addPostError: false,
   deletePostLoading: false,
   addCommentLoading: false,
+  addCommentDone: false,
+  addCommentError: false,
+  addMyPostCommentLoading: false,
+  addMyPostCommentDone: false,
+  addMyPostCommentError: false,
   loadMyPostLoading: false,
   loadMyPostDone: false,
   loadMyPostError: false,
@@ -34,6 +39,11 @@ export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
+
+// 내 게시글 댓글 등록
+export const ADD_MY_POST_COMMENT_REQUEST = 'ADD_MY_POST_COMMENT_REQUEST';
+export const ADD_MY_POST_COMMENT_SUCCESS = 'ADD_MY_POST_COMMENT_SUCCESS';
+export const ADD_MY_POST_COMMENT_FAILURE = 'ADD_MY_POST_COMMENT_FAILURE';
 
 // 댓글 삭제
 export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
@@ -69,6 +79,13 @@ export const deletePostRequestAction = (data) => {
 export const addCommentRequestAction = (data) => {
   return {
     type: ADD_COMMENT_REQUEST,
+    data,
+  };
+};
+
+export const addMyPostCommentRequestAction = (data) => {
+  return {
+    type: ADD_MY_POST_COMMENT_REQUEST,
     data,
   };
 };
@@ -173,6 +190,34 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addCommentLoading: false,
+      };
+    case ADD_MY_POST_COMMENT_REQUEST:
+      return {
+        ...state,
+        addMyPostCommentLoading: true,
+        addMyPostCommentDone: false,
+        addMyPostCommentError: false,
+      };
+    case ADD_MY_POST_COMMENT_SUCCESS:
+      const addMyPostIndex = state.myPostList.findIndex((v) => v.postId === parseInt(action.data.postId));
+      const addMyPost = { ...state.myPostList[addMyPostIndex] };
+      addMyPost.comments = [...addMyPost.comments, action.data];
+      const addMyPostList = [...state.myPostList];
+      addMyPostList[addMyPostIndex] = addMyPost;
+
+      return {
+        ...state,
+        myPostList: addMyPostList,
+        addMyPostCommentLoading: false,
+        addMyPostCommentDone: true,
+        addMyPostCommentError: false,
+      };
+    case ADD_MY_POST_COMMENT_FAILURE:
+      return {
+        ...state,
+        addMyPostCommentLoading: false,
+        addMyPostCommentDone: false,
+        addMyPostCommentError: true,
       };
     case DELETE_COMMENT_REQUEST:
       return {

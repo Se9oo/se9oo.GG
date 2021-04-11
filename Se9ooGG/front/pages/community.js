@@ -57,7 +57,7 @@ const Community = () => {
       {postList.length === 0 ? (
         <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 게시글이 없습니다.</Empty>
       ) : (
-        postList.map((v) => <PostCard data={v} key={v.postId} />)
+        postList.map((v) => <PostCard data={v} key={v.postId} page="community" />)
       )}
       {loadPostLoading && (
         <Loading>

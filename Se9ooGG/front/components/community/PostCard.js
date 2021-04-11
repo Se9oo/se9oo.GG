@@ -8,7 +8,7 @@ import CommonModal from '../CommonModal';
 import CommentCard from './CommentCard';
 import styled from 'styled-components';
 
-const PostCard = memo(({ data }) => {
+const PostCard = memo(({ data, page }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
   // modal content
@@ -119,7 +119,7 @@ const PostCard = memo(({ data }) => {
           <PostCommentCount>{`댓글 ${data.comments.length}개`}</PostCommentCount>
         </PostCardContentContainer>
       </Card>
-      {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} />}
+      {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} page={page} />}
       <CommonModal modalContent={modalContent} visible={showModal} />
     </>
   );

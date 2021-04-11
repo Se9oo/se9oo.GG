@@ -152,7 +152,8 @@ router.delete('/post/post/:postId', isLoggedIn, async (req, res, next) => {
 
 // 댓글 등록
 router.post('/post/:postId/comment', isLoggedIn, async (req, res, next) => {
-  const { email, content, postId } = req.body;
+  const { content, postId } = req.body;
+  const { email } = req.user[0];
 
   const connection = await pool.getConnection();
 
