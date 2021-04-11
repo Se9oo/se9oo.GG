@@ -9,18 +9,21 @@ import {
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
+  ADD_MY_POST_COMMENT_REQUEST,
+  ADD_MY_POST_COMMENT_SUCCESS,
+  ADD_MY_POST_COMMENT_FAILURE,
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAILURE,
+  DELETE_MY_POST_COMMENT_REQUEST,
+  DELETE_MY_POST_COMMENT_SUCCESS,
+  DELETE_MY_POST_COMMENT_FAILURE,
   LOAD_POST_REQUEST,
   LOAD_POST_SUCCESS,
   LOAD_POST_FAILURE,
   LOAD_MY_POST_REQUEST,
   LOAD_MY_POST_SUCCESS,
   LOAD_MY_POST_FAILURE,
-  ADD_MY_POST_COMMENT_REQUEST,
-  ADD_MY_POST_COMMENT_SUCCESS,
-  ADD_MY_POST_COMMENT_FAILURE,
 } from '../reducer/post';
 import axios from 'axios';
 
@@ -139,6 +142,21 @@ function* deleteComment(action) {
   }
 }
 
+function* deleteMyPostComment(action) {
+  try {
+    yield call(deleteCommentAPI, action.data);
+    yield put({
+      type: DELETE_MY_POST_COMMENT_SUCCESS,
+      data: action.data,
+    });
+  } catch (err) {
+    yield put({
+      type: DELETE_MY_POST_COMMENT_FAILURE,
+      data: err.response,
+    });
+  }
+}
+
 function* loadMyPost() {
   try {
     const result = yield call(loadMyPostAPI);
@@ -178,6 +196,10 @@ function* watchDeleteComment() {
   yield takeLatest(DELETE_COMMENT_REQUEST, deleteComment);
 }
 
+function* watchDeleteMyPostComment() {
+  yield takeLatest(DELETE_MY_POST_COMMENT_REQUEST, deleteMyPostComment);
+}
+
 function* watchLoadMyPost() {
   yield takeLatest(LOAD_MY_POST_REQUEST, loadMyPost);
 }
@@ -190,6 +212,7 @@ export default function* postSaga() {
     fork(watchAddComment),
     fork(watchAddMyPostComment),
     fork(watchDeleteComment),
+    fork(watchDeleteMyPostComment),
     fork(watchLoadMyPost),
   ]);
 }

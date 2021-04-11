@@ -1,12 +1,12 @@
 import React, { memo, useCallback, useState } from 'react';
 import { Avatar, Comment } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteCommentRequestAction } from '../../reducer/post';
+import { deleteCommentRequestAction, deleteMyPostCommentRequestAction } from '../../reducer/post';
 import CommonModal from '../CommonModal';
 import { CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const CommentItem = memo(({ comment, postId }) => {
+const CommentItem = memo(({ comment, postId, page }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
 
@@ -17,10 +17,15 @@ const CommentItem = memo(({ comment, postId }) => {
 
   const onOkDeleteCommentModal = useCallback(() => {
     dispatch(
-      deleteCommentRequestAction({
-        commentId: comment.commentId,
-        postId: postId,
-      })
+      page === 'community'
+        ? deleteCommentRequestAction({
+            commentId: comment.commentId,
+            postId: postId,
+          })
+        : deleteMyPostCommentRequestAction({
+            commentId: comment.commentId,
+            postId: postId,
+          })
     );
     setShowModal(false);
   }, []);

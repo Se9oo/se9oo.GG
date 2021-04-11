@@ -43,7 +43,9 @@ const CommentCard = memo(({ commentList, postId, page }) => {
     <CommentContainer>
       {commentList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 댓글이 없습니다.</Empty>}
       {commentList.length > 0 &&
-        commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />)}
+        commentList.map((comment) => (
+          <CommentItem key={comment.commentId} comment={comment} postId={postId} page={page} />
+        ))}
       {me && (
         <Comment
           avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}
