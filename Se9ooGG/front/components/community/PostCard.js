@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
-import { deletePostRequestAction } from '../../reducer/post';
+import { deleteMyPostRequestAction, deletePostRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
 import CommonModal from '../CommonModal';
@@ -56,7 +56,11 @@ const PostCard = memo(({ data, page }) => {
 
   // 게시글 삭제 modal ok
   const onOkDeletePost = useCallback(() => {
-    dispatch(deletePostRequestAction({ postId: data.postId }));
+    dispatch(
+      page === 'community'
+        ? deletePostRequestAction({ postId: data.postId })
+        : deleteMyPostRequestAction({ postId: data.postId })
+    );
     setShowModal(false);
   }, [data.postId]);
 

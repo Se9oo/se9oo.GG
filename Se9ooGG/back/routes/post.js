@@ -130,7 +130,6 @@ router.delete('/post/post/:postId', isLoggedIn, async (req, res, next) => {
     await connection.beginTransaction();
 
     if (postId) {
-      // 게시글을 지우면 cascade로 댓글도 다 삭제됨
       await connection.execute(deletePost, [postId]);
 
       await connection.commit();

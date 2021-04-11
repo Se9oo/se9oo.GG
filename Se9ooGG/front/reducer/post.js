@@ -8,6 +8,11 @@ export const initialState = {
   addPostDone: false,
   addPostError: false,
   deletePostLoading: false,
+  deletePostDone: false,
+  deletePostError: false,
+  deleteMyPostLoading: false,
+  deleteMyPostDone: false,
+  deleteMyPostError: false,
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: false,
@@ -40,6 +45,11 @@ export const ADD_POST_FAILURE = 'ADD_POST_FAILURE';
 export const DELETE_POST_REQUEST = 'DELETE_POST_REQUEST';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_FAILURE = 'DELETE_POST_FAILURE';
+
+// 내 게시글 삭제
+export const DELETE_MY_POST_REQUEST = 'DELETE_MY_POST_REQUEST';
+export const DELETE_MY_POST_SUCCESS = 'DELETE_MY_POST_SUCCESS';
+export const DELETE_MY_POST_FAILURE = 'DELETE_MY_POST_FAILURE';
 
 // 댓글 등록
 export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
@@ -83,6 +93,13 @@ export const addPostRequestAction = (data) => {
 export const deletePostRequestAction = (data) => {
   return {
     type: DELETE_POST_REQUEST,
+    data,
+  };
+};
+
+export const deleteMyPostRequestAction = (data) => {
+  return {
+    type: DELETE_MY_POST_REQUEST,
     data,
   };
 };
@@ -175,17 +192,46 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         deletePostLoading: true,
+        deletePostDone: false,
+        deletePostError: false,
       };
     case DELETE_POST_SUCCESS:
       return {
         ...state,
-        postList: [...state.postList].filter((v) => v.postId !== action.data.postId),
         deletePostLoading: false,
+        deletePostDone: true,
+        deletePostError: false,
+        postList: [...state.postList].filter((v) => v.postId !== action.data.postId),
       };
     case DELETE_POST_FAILURE:
       return {
         ...state,
         deletePostLoading: false,
+        deletePostDone: false,
+        deletePostError: true,
+      };
+    // 내 게시글 삭제
+    case DELETE_MY_POST_REQUEST:
+      return {
+        ...state,
+        deleteMyPostLoading: true,
+        deleteMyPostDone: false,
+        deleteMyPostError: false,
+      };
+    case DELETE_MY_POST_SUCCESS:
+      return {
+        ...state,
+        deleteMyPostLoading: false,
+        deleteMyPostDone: true,
+        deleteMyPostError: false,
+        myPostList: [...state.myPostList].filter((v) => v.postId !== action.data.postId),
+      };
+    case DELETE_MY_POST_FAILURE:
+      return {
+        ...state,
+        deleteMyPostLoading: false,
+        deleteMyPostDone: false,
+        deleteMyPostError: true,
       };
     case ADD_COMMENT_REQUEST:
       return {
