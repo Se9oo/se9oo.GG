@@ -5,7 +5,7 @@ import AppLayout from '../components/AppLayout';
 import CommentCard from '../components/community/CommentCard';
 import { LeftOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { loadPostRequestAction } from '../reducer/post';
+import { loadPostsRequestAction } from '../reducer/post';
 
 const Comment = () => {
   const router = useRouter();
@@ -15,7 +15,7 @@ const Comment = () => {
 
   useEffect(() => {
     if (postList.length === 0) {
-      dispatch(loadPostRequestAction());
+      dispatch(loadPostsRequestAction());
     }
   }, []);
 

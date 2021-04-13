@@ -1,9 +1,9 @@
 export const initialState = {
   postList: [],
   myPostList: [],
-  loadPostLoading: false,
-  loadPostDone: false,
-  loadPostError: false,
+  loadPostsLoading: false,
+  loadPostsDone: false,
+  loadPostsError: false,
   addPostLoading: false,
   addPostDone: false,
   addPostError: false,
@@ -32,9 +32,9 @@ export const initialState = {
 };
 
 // 글목록 불러오기
-export const LOAD_POST_REQUEST = 'LOAD_POST_REQUEST';
-export const LOAD_POST_SUCCESS = 'LOAD_POST_SUCCESS';
-export const LOAD_POST_FAILURE = 'LOAD_POST_FAILURE';
+export const LOAD_POSTS_REQUEST = 'LOAD_POSTS_REQUEST';
+export const LOAD_POSTS_SUCCESS = 'LOAD_POSTS_SUCCESS';
+export const LOAD_POSTS_FAILURE = 'LOAD_POSTS_FAILURE';
 
 // 글등록
 export const ADD_POST_REQUEST = 'ADD_POST_REQUEST';
@@ -72,13 +72,13 @@ export const DELETE_MY_POST_COMMENT_SUCCESS = 'DELETE_MY_POST_COMMENT_SUCCESS';
 export const DELETE_MY_POST_COMMENT_FAILURE = 'DELETE_MY_POST_COMMENT_FAILURE';
 
 // 내 게시글 불러오기
-export const LOAD_MY_POST_REQUEST = 'LOAD_MY_POST_REQUEST';
-export const LOAD_MY_POST_SUCCESS = 'LOAD_MY_POST_SUCCESS';
-export const LOAD_MY_POST_FAILURE = 'LOAD_MY_POST_FAILURE';
+export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
+export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
+export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
 
-export const loadPostRequestAction = (lastPostId) => {
+export const loadPostsRequestAction = (lastPostId) => {
   return {
-    type: LOAD_POST_REQUEST,
+    type: LOAD_POSTS_REQUEST,
     lastPostId,
   };
 };
@@ -132,37 +132,37 @@ export const deleteMyPostCommentRequestAction = (data) => {
   };
 };
 
-export const loadMyPostRequestAction = () => {
+export const loadMyPostsRequestAction = () => {
   return {
-    type: LOAD_MY_POST_REQUEST,
+    type: LOAD_MY_POSTS_REQUEST,
   };
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case LOAD_POST_REQUEST:
+    case LOAD_POSTS_REQUEST:
       return {
         ...state,
-        loadPostLoading: true,
-        loadPostDone: false,
-        loadPostError: false,
+        loadPostsLoading: true,
+        loadPostsDone: false,
+        loadPostsError: false,
       };
-    case LOAD_POST_SUCCESS:
+    case LOAD_POSTS_SUCCESS:
       const newPostList = [...state.postList, ...action.data];
       return {
         ...state,
-        loadPostLoading: false,
-        loadPostDone: true,
-        loadPostError: false,
+        loadPostsLoading: false,
+        loadPostsDone: true,
+        loadPostsError: false,
         postList: newPostList,
         existMorePosts: action.data.length !== 0,
       };
-    case LOAD_POST_FAILURE:
+    case LOAD_POSTS_FAILURE:
       return {
         ...state,
-        loadPostLoading: false,
-        loadPostDone: false,
-        loadPostError: true,
+        loadPostsLoading: false,
+        loadPostsDone: false,
+        loadPostsError: true,
       };
     // 글등록
     case ADD_POST_REQUEST:
@@ -343,27 +343,27 @@ const reducer = (state = initialState, action) => {
         deleteMyPostCommentError: true,
       };
 
-    case LOAD_MY_POST_REQUEST:
+    case LOAD_MY_POSTS_REQUEST:
       return {
         ...state,
-        loadMyPostLoading: true,
-        loadMyPostDone: false,
-        loadMyPostError: false,
+        loadMyPostsLoading: true,
+        loadMyPostsDone: false,
+        loadMyPostsError: false,
       };
-    case LOAD_MY_POST_SUCCESS:
+    case LOAD_MY_POSTS_SUCCESS:
       return {
         ...state,
         myPostList: action.data,
-        loadMyPostLoading: false,
-        loadMyPostDone: true,
-        loadMyPostError: false,
+        loadMyPostsLoading: false,
+        loadMyPostsDone: true,
+        loadMyPostsError: false,
       };
-    case LOAD_MY_POST_FAILURE:
+    case LOAD_MY_POSTS_FAILURE:
       return {
         ...state,
-        loadMyPostLoading: false,
-        loadMyPostDone: false,
-        loadMyPostError: true,
+        loadMyPostsLoading: false,
+        loadMyPostsDone: false,
+        loadMyPostsError: true,
       };
     default:
       return state;

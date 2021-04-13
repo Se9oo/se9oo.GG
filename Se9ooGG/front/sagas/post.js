@@ -21,16 +21,16 @@ import {
   DELETE_MY_POST_COMMENT_REQUEST,
   DELETE_MY_POST_COMMENT_SUCCESS,
   DELETE_MY_POST_COMMENT_FAILURE,
-  LOAD_POST_REQUEST,
-  LOAD_POST_SUCCESS,
-  LOAD_POST_FAILURE,
-  LOAD_MY_POST_REQUEST,
-  LOAD_MY_POST_SUCCESS,
-  LOAD_MY_POST_FAILURE,
+  LOAD_POSTS_REQUEST,
+  LOAD_POSTS_SUCCESS,
+  LOAD_POSTS_FAILURE,
+  LOAD_MY_POSTS_REQUEST,
+  LOAD_MY_POSTS_SUCCESS,
+  LOAD_MY_POSTS_FAILURE,
 } from '../reducer/post';
 import axios from 'axios';
 
-function loadPostAPI(lastPostId) {
+function loadPostsAPI(lastPostId) {
   return axios.get(`/post/posts?lastPostId=${lastPostId}`);
 }
 
@@ -50,20 +50,20 @@ function deleteCommentAPI(data) {
   return axios.delete(`/post/${data.postId}/comment/${data.commentId}`);
 }
 
-function loadMyPostAPI() {
+function loadMyPostsAPI() {
   return axios.get(`/post/myposts`);
 }
 
-function* loadPost(action) {
+function* loadPosts(action) {
   try {
-    const result = yield call(loadPostAPI, action.lastPostId);
+    const result = yield call(loadPostsAPI, action.lastPostId);
     yield put({
-      type: LOAD_POST_SUCCESS,
+      type: LOAD_POSTS_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     yield put({
-      type: LOAD_POST_FAILURE,
+      type: LOAD_POSTS_FAILURE,
       data: err.response.data,
     });
   }
@@ -175,23 +175,23 @@ function* deleteMyPostComment(action) {
   }
 }
 
-function* loadMyPost() {
+function* loadMyPosts() {
   try {
-    const result = yield call(loadMyPostAPI);
+    const result = yield call(loadMyPostsAPI);
     yield put({
-      type: LOAD_MY_POST_SUCCESS,
+      type: LOAD_MY_POSTS_SUCCESS,
       data: result.data,
     });
   } catch (err) {
     yield put({
-      type: LOAD_MY_POST_FAILURE,
+      type: LOAD_MY_POSTS_FAILURE,
       data: err.response,
     });
   }
 }
 
-function* watchLoadPost() {
-  yield throttle(2000, LOAD_POST_REQUEST, loadPost);
+function* watchLoadPosts() {
+  yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
 
 function* watchAddPost() {
@@ -222,13 +222,13 @@ function* watchDeleteMyPostComment() {
   yield takeLatest(DELETE_MY_POST_COMMENT_REQUEST, deleteMyPostComment);
 }
 
-function* watchLoadMyPost() {
-  yield takeLatest(LOAD_MY_POST_REQUEST, loadMyPost);
+function* watchLoadMyPosts() {
+  yield takeLatest(LOAD_MY_POSTS_REQUEST, loadMyPosts);
 }
 
 export default function* postSaga() {
   yield all([
-    fork(watchLoadPost),
+    fork(watchLoadPosts),
     fork(watchAddPost),
     fork(watchDeletePost),
     fork(watchDeleteMyPost),
@@ -236,6 +236,6 @@ export default function* postSaga() {
     fork(watchAddMyPostComment),
     fork(watchDeleteComment),
     fork(watchDeleteMyPostComment),
-    fork(watchLoadMyPost),
+    fork(watchLoadMyPosts),
   ]);
 }

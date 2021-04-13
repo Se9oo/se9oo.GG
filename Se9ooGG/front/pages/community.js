@@ -4,7 +4,7 @@ import Router from 'next/router';
 import AppLayout from '../components/AppLayout';
 import PostCard from '../components/community/PostCard';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadPostRequestAction } from '../reducer/post';
+import { loadPostsRequestAction } from '../reducer/post';
 import { Button, Input, Empty, Spin } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ import styled from 'styled-components';
 const Community = () => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
-  const { postList, existMorePosts, loadPostLoading } = useSelector((state) => state.post);
+  const { postList, existMorePosts, loadPostsLoading } = useSelector((state) => state.post);
 
   const onClickAddPostBtn = useCallback(() => {
     Router.push('/editPost');
@@ -21,7 +21,7 @@ const Community = () => {
   // 페이지 초기 실행시에만 postList 조회
   useEffect(() => {
     if (postList.length === 0) {
-      dispatch(loadPostRequestAction(0));
+      dispatch(loadPostsRequestAction(0));
     }
   }, []);
 
@@ -29,9 +29,9 @@ const Community = () => {
   useEffect(() => {
     function onScroll() {
       if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 100) {
-        if (existMorePosts && !loadPostLoading) {
+        if (existMorePosts && !loadPostsLoading) {
           const lastPostId = postList[postList.length - 1].postId;
-          dispatch(loadPostRequestAction(lastPostId));
+          dispatch(loadPostsRequestAction(lastPostId));
         }
       }
     }
@@ -41,7 +41,7 @@ const Community = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [existMorePosts, loadPostLoading]);
+  }, [existMorePosts, loadPostsLoading]);
 
   return (
     <AppLayout>
@@ -59,7 +59,7 @@ const Community = () => {
       ) : (
         postList.map((v) => <PostCard data={v} key={v.postId} page="community" />)
       )}
-      {loadPostLoading && (
+      {loadPostsLoading && (
         <Loading>
           <Spin indicator={<LoadingOutlined spin />} />
         </Loading>

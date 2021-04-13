@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { loadMyPostRequestAction } from '../../reducer/post';
+import { loadMyPostsRequestAction } from '../../reducer/post';
 import PostCard from '../community/PostCard';
 import { Empty } from 'antd';
 import styled from 'styled-components';
@@ -12,7 +12,7 @@ const MyPost = () => {
 
   useEffect(() => {
     if (me) {
-      dispatch(loadMyPostRequestAction());
+      dispatch(loadMyPostsRequestAction());
     }
   }, [me]);
 
