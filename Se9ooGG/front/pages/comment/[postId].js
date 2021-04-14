@@ -1,23 +1,22 @@
 import React, { useCallback, useEffect } from 'react';
-import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux';
-import AppLayout from '../components/AppLayout';
-import CommentCard from '../components/community/CommentCard';
+import { useRouter } from 'next/router';
+import AppLayout from '../../components/AppLayout';
+import CommentCard from '../../components/community/CommentCard';
+import { loadCommentsRequestAction } from '../../reducer/post';
 import { LeftOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
-import { loadPostsRequestAction } from '../reducer/post';
 
-const Comment = () => {
+const Comments = () => {
   const router = useRouter();
-  const dispatch = useDispatch('');
-  const { postList } = useSelector((state) => state.post);
-  const commentList = postList.filter((v) => v.postId === parseInt(router.query.postId))[0];
+  const dispatch = useDispatch();
+  const { commentList } = useSelector((state) => state.post);
 
   useEffect(() => {
-    if (postList.length === 0) {
-      dispatch(loadPostsRequestAction());
+    if (router.query.postId) {
+      dispatch(loadCommentsRequestAction(router.query.postId));
     }
-  }, []);
+  }, [router.query.postId]);
 
   const onClickBackBtn = useCallback(() => {
     router.back();
@@ -29,10 +28,12 @@ const Comment = () => {
         <LeftOutlined onClick={onClickBackBtn} />
         <h2>댓글</h2>
       </CommentHeader>
-      {commentList && <CommentCard commentList={commentList.comments} postId={router.query.postId} />}
+      {commentList && <CommentCard commentList={commentList} postId={router.query.postId} />}
     </AppLayout>
   );
 };
+
+export default Comments;
 
 const CommentHeader = styled.div`
   position: relative;
@@ -56,5 +57,3 @@ const CommentHeader = styled.div`
     font-size: 2rem;
   }
 `;
-
-export default Comment;

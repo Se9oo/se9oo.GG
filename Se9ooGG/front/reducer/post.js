@@ -1,6 +1,7 @@
 export const initialState = {
   postList: [],
   myPostList: [],
+  commentList: [],
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: false,
@@ -29,6 +30,9 @@ export const initialState = {
   loadMyPostDone: false,
   loadMyPostError: false,
   existMorePosts: true,
+  loadCommentsLoading: false,
+  loadCommentsDone: false,
+  loadCommentsError: false,
 };
 
 // 글목록 불러오기
@@ -75,6 +79,11 @@ export const DELETE_MY_POST_COMMENT_FAILURE = 'DELETE_MY_POST_COMMENT_FAILURE';
 export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
 export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
 export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
+
+// 특정 게시글 댓글 불러오기
+export const LOAD_COMMENTS_REQUEST = 'LOAD_COMMENTS_REQUEST';
+export const LOAD_COMMENTS_SUCCESS = 'LOAD_COMMENTS_SUCCESS';
+export const LOAD_COMMENTS_FAILURE = 'LOAD_COMMENTS_FAILURE';
 
 export const loadPostsRequestAction = (lastPostId) => {
   return {
@@ -135,6 +144,13 @@ export const deleteMyPostCommentRequestAction = (data) => {
 export const loadMyPostsRequestAction = () => {
   return {
     type: LOAD_MY_POSTS_REQUEST,
+  };
+};
+
+export const loadCommentsRequestAction = (postId) => {
+  return {
+    type: LOAD_COMMENTS_REQUEST,
+    postId,
   };
 };
 
@@ -364,6 +380,28 @@ const reducer = (state = initialState, action) => {
         loadMyPostsLoading: false,
         loadMyPostsDone: false,
         loadMyPostsError: true,
+      };
+    case LOAD_COMMENTS_REQUEST:
+      return {
+        ...state,
+        loadCommentsLoading: true,
+        loadCommentsDone: false,
+        loadCommentsError: false,
+      };
+    case LOAD_COMMENTS_SUCCESS:
+      return {
+        ...state,
+        loadCommentsLoading: false,
+        loadCommentsDone: true,
+        loadCommentsError: false,
+        commentList: [...action.data],
+      };
+    case LOAD_COMMENTS_FAILURE:
+      return {
+        ...state,
+        loadCommentsLoading: false,
+        loadCommentsDone: false,
+        laodCommentsError: true,
       };
     default:
       return state;

@@ -213,4 +213,27 @@ router.delete('/post/:postId/comment/:commentId', isLoggedIn, async (req, res, n
   }
 });
 
+// 특정 게시글 댓글 조회
+router.get(`/post/comments`, async (req, res, next) => {
+  const postId = parseInt(req.query.postId, 10);
+  const connection = await pool.getConnection();
+
+  try {
+    if (!postId) {
+      return res.status(401).json('error');
+    }
+
+    const [commentList] = await connection.query(selectCommentInfoByPostId, [postId]);
+
+    return res.status(200).json(commentList);
+  } catch (err) {
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
 module.exports = router;

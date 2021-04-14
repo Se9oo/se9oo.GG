@@ -26,7 +26,7 @@ const PostCard = memo(({ data, page }) => {
     // 500px 이하에서는 comment 페이지로 이동
     if (window.innerWidth < 500) {
       router.push({
-        pathname: '/comment',
+        pathname: '/comment/[postId]',
         query: { postId: data.postId },
       });
     } else {
