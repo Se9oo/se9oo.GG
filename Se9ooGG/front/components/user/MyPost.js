@@ -23,7 +23,7 @@ const MyPost = () => {
         {myPostList.length === 0 ? (
           <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 게시글이 없습니다.</Empty>
         ) : (
-          myPostList.map((v) => <PostCard data={v} key={v.postId} page="my" />)
+          myPostList.map((v) => <PostCard data={v} key={v.postId} />)
         )}
       </PostList>
     </Container>

@@ -17,15 +17,9 @@ export const initialState = {
   addCommentLoading: false,
   addCommentDone: false,
   addCommentError: false,
-  addMyPostCommentLoading: false,
-  addMyPostCommentDone: false,
-  addMyPostCommentError: false,
   deleteCommentLoading: false,
   deleteCommentDone: false,
   deleteCommentError: false,
-  deleteMyPostCommentLoading: false,
-  deleteMyPostCommentDone: false,
-  deleteMyPostCommentError: false,
   loadMyPostLoading: false,
   loadMyPostDone: false,
   loadMyPostError: false,
@@ -64,11 +58,6 @@ export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 export const DELETE_COMMENT_REQUEST = 'DELETE_COMMENT_REQUEST';
 export const DELETE_COMMENT_SUCCESS = 'DELETE_COMMENT_SUCCESS';
 export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
-
-// 내 게시글 댓글 삭제
-export const DELETE_MY_POST_COMMENT_REQUEST = 'DELETE_MY_POST_COMMENT_REQUEST';
-export const DELETE_MY_POST_COMMENT_SUCCESS = 'DELETE_MY_POST_COMMENT_SUCCESS';
-export const DELETE_MY_POST_COMMENT_FAILURE = 'DELETE_MY_POST_COMMENT_FAILURE';
 
 // 내 게시글 불러오기
 export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
@@ -118,13 +107,6 @@ export const addCommentRequestAction = (data) => {
 export const deleteCommentRequestAction = (data) => {
   return {
     type: DELETE_COMMENT_REQUEST,
-    data,
-  };
-};
-
-export const deleteMyPostCommentRequestAction = (data) => {
-  return {
-    type: DELETE_MY_POST_COMMENT_REQUEST,
     data,
   };
 };
@@ -288,17 +270,35 @@ const reducer = (state = initialState, action) => {
       };
     case DELETE_COMMENT_SUCCESS:
       const deletePostIndex = state.postList.findIndex((v) => v.postId === parseInt(action.data.postId));
-      const deletePost = { ...state.postList[deletePostIndex] };
-      deletePost.comments = [...deletePost.comments].filter((comment) => comment.commentId !== action.data.commentId);
-      const deletePostList = [...state.postList];
-      deletePostList[deletePostIndex] = deletePost;
+      let deletePost;
+      let deletePostList;
+      if (deletePostIndex !== -1) {
+        deletePost = { ...state.postList[deletePostIndex] };
+        deletePost.comments = [...deletePost.comments].filter((comment) => comment.commentId !== action.data.commentId);
+        deletePostList = [...state.postList];
+        deletePostList[deletePostIndex] = deletePost;
+      }
+
+      const deleteMyPostIndex = state.myPostList.findIndex((v) => v.postId === parseInt(action.data.postId));
+      let deleteMyPost;
+      let deleteMyPostList;
+      if (deleteMyPostIndex !== -1) {
+        deleteMyPost = { ...state.myPostList[deleteMyPostIndex] };
+        deleteMyPost.comments = [...deleteMyPost.comments].filter(
+          (comment) => comment.commentId !== action.data.commentId
+        );
+        deleteMyPostList = [...state.myPostList];
+        deleteMyPostList[deleteMyPostIndex] = deleteMyPost;
+      }
 
       return {
         ...state,
+        postList: deletePostIndex !== -1 ? deletePostList : [],
+        myPostList: deleteMyPostIndex !== -1 ? deleteMyPostList : [],
+        commentList: [...state.commentList].filter((comment) => comment.commentId !== action.data.commentId),
         deleteCommentLoading: false,
         deleteCommentDone: true,
         deleteCommentError: false,
-        postList: deletePostList,
       };
     case DELETE_COMMENT_FAILURE:
       return {
@@ -307,38 +307,6 @@ const reducer = (state = initialState, action) => {
         deleteCommentDone: false,
         deleteCommentError: true,
       };
-
-    case DELETE_MY_POST_COMMENT_REQUEST:
-      return {
-        ...state,
-        deleteMyPostCommentLoading: true,
-        deleteMyPostCommentDone: false,
-        deleteMyPostCommentError: false,
-      };
-    case DELETE_MY_POST_COMMENT_SUCCESS:
-      const deleteMyPostIndex = state.myPostList.findIndex((v) => v.postId === parseInt(action.data.postId));
-      const deleteMyPost = { ...state.myPostList[deleteMyPostIndex] };
-      deleteMyPost.comments = [...deleteMyPost.comments].filter(
-        (comment) => comment.commentId !== action.data.commentId
-      );
-      const deleteMyPostList = [...state.myPostList];
-      deleteMyPostList[deleteMyPostIndex] = deleteMyPost;
-
-      return {
-        ...state,
-        deleteMyPostCommentLoading: false,
-        deleteMyPostCommentDone: true,
-        deleteMyPostCommentError: false,
-        myPostList: deleteMyPostList,
-      };
-    case DELETE_MY_POST_COMMENT_FAILURE:
-      return {
-        ...state,
-        deleteMyPostCommentLoading: false,
-        deleteMyPostCommentDone: false,
-        deleteMyPostCommentError: true,
-      };
-
     case LOAD_MY_POSTS_REQUEST:
       return {
         ...state,

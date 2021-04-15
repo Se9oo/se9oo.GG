@@ -123,7 +123,7 @@ const PostCard = memo(({ data, page }) => {
           <PostCommentCount>{`댓글 ${data.comments.length}개`}</PostCommentCount>
         </PostCardContentContainer>
       </Card>
-      {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} page={page} />}
+      {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} />}
       <CommonModal modalContent={modalContent} visible={showModal} />
     </>
   );

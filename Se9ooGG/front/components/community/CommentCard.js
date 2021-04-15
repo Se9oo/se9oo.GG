@@ -6,7 +6,7 @@ import { errorModal } from '../CommonModal';
 import CommentItem from './CommentItem';
 import styled from 'styled-components';
 
-const CommentCard = memo(({ commentList, postId, page }) => {
+const CommentCard = memo(({ commentList, postId }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
   const { addCommentLoading } = useSelector((state) => state.post);
@@ -38,9 +38,7 @@ const CommentCard = memo(({ commentList, postId, page }) => {
     <CommentContainer>
       {commentList.length === 0 && <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>등록된 댓글이 없습니다.</Empty>}
       {commentList.length > 0 &&
-        commentList.map((comment) => (
-          <CommentItem key={comment.commentId} comment={comment} postId={postId} page={page} />
-        ))}
+        commentList.map((comment) => <CommentItem key={comment.commentId} comment={comment} postId={postId} />)}
       {me && (
         <Comment
           avatar={<Avatar>{me.nickname.slice(0, 1)}</Avatar>}

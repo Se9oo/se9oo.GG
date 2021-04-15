@@ -6,7 +6,7 @@ import CommonModal from '../CommonModal';
 import { CloseOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
 
-const CommentItem = memo(({ comment, postId, page }) => {
+const CommentItem = memo(({ comment, postId }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
 
@@ -17,15 +17,10 @@ const CommentItem = memo(({ comment, postId, page }) => {
 
   const onOkDeleteCommentModal = useCallback(() => {
     dispatch(
-      page === 'community'
-        ? deleteCommentRequestAction({
-            commentId: comment.commentId,
-            postId: postId,
-          })
-        : deleteMyPostCommentRequestAction({
-            commentId: comment.commentId,
-            postId: postId,
-          })
+      deleteCommentRequestAction({
+        commentId: comment.commentId,
+        postId: postId,
+      })
     );
     setShowModal(false);
   }, []);
