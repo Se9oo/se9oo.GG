@@ -12,9 +12,6 @@ import {
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
-  ADD_MY_POST_COMMENT_REQUEST,
-  ADD_MY_POST_COMMENT_SUCCESS,
-  ADD_MY_POST_COMMENT_FAILURE,
   DELETE_COMMENT_REQUEST,
   DELETE_COMMENT_SUCCESS,
   DELETE_COMMENT_FAILURE,
@@ -137,21 +134,6 @@ function* addComment(action) {
   }
 }
 
-function* addMyPostComment(action) {
-  try {
-    const result = yield call(addCommentAPI, action.data);
-    yield put({
-      type: ADD_MY_POST_COMMENT_SUCCESS,
-      data: result.data[0],
-    });
-  } catch (err) {
-    yield put({
-      type: ADD_MY_POST_COMMENT_FAILURE,
-      data: err.response,
-    });
-  }
-}
-
 function* deleteComment(action) {
   try {
     yield call(deleteCommentAPI, action.data);
@@ -232,10 +214,6 @@ function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
-function* watchAddMyPostComment() {
-  yield takeLatest(ADD_MY_POST_COMMENT_REQUEST, addMyPostComment);
-}
-
 function* watchDeleteComment() {
   yield takeLatest(DELETE_COMMENT_REQUEST, deleteComment);
 }
@@ -259,7 +237,6 @@ export default function* postSaga() {
     fork(watchDeletePost),
     fork(watchDeleteMyPost),
     fork(watchAddComment),
-    fork(watchAddMyPostComment),
     fork(watchDeleteComment),
     fork(watchDeleteMyPostComment),
     fork(watchLoadMyPosts),
