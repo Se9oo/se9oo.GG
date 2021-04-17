@@ -16,7 +16,7 @@ exports.selectFullUserInfo = `
     DATE_FORMAT(usr.reg_dt, '%Y.%m.%d') AS regDt,
     COUNT(pst.post_id) AS postCount
   FROM user usr
-  LEFT OUTER JOIN post pst ON usr.user_email = pst.user_email
+  LEFT OUTER JOIN post pst ON usr.user_email = pst.user_email AND pst.status = 1
   WHERE
     usr.user_email = ?
 `;
