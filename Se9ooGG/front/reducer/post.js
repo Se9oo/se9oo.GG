@@ -186,6 +186,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addCommentLoading: true,
+        addCommentDone: false,
+        addCommentError: false,
       };
     case ADD_COMMENT_SUCCESS:
       // postList
@@ -223,6 +225,8 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         addCommentLoading: false,
+        addCommentDone: false,
+        addCommentError: true,
       };
     case DELETE_COMMENT_REQUEST:
       return {
