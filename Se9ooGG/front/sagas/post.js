@@ -21,6 +21,9 @@ import {
   LOAD_COMMENTS_REQUEST,
   LOAD_COMMENTS_SUCCESS,
   LOAD_COMMENTS_FAILURE,
+  LOAD_EDIT_POST_INFO_REQUEST,
+  LOAD_EDIT_POST_INFO_SUCCESS,
+  LOAD_EDIT_POST_INFO_FAILURE,
 } from '../reducer/post';
 import axios from 'axios';
 
@@ -50,6 +53,10 @@ function loadMyPostsAPI() {
 
 function loadCommentsAPI(postId) {
   return axios.get(`/post/comments?postId=${postId}`);
+}
+
+function loadEditPostInfoAPI(postId) {
+  return axios.get(`/post/edit/postId=${postId}`);
 }
 
 function* loadPosts(action) {
@@ -158,6 +165,21 @@ function* loadComments(action) {
   }
 }
 
+function* loadEditPostInfo(action) {
+  try {
+    const result = yield call(loadEditPostInfoAPI, action.postId);
+    yield put({
+      type: LOAD_EDIT_POST_INFO_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: LOAD_EDIT_POST_INFO_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -186,6 +208,10 @@ function* watchLoadComments() {
   yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
 }
 
+function* watchLoadEditPostInfo() {
+  yield takeLatest(LOAD_EDIT_POST_INFO_REQUEST, loadEditPostInfo);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -195,5 +221,6 @@ export default function* postSaga() {
     fork(watchDeleteComment),
     fork(watchLoadMyPosts),
     fork(watchLoadComments),
+    fork(watchLoadEditPostInfo),
   ]);
 }

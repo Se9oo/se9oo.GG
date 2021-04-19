@@ -2,6 +2,7 @@ export const initialState = {
   postList: [],
   myPostList: [],
   commentList: [],
+  editPostInfo: {},
   loadPostsLoading: false,
   loadPostsDone: false,
   loadPostsError: false,
@@ -24,6 +25,9 @@ export const initialState = {
   loadCommentsLoading: false,
   loadCommentsDone: false,
   loadCommentsError: false,
+  loadEditPostInfoLoading: false,
+  loadEditPostInfoDone: false,
+  loadEditPostInfoError: false,
 };
 
 // 글목록 불러오기
@@ -55,6 +59,11 @@ export const DELETE_COMMENT_FAILURE = 'DELETE_COMMENT_FAILURE';
 export const LOAD_MY_POSTS_REQUEST = 'LOAD_MY_POSTS_REQUEST';
 export const LOAD_MY_POSTS_SUCCESS = 'LOAD_MY_POSTS_SUCCESS';
 export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
+
+// 수정할 게시글 불러오기
+export const LOAD_EDIT_POST_INFO_REQUEST = 'LOAD_EDIT_POST_INFO_REQUEST';
+export const LOAD_EDIT_POST_INFO_SUCCESS = 'LOAD_EDIT_POST_INFO_SUCCESS';
+export const LOAD_EDIT_POST_INFO_FAILURE = 'LOAD_EDIT_POST_INFO_FAILURE';
 
 // 특정 게시글 댓글 불러오기
 export const LOAD_COMMENTS_REQUEST = 'LOAD_COMMENTS_REQUEST';
@@ -99,6 +108,13 @@ export const deleteCommentRequestAction = (data) => {
 export const loadMyPostsRequestAction = () => {
   return {
     type: LOAD_MY_POSTS_REQUEST,
+  };
+};
+
+export const loadEditPostInfoRequestAction = (data) => {
+  return {
+    type: LOAD_EDIT_POST_INFO_REQUEST,
+    data,
   };
 };
 
@@ -317,6 +333,28 @@ const reducer = (state = initialState, action) => {
         loadCommentsLoading: false,
         loadCommentsDone: false,
         laodCommentsError: true,
+      };
+    case LOAD_EDIT_POST_INFO_REQUEST:
+      return {
+        ...state,
+        loadEditPostInfoLoading: true,
+        loadEditPostInfoDone: false,
+        loadEditPostInfoError: false,
+      };
+    case LOAD_EDIT_POST_INFO_SUCCESS:
+      return {
+        ...state,
+        editPostInfo: action.data,
+        loadEditPostInfoLoading: false,
+        loadEditPostInfoDone: true,
+        loadEditPostInfoError: false,
+      };
+    case LOAD_EDIT_POST_INFO_FAILURE:
+      return {
+        ...state,
+        loadEditPostInfoLoading: false,
+        loadEditPostInfoDone: false,
+        loadEditPostInfoError: true,
       };
     default:
       return state;
