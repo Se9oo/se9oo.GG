@@ -8,7 +8,7 @@ import CommonModal from '../CommonModal';
 import CommentCard from './CommentCard';
 import styled from 'styled-components';
 
-const PostCard = memo(({ data, page }) => {
+const PostCard = memo(({ data }) => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
   // modal content
@@ -65,6 +65,14 @@ const PostCard = memo(({ data, page }) => {
     setShowModal(false);
   }, []);
 
+  // 게시글 수정
+  const onClickEditPostBtn = useCallback(() => {
+    router.push({
+      pathname: '/post/edit/[postId]',
+      query: { postId: data.postId },
+    });
+  }, []);
+
   return (
     <>
       <Card
@@ -87,7 +95,7 @@ const PostCard = memo(({ data, page }) => {
               <div>
                 {me && me.email === data.email && (
                   <>
-                    <Button>수정</Button>
+                    <Button onClick={onClickEditPostBtn}>수정</Button>
                     <Button onClick={onClickDeletePostBtn}>삭제</Button>
                   </>
                 )}

@@ -55,8 +55,8 @@ function loadCommentsAPI(postId) {
   return axios.get(`/post/comments?postId=${postId}`);
 }
 
-function loadEditPostInfoAPI(postId) {
-  return axios.get(`/post/edit/postId=${postId}`);
+function loadEditPostInfoAPI(data) {
+  return axios.get(`/post/edit/postId=${data.postId}`);
 }
 
 function* loadPosts(action) {
@@ -167,7 +167,7 @@ function* loadComments(action) {
 
 function* loadEditPostInfo(action) {
   try {
-    const result = yield call(loadEditPostInfoAPI, action.postId);
+    const result = yield call(loadEditPostInfoAPI, action.data);
     yield put({
       type: LOAD_EDIT_POST_INFO_SUCCESS,
       data: result.data,
