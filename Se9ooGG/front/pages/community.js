@@ -28,7 +28,10 @@ const Community = () => {
   // infinite scroll
   useEffect(() => {
     function onScroll() {
-      if (window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 100) {
+      // ie인 경우 pageYOffset
+      let scrollY = window.scrollY || window.pageYOffset;
+      
+      if (scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 100) {
         if (existMorePosts && !loadPostsLoading) {
           const lastPostId = postList[postList.length - 1].postId;
           dispatch(loadPostsRequestAction(lastPostId));
