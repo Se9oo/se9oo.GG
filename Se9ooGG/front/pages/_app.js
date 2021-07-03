@@ -51,9 +51,23 @@ const GlobalStyles = createGlobalStyle`
   }
 
   @font-face {
-    font-family: 'GmarketSansMedium';
-    src: url('/fonts/GmarketSansTTFMedium.ttf') format('truetype');
+    font-family: 'GmarketSans';
+    src: url('/fonts/GmarketSansLight.woff') format('woff');
+    font-weight: lighter;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GmarketSans';
+    src: url('/fonts/GmarketSansMedium.woff') format('woff');
     font-weight: normal;
+    font-style: normal;
+  }
+
+  @font-face {
+    font-family: 'GmarketSans';
+    src: url('/fonts/GmarketSansBold.woff') format('woff');
+    font-weight: bold;
     font-style: normal;
   }
 
@@ -70,7 +84,7 @@ const GlobalStyles = createGlobalStyle`
   }
 
   body, input, a, ol, ul, li, button {
-    font-family: 'GmarketSansMedium', 'Sans-serif' !important;
+    font-family: 'GmarketSans', 'Sans-serif' !important;
   }
 
   #__next {
