@@ -21,6 +21,7 @@ export const initialState = {
   loadMyPostLoading: false,
   loadMyPostDone: false,
   loadMyPostError: false,
+  myPostCount: 0,
   existMorePosts: true,
   loadCommentsLoading: false,
   loadCommentsDone: false,
@@ -105,9 +106,10 @@ export const deleteCommentRequestAction = (data) => {
   };
 };
 
-export const loadMyPostsRequestAction = () => {
+export const loadMyPostsRequestAction = (data) => {
   return {
     type: LOAD_MY_POSTS_REQUEST,
+    data,
   };
 };
 
@@ -300,7 +302,8 @@ const reducer = (state = initialState, action) => {
     case LOAD_MY_POSTS_SUCCESS:
       return {
         ...state,
-        myPostList: action.data,
+        myPostList: action.data.myPostList,
+        myPostCount: action.data.myPostCount,
         loadMyPostsLoading: false,
         loadMyPostsDone: true,
         loadMyPostsError: false,
@@ -311,6 +314,7 @@ const reducer = (state = initialState, action) => {
         loadMyPostsLoading: false,
         loadMyPostsDone: false,
         loadMyPostsError: true,
+        myPostCount: 0,
       };
     case LOAD_COMMENTS_REQUEST:
       return {

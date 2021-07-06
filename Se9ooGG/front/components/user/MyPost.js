@@ -1,20 +1,31 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loadMyPostsRequestAction } from '../../reducer/post';
 import PostCard from '../community/PostCard';
-import { Empty } from 'antd';
+import { Empty, Pagination } from 'antd';
 import styled from 'styled-components';
 
 const MyPost = () => {
   const dispatch = useDispatch('');
   const { me } = useSelector((state) => state.user);
-  const { myPostList } = useSelector((state) => state.post);
+  const { myPostList, myPostCount } = useSelector((state) => state.post);
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
     if (me) {
-      dispatch(loadMyPostsRequestAction());
+      dispatch(loadMyPostsRequestAction({ page: 1 }));
     }
   }, [me]);
+
+  // 페이지 변경시 내 게시글 조회
+  useEffect(() => {
+    dispatch(loadMyPostsRequestAction({ page: currentPage }));
+  }, [currentPage]);
+
+  // 페이지 변경
+  const onChangePaging = (page) => {
+    setCurrentPage(page);
+  };
 
   return (
     <Container>
@@ -26,6 +37,7 @@ const MyPost = () => {
           myPostList.map((v) => <PostCard data={v} key={v.postId} />)
         )}
       </PostList>
+      <Paging onChange={onChangePaging} defaultCurrent={1} pageSize={5} total={myPostCount}/>
     </Container>
   );
 };
@@ -48,4 +60,11 @@ const SubTitle = styled.h2`
 
 const PostList = styled.div`
   padding: 1rem;
+`;
+
+const Paging = styled(Pagination)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1rem 0;
 `;

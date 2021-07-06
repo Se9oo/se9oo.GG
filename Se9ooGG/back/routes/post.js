@@ -11,6 +11,7 @@ const {
   deletePost,
   selectCommentInfoByCommentId,
   selectMaxPostId,
+  selectMyPostCount,
 } = require('./query/post');
 
 const router = express.Router();
@@ -51,17 +52,31 @@ router.get('/post/posts', async (req, res, next) => {
   }
 });
 
-router.get(`/post/myposts/`, isLoggedIn, async (req, res, next) => {
+router.get(`/post/myposts/:page`, isLoggedIn, async (req, res, next) => {
   const { email } = req.user[0];
+  const { page } = req.params;
 
   const connection = await pool.getConnection();
+
+  // 한 페이지에 보여줄 게시글 갯수
+  const MAX_PAGE_ITEM_COUNT = 5;
 
   try {
     if (!email) {
       return res.status(401).json('입력값을 확인해주세요.');
     }
 
-    const [myPostList] = await connection.query(selectMyPostList, [email]);
+    const [myPostCount] = await connection.query(selectMyPostCount, [email]);
+
+    // 예외처리
+    if (page <= 0) {
+      page = 1;
+    }
+
+    // offset 설정
+    let offset = page ? MAX_PAGE_ITEM_COUNT * page - MAX_PAGE_ITEM_COUNT : 0;
+
+    const [myPostList] = await connection.query(selectMyPostList, [email, MAX_PAGE_ITEM_COUNT, offset]);
 
     // 조회한 게시글 id로 해당 게시글의 댓글 조회
     await Promise.all(
@@ -71,7 +86,11 @@ router.get(`/post/myposts/`, isLoggedIn, async (req, res, next) => {
       })
     );
 
-    return res.status(200).json(myPostList);
+    const data = {};
+    data['myPostCount'] = myPostCount[0]['count'];
+    data['myPostList'] = myPostList;
+
+    return res.status(200).json(data);
   } catch (err) {
     next(err);
     return res.status(500).json(err);

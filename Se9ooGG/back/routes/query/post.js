@@ -37,6 +37,17 @@ exports.selectMyPostList = `
     pst.user_email = ?
     AND pst.status = 1
   ORDER BY pst.post_id DESC
+  LIMIT ? OFFSET ?
+`;
+
+// 내 게시글 개수 조회
+exports.selectMyPostCount = `
+  SELECT
+    COUNT(*) AS count
+  FROM post
+  WHERE
+    user_email = ?
+    AND status = 1
 `;
 
 // 게시글 등록
