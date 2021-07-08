@@ -42,7 +42,7 @@ const Info = styled.div`
 const Name = styled.strong`
   display: block;
   font-size: 1.3rem;
-  font-weight: 700;
+  font-weight: 500;
   line-height: 1.5;
   margin-bottom: 0.5rem;
 `;
