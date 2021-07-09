@@ -2,7 +2,16 @@ import React from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import styled from 'styled-components';
+
+const PrevButton = ({ onClick }) => {
+  return <PrevSlideButton onClick={onClick} />;
+};
+
+const NextButton = ({ onClick }) => {
+  return <NextSlideButton onClick={onClick} />;
+};
 
 const ChampionSkins = ({ championName, skins }) => {
   const options = {
@@ -12,6 +21,8 @@ const ChampionSkins = ({ championName, skins }) => {
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    prevArrow: <PrevButton />,
+    nextArrow: <NextButton />,
   };
 
   return (
@@ -47,10 +58,31 @@ const SubTitle = styled.h2`
 `;
 
 const SliderWrapper = styled.div`
+  position: relative;
   width: 100%;
   padding: 1rem;
 `;
 
 const SkinImg = styled.img`
   width: 100%;
+`;
+
+const PrevSlideButton = styled(LeftOutlined)`
+  position: absolute;
+  top: 50%;
+  left: 1%;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 999;
+  cursor: pointer;
+`;
+
+const NextSlideButton = styled(RightOutlined)`
+  position: absolute;
+  top: 50%;
+  right: 1%;
+  font-size: 2rem;
+  color: rgba(255, 255, 255, 0.5);
+  z-index: 999;
+  cursor: pointer;
 `;
