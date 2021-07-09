@@ -1,26 +1,32 @@
 import React from 'react';
 import ChampionTipsItem from './ChampionTipsItem';
+import { Empty } from 'antd';
 import styled from 'styled-components';
 
 const ChampionTips = ({ tips }) => {
   const allTips = [...tips];
+
   return (
     <article>
       <SubTitle>챔피언 팁</SubTitle>
-      {allTips.map((tips, i) => {
-        return (
-          <React.Fragment key={`fragment_${i}`}>
-            <Team key={`team_${i}`} team={i}>
-              {i === 0 ? '아군' : '적군'}
-            </Team>
-            <ul key={`tips_${i}`}>
-              {tips.map((tip, idx) => {
-                return <ChampionTipsItem key={idx} tip={tip} />;
-              })}
-            </ul>
-          </React.Fragment>
-        );
-      })}
+      {allTips[0].length === 0 && allTips[1].length === 0 ? (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE}>챔피언 팁이 없습니다.</Empty>
+      ) : (
+        allTips.map((tips, i) => {
+          return (
+            <React.Fragment key={`fragment_${i}`}>
+              <Team key={`team_${i}`} team={i}>
+                {i === 0 ? '아군' : '적군'}
+              </Team>
+              <ul key={`tips_${i}`}>
+                {tips.map((tip, idx) => {
+                  return <ChampionTipsItem key={idx} tip={tip} />;
+                })}
+              </ul>
+            </React.Fragment>
+          );
+        })
+      )}
     </article>
   );
 };
