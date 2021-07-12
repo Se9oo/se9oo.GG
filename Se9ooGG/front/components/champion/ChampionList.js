@@ -8,10 +8,13 @@ const ChampionList = ({ list }) => {
   const championList = [...list].sort((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 
   const onClickChampionItem = useCallback((id) => {
-    router.push({
-      pathname: '/champion/[championName]',
-      query: { championName: `${id}` },
-    });
+    router
+      .push({
+        pathname: '/champion/[championName]',
+        query: { championName: `${id}` },
+      })
+      // 페이지 이동시 이동한 페이지 상단으로 스크롤 이동
+      .then(() => window.scrollTo(0, 0));
   }, []);
 
   return (
