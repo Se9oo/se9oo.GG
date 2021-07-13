@@ -106,3 +106,13 @@ exports.deleteComment = `
   DELETE FROM comment
   WHERE comment_id = ?
 `;
+
+// 게시글 좋아요 등록
+exports.addLike = `
+  INSERT INTO likes 
+    (post_id, user_email, reg_dt, cancel_dt, status)
+  VALUES
+    (?, ?, NOW(), NULL, 1)
+  ON DUPLICATE KEY
+  UPDATE cancel_dt = NULL, status = 1;
+`;

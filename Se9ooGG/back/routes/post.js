@@ -12,6 +12,7 @@ const {
   selectCommentInfoByCommentId,
   selectMaxPostId,
   selectMyPostCount,
+  addLike,
 } = require('./query/post');
 
 const router = express.Router();
@@ -248,6 +249,33 @@ router.get(`/post/comments`, async (req, res, next) => {
   } catch (err) {
     next(err);
     return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
+// 게시글 좋아요 등록
+router.post(`/post/like/:postId`, async (req, res, next) => {
+  const { postId } = req.params;
+  const { email } = req.user[0];
+
+  const connection = await pool.getConnection();
+
+  try {
+    if (!postId) return res.status(401).json('error');
+
+    await connection.beginTransaction();
+
+    await connection.execute(addLike, [postId, email]);
+
+    await connection.commit();
+
+    return res.status(200);
+  } catch (err) {
+    next(err);
+    return res.status(500).json;
   } finally {
     if (connection !== null) {
       connection.release();

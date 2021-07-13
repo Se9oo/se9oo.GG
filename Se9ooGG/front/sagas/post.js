@@ -24,6 +24,9 @@ import {
   LOAD_EDIT_POST_INFO_REQUEST,
   LOAD_EDIT_POST_INFO_SUCCESS,
   LOAD_EDIT_POST_INFO_FAILURE,
+  ADD_LIKE_REQUEST,
+  ADD_LIKE_SUCCESS,
+  ADD_LIKE_FAILURE,
 } from '../reducer/post';
 import axios from 'axios';
 
@@ -57,6 +60,11 @@ function loadCommentsAPI(postId) {
 
 function loadEditPostInfoAPI(data) {
   return axios.get(`/post/edit/postId=${data.postId}`);
+}
+
+// 게시글 좋아요 등록
+function addLikeAPI(data) {
+  return axios.post(`/post/like/${data.postId}`);
 }
 
 function* loadPosts(action) {
@@ -180,6 +188,21 @@ function* loadEditPostInfo(action) {
   }
 }
 
+// 게시글 좋아요 등록
+function* addLike(action) {
+  try {
+    yield call(addLikeAPI, action.data);
+    yield put({
+      type: ADD_LIKE_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: ADD_LIKE_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -212,6 +235,11 @@ function* watchLoadEditPostInfo() {
   yield takeLatest(LOAD_EDIT_POST_INFO_REQUEST, loadEditPostInfo);
 }
 
+// 게시글 좋아요 등록
+function* watchAddLike() {
+  yield takeLatest(ADD_LIKE_REQUEST, addLike);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -222,5 +250,6 @@ export default function* postSaga() {
     fork(watchLoadMyPosts),
     fork(watchLoadComments),
     fork(watchLoadEditPostInfo),
+    fork(watchAddLike),
   ]);
 }

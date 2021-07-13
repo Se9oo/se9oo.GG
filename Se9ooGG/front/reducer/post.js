@@ -29,6 +29,10 @@ export const initialState = {
   loadEditPostInfoLoading: false,
   loadEditPostInfoDone: false,
   loadEditPostInfoError: false,
+  // 게시글 좋아요
+  addLikeLoading: false,
+  addLikeDone: false,
+  addLikeError: false,
 };
 
 // 글목록 불러오기
@@ -70,6 +74,11 @@ export const LOAD_EDIT_POST_INFO_FAILURE = 'LOAD_EDIT_POST_INFO_FAILURE';
 export const LOAD_COMMENTS_REQUEST = 'LOAD_COMMENTS_REQUEST';
 export const LOAD_COMMENTS_SUCCESS = 'LOAD_COMMENTS_SUCCESS';
 export const LOAD_COMMENTS_FAILURE = 'LOAD_COMMENTS_FAILURE';
+
+// 좋아요 등록하기
+export const ADD_LIKE_REQUEST = 'ADD_LIKE_REQUEST';
+export const ADD_LIKE_SUCCESS = 'ADD_LIKE_SUCCESS';
+export const ADD_LIKE_FAILURE = 'ADD_LIKE_FAILURE';
 
 export const loadPostsRequestAction = (lastPostId) => {
   return {
@@ -124,6 +133,13 @@ export const loadCommentsRequestAction = (postId) => {
   return {
     type: LOAD_COMMENTS_REQUEST,
     postId,
+  };
+};
+
+export const addLikeRequestAction = (data) => {
+  return {
+    type: ADD_LIKE_REQUEST,
+    data,
   };
 };
 
@@ -359,6 +375,28 @@ const reducer = (state = initialState, action) => {
         loadEditPostInfoLoading: false,
         loadEditPostInfoDone: false,
         loadEditPostInfoError: true,
+      };
+    // 게시글 좋아요 등록
+    case ADD_LIKE_REQUEST:
+      return {
+        ...state,
+        addLikeLoading: true,
+        addLikeDone: false,
+        addLikeError: false,
+      };
+    case ADD_LIKE_SUCCESS:
+      return {
+        ...state,
+        addLikeLoading: false,
+        addLikeDone: true,
+        addLikeError: false,
+      };
+    case ADD_LIKE_FAILURE:
+      return {
+        ...state,
+        addLikeLoading: false,
+        addLikeDone: false,
+        addLikeError: true,
       };
     default:
       return state;
