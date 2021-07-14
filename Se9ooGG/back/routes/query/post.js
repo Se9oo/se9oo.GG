@@ -107,6 +107,28 @@ exports.deleteComment = `
   WHERE comment_id = ?
 `;
 
+// 게시글 좋아요 개수
+exports.selectLikeCountByPostId = `
+  SELECT
+    COUNT(*) AS cnt
+  FROM
+    likes
+  WHERE
+    post_id = ?
+    AND status = 1
+`;
+
+// 해당 게시글 좋아요 여부
+exports.selectIsLike = `
+  SELECT
+    COUNT(*) AS cnt
+  FROM
+    likes
+  WHERE
+    user_email = ?
+    AND status = 1
+`;
+
 // 게시글 좋아요 등록
 exports.addLike = `
   INSERT INTO likes 

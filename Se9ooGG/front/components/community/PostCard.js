@@ -20,7 +20,7 @@ const PostCard = memo(({ data }) => {
   // tablet 이상 comment component 노출 여부
   const [showComment, setShowComment] = useState(false);
   // 좋아요 버튼
-  const [liked, setLiked] = useState(false);
+  const [liked, setLiked] = useState(data.isLike || false);
 
   const onClickComment = useCallback(() => {
     // 500px 이하에서는 comment 페이지로 이동

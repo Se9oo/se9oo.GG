@@ -12,6 +12,8 @@ const {
   selectCommentInfoByCommentId,
   selectMaxPostId,
   selectMyPostCount,
+  selectLikeCountByPostId,
+  selectIsLike,
   addLike,
 } = require('./query/post');
 
@@ -36,7 +38,17 @@ router.get('/post/posts', async (req, res, next) => {
     await Promise.all(
       postList.map(async (row, i) => {
         const [commentList] = await connection.query(selectCommentInfoByPostId, [row.postId]);
-        postList[i].comments = commentList;
+        const [likeCount] = await connection.query(selectLikeCountByPostId, [row.postId]);
+
+        postList[i].comments = commentList; // 댓글 목록
+        postList[i].likeCount = likeCount[0].cnt; // 좋아요 개수
+        postList[i].isLike = false;
+
+        if (req.user) {
+          const [isLike] = await connection.query(selectIsLike, req.user[0].email);
+
+          postList[i].isLike = isLike[0].cnt > 0 ? true : false; // 좋아요 여부
+        }
       })
     );
 
@@ -257,7 +269,7 @@ router.get(`/post/comments`, async (req, res, next) => {
 });
 
 // 게시글 좋아요 등록
-router.post(`/post/like/:postId`, async (req, res, next) => {
+router.post(`/post/like/:postId`, isLoggedIn, async (req, res, next) => {
   const { postId } = req.params;
   const { email } = req.user[0];
 
