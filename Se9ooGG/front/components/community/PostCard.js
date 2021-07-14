@@ -88,11 +88,13 @@ const PostCard = memo(({ data }) => {
         }}
         actions={[
           <CommentOutlined key="comment" onClick={onClickComment} />,
-          liked ? (
-            <SmileTwoTone twoToneColor="#eb2f96" key="heartTwo" onClick={onToggleSmile} />
-          ) : (
-            <SmileOutlined key="like" onClick={onToggleSmile} />
-          ),
+          me ? (
+            liked ? (
+              <SmileTwoTone twoToneColor="#eb2f96" key="heartTwo" onClick={onToggleSmile} />
+            ) : (
+              <SmileOutlined key="like" onClick={onToggleSmile} />
+            )
+          ) : null,
           <Popover
             trigger="click"
             visible={showPopOver}
