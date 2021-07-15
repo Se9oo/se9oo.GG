@@ -126,6 +126,7 @@ exports.selectIsLike = `
     likes
   WHERE
     user_email = ?
+    AND post_id = ?
     AND status = 1
 `;
 

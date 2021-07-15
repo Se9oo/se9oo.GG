@@ -45,7 +45,7 @@ router.get('/post/posts', async (req, res, next) => {
         postList[i].isLike = false;
 
         if (req.user) {
-          const [isLike] = await connection.query(selectIsLike, req.user[0].email);
+          const [isLike] = await connection.query(selectIsLike, [req.user[0].email, [row.postId]]);
 
           postList[i].isLike = isLike[0].cnt > 0 ? true : false; // 좋아요 여부
         }
@@ -284,7 +284,7 @@ router.post(`/post/like/:postId`, isLoggedIn, async (req, res, next) => {
 
     await connection.commit();
 
-    return res.status(200);
+    return res.status(200).json('success');
   } catch (err) {
     next(err);
     return res.status(500).json;
