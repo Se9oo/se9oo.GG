@@ -27,6 +27,9 @@ import {
   ADD_LIKE_REQUEST,
   ADD_LIKE_SUCCESS,
   ADD_LIKE_FAILURE,
+  CANCEL_LIKE_REQUEST,
+  CANCEL_LIKE_SUCCESS,
+  CANCEL_LIKE_FAILURE,
 } from '../reducer/post';
 import axios from 'axios';
 
@@ -65,6 +68,11 @@ function loadEditPostInfoAPI(data) {
 // 게시글 좋아요 등록
 function addLikeAPI(data) {
   return axios.post(`/post/like/${data.postId}`);
+}
+
+// 게시글 좋아요 취소
+function cancelLIkeAPI(data) {
+  return axios.delete(`/post/like/${data.postId}`);
 }
 
 function* loadPosts(action) {
@@ -203,6 +211,21 @@ function* addLike(action) {
   }
 }
 
+// 게시글 좋아요 취소
+function* cancelLike(action) {
+  try {
+    yield call(cancelLIkeAPI, action.data);
+    yield put({
+      type: CANCEL_LIKE_SUCCESS,
+    });
+  } catch (err) {
+    yield put({
+      type: CANCEL_LIKE_FAILURE,
+      data: err.response.data,
+    });
+  }
+}
+
 function* watchLoadPosts() {
   yield throttle(2000, LOAD_POSTS_REQUEST, loadPosts);
 }
@@ -240,6 +263,11 @@ function* watchAddLike() {
   yield takeLatest(ADD_LIKE_REQUEST, addLike);
 }
 
+// 게시글 좋아요 취소
+function* watchCancelLike() {
+  yield takeLatest(CANCEL_LIKE_REQUEST, cancelLike);
+}
+
 export default function* postSaga() {
   yield all([
     fork(watchLoadPosts),
@@ -251,5 +279,6 @@ export default function* postSaga() {
     fork(watchLoadComments),
     fork(watchLoadEditPostInfo),
     fork(watchAddLike),
+    fork(watchCancelLike),
   ]);
 }

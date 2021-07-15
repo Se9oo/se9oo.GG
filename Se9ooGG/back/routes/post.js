@@ -15,6 +15,7 @@ const {
   selectLikeCountByPostId,
   selectIsLike,
   addLike,
+  cancelLike,
 } = require('./query/post');
 
 const router = express.Router();
@@ -287,7 +288,34 @@ router.post(`/post/like/:postId`, isLoggedIn, async (req, res, next) => {
     return res.status(200).json('success');
   } catch (err) {
     next(err);
-    return res.status(500).json;
+    return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
+// 게시글 좋아요 취소
+router.delete(`/post/like/:postId`, isLoggedIn, async (req, res, next) => {
+  const { postId } = req.params;
+  const { email } = req.user[0];
+
+  const connection = await pool.getConnection();
+
+  try {
+    if (!postId) return res.status(401).json('error');
+
+    await connection.beginTransaction();
+
+    await connection.execute(cancelLike, [email, postId]);
+
+    await connection.commit();
+
+    return res.status(200).json('success');
+  } catch (err) {
+    next(err);
+    return res.status(500).json(err);
   } finally {
     if (connection !== null) {
       connection.release();

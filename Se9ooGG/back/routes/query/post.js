@@ -139,3 +139,13 @@ exports.addLike = `
   ON DUPLICATE KEY
   UPDATE cancel_dt = NULL, status = 1;
 `;
+
+// 게시글 좋아요 취소
+exports.cancelLike = `
+  UPDATE likes SET
+    status = 0
+    , cancel_dt = now()
+  WHERE
+    user_email = ?
+    AND post_id = ?
+`;

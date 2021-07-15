@@ -1,7 +1,7 @@
-import React, { memo, useCallback, useEffect, useState } from 'react';
+import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
-import { addLikeRequestAction, deleteMyPostRequestAction, deletePostRequestAction } from '../../reducer/post';
+import { addLikeRequestAction, cancelLikeRequestAction, deletePostRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
 import CommonModal from '../CommonModal';
@@ -71,12 +71,9 @@ const PostCard = memo(({ data }) => {
 
   // 게시글 좋아요 등록/해제
   const onToggleSmile = useCallback(() => {
-    setLiked((prevLiked) => !prevLiked);
-  }, []);
+    dispatch(liked ? cancelLikeRequestAction({ postId: data.postId }) : addLikeRequestAction({ postId: data.postId }));
 
-  // 게시글 좋아요 버튼이 눌리면 (값이 변하면)
-  useEffect(() => {
-    liked ? dispatch(addLikeRequestAction({ postId: data.postId })) : console.log('해제');
+    setLiked((prevLiked) => !prevLiked);
   }, [liked]);
 
   return (

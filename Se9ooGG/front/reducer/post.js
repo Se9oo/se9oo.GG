@@ -33,6 +33,10 @@ export const initialState = {
   addLikeLoading: false,
   addLikeDone: false,
   addLikeError: false,
+  // 게시글 좋아요 취소하기
+  cancelLikeLoading: false,
+  cancelLikeDone: false,
+  cancelLikeError: false,
 };
 
 // 글목록 불러오기
@@ -79,6 +83,11 @@ export const LOAD_COMMENTS_FAILURE = 'LOAD_COMMENTS_FAILURE';
 export const ADD_LIKE_REQUEST = 'ADD_LIKE_REQUEST';
 export const ADD_LIKE_SUCCESS = 'ADD_LIKE_SUCCESS';
 export const ADD_LIKE_FAILURE = 'ADD_LIKE_FAILURE';
+
+// 좋아요 취소하기
+export const CANCEL_LIKE_REQUEST = 'CANCEL_LIKE_REQUEST';
+export const CANCEL_LIKE_SUCCESS = 'CANCEL_LIKE_SUCCESS';
+export const CANCEL_LIKE_FAILURE = 'CANCEL_LIKE_FAILURE';
 
 export const loadPostsRequestAction = (lastPostId) => {
   return {
@@ -136,9 +145,18 @@ export const loadCommentsRequestAction = (postId) => {
   };
 };
 
+// 좋아요 등록하기
 export const addLikeRequestAction = (data) => {
   return {
     type: ADD_LIKE_REQUEST,
+    data,
+  };
+};
+
+// 좋아요 취소하기
+export const cancelLikeRequestAction = (data) => {
+  return {
+    type: CANCEL_LIKE_REQUEST,
     data,
   };
 };
@@ -397,6 +415,27 @@ const reducer = (state = initialState, action) => {
         addLikeLoading: false,
         addLikeDone: false,
         addLikeError: true,
+      };
+    case CANCEL_LIKE_REQUEST:
+      return {
+        ...state,
+        cancelLikeLoading: true,
+        cancelLikeDone: false,
+        cancelLikeError: false,
+      };
+    case CANCEL_LIKE_SUCCESS:
+      return {
+        ...state,
+        cancelLikeLoading: false,
+        cancelLikeDone: true,
+        cancelLikeError: false,
+      };
+    case CANCEL_LIKE_FAILURE:
+      return {
+        ...state,
+        cancelLikeLoading: false,
+        cancelLikeDone: false,
+        cancelLikeError: true,
       };
     default:
       return state;
