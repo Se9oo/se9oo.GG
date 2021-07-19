@@ -145,18 +145,10 @@ export const loadCommentsRequestAction = (postId) => {
   };
 };
 
-// 좋아요 등록하기
-export const addLikeRequestAction = (data) => {
+// 좋아요 등록/취소하기
+export const likeRequestAction = (data) => {
   return {
-    type: ADD_LIKE_REQUEST,
-    data,
-  };
-};
-
-// 좋아요 취소하기
-export const cancelLikeRequestAction = (data) => {
-  return {
-    type: CANCEL_LIKE_REQUEST,
+    type: data.action === 'add' ? ADD_LIKE_REQUEST : CANCEL_LIKE_REQUEST,
     data,
   };
 };

@@ -269,50 +269,23 @@ router.get(`/post/comments`, async (req, res, next) => {
   }
 });
 
-// 게시글 좋아요 등록
-router.post(`/post/like/:postId`, isLoggedIn, async (req, res, next) => {
-  const { postId } = req.params;
+// 게시글 좋아요 등록/취소
+router.post(`/post/like`, isLoggedIn, async (req, res, next) => {
+  const { postId, action } = req.body;
   const { email } = req.user[0];
 
   const connection = await pool.getConnection();
 
   try {
-    if (!postId) return res.status(401).json('error');
+    if (!postId || !action) return res.status(401).json('error');
 
     await connection.beginTransaction();
 
-    await connection.execute(addLike, [postId, email]);
+    await connection.execute(action === 'add' ? addLike : cancelLike, [email, postId]);
 
     await connection.commit();
 
-    return res.status(200).json('success');
-  } catch (err) {
-    next(err);
-    return res.status(500).json(err);
-  } finally {
-    if (connection !== null) {
-      connection.release();
-    }
-  }
-});
-
-// 게시글 좋아요 취소
-router.delete(`/post/like/:postId`, isLoggedIn, async (req, res, next) => {
-  const { postId } = req.params;
-  const { email } = req.user[0];
-
-  const connection = await pool.getConnection();
-
-  try {
-    if (!postId) return res.status(401).json('error');
-
-    await connection.beginTransaction();
-
-    await connection.execute(cancelLike, [email, postId]);
-
-    await connection.commit();
-
-    return res.status(200).json('success');
+    return res.status(200).json(postId);
   } catch (err) {
     next(err);
     return res.status(500).json(err);

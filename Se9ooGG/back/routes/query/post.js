@@ -133,7 +133,7 @@ exports.selectIsLike = `
 // 게시글 좋아요 등록
 exports.addLike = `
   INSERT INTO likes 
-    (post_id, user_email, reg_dt, cancel_dt, status)
+    (user_email, post_id, reg_dt, cancel_dt, status)
   VALUES
     (?, ?, NOW(), NULL, 1)
   ON DUPLICATE KEY
@@ -146,6 +146,6 @@ exports.cancelLike = `
     status = 0
     , cancel_dt = now()
   WHERE
-    user_email = ?
-    AND post_id = ?
+  user_email = ?
+  AND post_id = ?
 `;

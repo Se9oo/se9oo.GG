@@ -1,7 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
-import { addLikeRequestAction, cancelLikeRequestAction, deletePostRequestAction } from '../../reducer/post';
+import { deletePostRequestAction, likeRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
 import CommonModal from '../CommonModal';
@@ -71,7 +71,7 @@ const PostCard = memo(({ data }) => {
 
   // 게시글 좋아요 등록/해제
   const onToggleSmile = useCallback(() => {
-    dispatch(liked ? cancelLikeRequestAction({ postId: data.postId }) : addLikeRequestAction({ postId: data.postId }));
+    dispatch(likeRequestAction({ postId: data.postId, action: liked ? 'cancel' : 'add'}));
 
     setLiked((prevLiked) => !prevLiked);
   }, [liked]);
@@ -130,7 +130,7 @@ const PostCard = memo(({ data }) => {
               );
             })}
           <PostCommentCount>{`댓글 ${data.comments.length}개`}</PostCommentCount>
-          <PostLikeCount>{`좋아요 ${data.likeCount}개`}</PostLikeCount>
+          <PostLikeCount>{`좋아요 ${data.likeCount || 0}개`}</PostLikeCount>
         </PostCardContentContainer>
       </Card>
       {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} />}

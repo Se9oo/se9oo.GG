@@ -65,14 +65,9 @@ function loadEditPostInfoAPI(data) {
   return axios.get(`/post/edit/postId=${data.postId}`);
 }
 
-// 게시글 좋아요 등록
-function addLikeAPI(data) {
-  return axios.post(`/post/like/${data.postId}`);
-}
-
-// 게시글 좋아요 취소
-function cancelLIkeAPI(data) {
-  return axios.delete(`/post/like/${data.postId}`);
+// 게시글 좋아요 등록/취소
+function likeActionAPI(data) {
+  return axios.post(`/post/like`, data);
 }
 
 function* loadPosts(action) {
@@ -199,9 +194,10 @@ function* loadEditPostInfo(action) {
 // 게시글 좋아요 등록
 function* addLike(action) {
   try {
-    yield call(addLikeAPI, action.data);
+    const result = yield call(likeActionAPI, action.data);
     yield put({
       type: ADD_LIKE_SUCCESS,
+      data: result.data,
     });
   } catch (err) {
     yield put({
@@ -214,9 +210,10 @@ function* addLike(action) {
 // 게시글 좋아요 취소
 function* cancelLike(action) {
   try {
-    yield call(cancelLIkeAPI, action.data);
+    const result = yield call(likeActionAPI, action.data);
     yield put({
       type: CANCEL_LIKE_SUCCESS,
+      data: result.data,
     });
   } catch (err) {
     yield put({
