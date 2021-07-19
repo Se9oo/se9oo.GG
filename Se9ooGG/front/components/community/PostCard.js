@@ -130,6 +130,7 @@ const PostCard = memo(({ data }) => {
               );
             })}
           <PostCommentCount>{`댓글 ${data.comments.length}개`}</PostCommentCount>
+          <PostLikeCount>{`좋아요 ${data.likeCount}개`}</PostLikeCount>
         </PostCardContentContainer>
       </Card>
       {showComment && data.comments && <CommentCard commentList={data.comments} postId={data.postId} />}
@@ -145,6 +146,10 @@ const PostCardContentContainer = styled.div`
 const PostCommentCount = styled.span`
   display: block;
   margin-top: 2rem;
+  color: #ced4da;
+`;
+
+const PostLikeCount = styled.span`
   color: #ced4da;
 `;
 
