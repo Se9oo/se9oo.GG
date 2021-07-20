@@ -395,6 +395,15 @@ const reducer = (state = initialState, action) => {
         addLikeError: false,
       };
     case ADD_LIKE_SUCCESS:
+      // 좋아요 누른 post의 index
+      const likePostIdx = state.postList.findIndex((post) => post.postId === parseInt(action.data));
+      // post 정보 복사
+      const likePost = {...state.postList[likePostIdx]};
+
+      likePost.likeCount++;
+
+      state.postList[likePostIdx] = likePost;
+
       return {
         ...state,
         addLikeLoading: false,
@@ -416,6 +425,17 @@ const reducer = (state = initialState, action) => {
         cancelLikeError: false,
       };
     case CANCEL_LIKE_SUCCESS:
+      // 좋아요 취소한 post index
+      const unlikePostIdx = state.postList.findIndex((post) => post.postId === parseInt(action.data));
+      // post 정보 복사
+      const unlikePost = {...state.postList[unlikePostIdx]};
+
+      unlikePost.likeCount--;
+
+      if (unlikePost.likeCount < 0) unlikePost.likeCount = 0;
+
+      state.postList[unlikePostIdx] = unlikePost;
+
       return {
         ...state,
         cancelLikeLoading: false,
