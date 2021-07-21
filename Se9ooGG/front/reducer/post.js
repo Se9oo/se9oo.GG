@@ -401,6 +401,7 @@ const reducer = (state = initialState, action) => {
       const likePost = {...state.postList[likePostIdx]};
 
       likePost.likeCount++;
+      likePost.isLike = true;
 
       state.postList[likePostIdx] = likePost;
 
@@ -431,6 +432,7 @@ const reducer = (state = initialState, action) => {
       const unlikePost = {...state.postList[unlikePostIdx]};
 
       unlikePost.likeCount--;
+      unlikePost.isLike = false;
 
       if (unlikePost.likeCount < 0) unlikePost.likeCount = 0;
 
