@@ -7,15 +7,8 @@ import styled from 'styled-components';
 
 const MyPost = () => {
   const dispatch = useDispatch('');
-  const { me } = useSelector((state) => state.user);
   const { myPostList, myPostCount } = useSelector((state) => state.post);
   const [currentPage, setCurrentPage] = useState(1);
-
-  useEffect(() => {
-    if (me) {
-      dispatch(loadMyPostsRequestAction({ page: 1 }));
-    }
-  }, [me]);
 
   // 페이지 변경시 내 게시글 조회
   useEffect(() => {

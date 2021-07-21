@@ -405,6 +405,16 @@ const reducer = (state = initialState, action) => {
 
       state.postList[likePostIdx] = likePost;
 
+      // 좋아요 누른 myPost의 index
+      const myLikePostIdx = state.myPostList.findIndex((post) => post.postId === parseInt(action.data));
+      // myPost의 정보 복사
+      const likeMyPost = {...state.myPostList[myLikePostIdx]};
+
+      likeMyPost.likeCount++;
+      likeMyPost.isLike = true;
+
+      state.myPostList[myLikePostIdx] = likeMyPost;
+
       return {
         ...state,
         addLikeLoading: false,
@@ -437,6 +447,18 @@ const reducer = (state = initialState, action) => {
       if (unlikePost.likeCount < 0) unlikePost.likeCount = 0;
 
       state.postList[unlikePostIdx] = unlikePost;
+
+      // 좋아요 취소한 myPost index
+      const unlikeMyPostIdx = state.myPostList.findIndex((post) => post.postId === parseInt(action.data));
+      // myPost 정보 복사
+      const unlikeMyPost = {...state.myPostList[unlikeMyPostIdx]};
+
+      unlikeMyPost.likeCount--;
+      unlikeMyPost.isLike = false;
+
+      if (unlikeMyPost.likeCount < 0) unlikeMyPost.likeCount = 0;
+
+      state.myPostList[unlikeMyPostIdx] = unlikeMyPost;
 
       return {
         ...state,

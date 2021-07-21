@@ -96,7 +96,17 @@ router.get(`/post/myposts/:page`, isLoggedIn, async (req, res, next) => {
     await Promise.all(
       myPostList.map(async (row, i) => {
         const [commentList] = await connection.query(selectCommentInfoByPostId, [row.postId]);
+        const [likeCount] = await connection.query(selectLikeCountByPostId, [row.postId]);
+
         myPostList[i].comments = commentList;
+        myPostList[i].likeCount = likeCount[0].cnt; // 좋아요 개수
+        myPostList[i].isLike = false;
+
+        if (req.user) {
+          const [isLike] = await connection.query(selectIsLike, [email, [row.postId]]);
+
+          myPostList[i].isLike = isLike[0].cnt > 0 ? true : false; // 좋아요 여부
+        }
       })
     );
 
