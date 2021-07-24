@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import useInput from '../../hooks/useInput';
 import { Button, Form, Input } from 'antd';
 import CommonModal from '../CommonModal';
@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const EditPostForm = ({ data }) => {
   // 제목 입력
   const [postTitle, onChangePostTitle] = useInput(data.postTitle);
-  const [postContent, onChangePostContent] = useInput(data.postConent);
+  const [postContent, onChangePostContent] = useInput(data.postContent);
   // modal content
   const [modalContent, setModalContent] = useState('');
   // modal show

@@ -61,8 +61,8 @@ function loadCommentsAPI(postId) {
   return axios.get(`/post/comments?postId=${postId}`);
 }
 
-function loadEditPostInfoAPI(data) {
-  return axios.get(`/post/edit/postId=${data.postId}`);
+function loadEditPostInfoAPI(postId) {
+  return axios.get(`/post/load?postId=${postId}`);
 }
 
 // 게시글 좋아요 등록/취소

@@ -22,7 +22,7 @@ const editPostById = () => {
       <Head>
         <title>se9oo | 글 수정</title>
       </Head>
-      {editPostInfo && <EditPostForm data={editPostInfo} />}
+      {editPostInfo.hasOwnProperty('postTitle') && <EditPostForm data={editPostInfo} />}
     </AppLayout>
   );
 };

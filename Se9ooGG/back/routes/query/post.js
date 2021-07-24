@@ -149,3 +149,13 @@ exports.cancelLike = `
   user_email = ?
   AND post_id = ?
 `;
+
+exports.selectLoadEditPost = `
+  SELECT
+    post_title
+    , post_content
+  FROM
+    post
+  WHERE
+    post_id = ?
+`;

@@ -372,9 +372,13 @@ const reducer = (state = initialState, action) => {
         loadEditPostInfoError: false,
       };
     case LOAD_EDIT_POST_INFO_SUCCESS:
+      const data = action.data[0];
       return {
         ...state,
-        editPostInfo: action.data,
+        editPostInfo: {
+          postTitle: data.post_title,
+          postContent: data.post_content,
+        },
         loadEditPostInfoLoading: false,
         loadEditPostInfoDone: true,
         loadEditPostInfoError: false,

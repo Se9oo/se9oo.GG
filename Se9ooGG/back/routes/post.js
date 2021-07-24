@@ -16,6 +16,7 @@ const {
   selectIsLike,
   addLike,
   cancelLike,
+  selectLoadEditPost,
 } = require('./query/post');
 
 const router = express.Router();
@@ -296,6 +297,27 @@ router.post(`/post/like`, isLoggedIn, async (req, res, next) => {
     await connection.commit();
 
     return res.status(200).json(postId);
+  } catch (err) {
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
+router.get(`/post/load`, isLoggedIn, async (req, res, next) => {
+  const postId = parseInt(req.query.postId, 10);
+
+  const connection = await pool.getConnection();
+
+  try {
+    if (!postId) return res.status(401).json('error');
+
+    const [post] = await connection.query(selectLoadEditPost, [postId]);
+
+    return res.status(200).json(post);
   } catch (err) {
     next(err);
     return res.status(500).json(err);
