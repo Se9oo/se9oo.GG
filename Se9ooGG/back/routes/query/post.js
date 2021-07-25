@@ -152,10 +152,12 @@ exports.cancelLike = `
 
 exports.selectLoadEditPost = `
   SELECT
-    post_title
-    , post_content
+    pst.post_title
+    , pst.post_content
+    , usr.user_nickname
   FROM
-    post
+    post pst
+  LEFT OUTER JOIN user usr ON pst.user_email = usr.user_email
   WHERE
     post_id = ?
 `;

@@ -378,6 +378,7 @@ const reducer = (state = initialState, action) => {
         editPostInfo: {
           postTitle: data.post_title,
           postContent: data.post_content,
+          userNickname: data.user_nickname,
         },
         loadEditPostInfoLoading: false,
         loadEditPostInfoDone: true,

@@ -18,7 +18,7 @@ const EditPostForm = ({ data }) => {
       <Form onFinish="">
         <Content>
           <label htmlFor="post-writer">작성자</label>
-          <strong>{data && data.nickname}</strong>
+          <strong>{data && data.userNickname}</strong>
         </Content>
         <Content>
           <label htmlFor="post-title">제목</label>
