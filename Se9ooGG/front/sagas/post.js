@@ -24,6 +24,9 @@ import {
   LOAD_EDIT_POST_INFO_REQUEST,
   LOAD_EDIT_POST_INFO_SUCCESS,
   LOAD_EDIT_POST_INFO_FAILURE,
+  EDIT_POST_REQUEST,
+  EDIT_POST_SUCCESS,
+  EDIT_POST_FAILURE,
   ADD_LIKE_REQUEST,
   ADD_LIKE_SUCCESS,
   ADD_LIKE_FAILURE,
@@ -61,8 +64,14 @@ function loadCommentsAPI(postId) {
   return axios.get(`/post/comments?postId=${postId}`);
 }
 
+// 수정할 게시글 정보 가져오기
 function loadEditPostInfoAPI(postId) {
   return axios.get(`/post/load?postId=${postId}`);
+}
+
+// 게시글 수정하기
+function editPostAPI(data) {
+  return axios.post(`/post/editPost`, data);
 }
 
 // 게시글 좋아요 등록/취소
@@ -191,6 +200,21 @@ function* loadEditPostInfo(action) {
   }
 }
 
+function* editPost(action) {
+  try {
+    const result = yield call(editPostAPI, action.data);
+    yield put({
+      type: EDIT_POST_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    yield put({
+      type: EDIT_POST_FAILURE,
+      data: err.response.data,
+    })
+  }
+}
+
 // 게시글 좋아요 등록
 function* addLike(action) {
   try {
@@ -251,8 +275,14 @@ function* watchLoadComments() {
   yield takeLatest(LOAD_COMMENTS_REQUEST, loadComments);
 }
 
+// 수정할 게시글 정보 가져오기
 function* watchLoadEditPostInfo() {
   yield takeLatest(LOAD_EDIT_POST_INFO_REQUEST, loadEditPostInfo);
+}
+
+// 게시글 수정하기
+function* watchEditPost() {
+  yield takeLatest(EDIT_POST_REQUEST, editPost);
 }
 
 // 게시글 좋아요 등록
@@ -275,6 +305,7 @@ export default function* postSaga() {
     fork(watchLoadMyPosts),
     fork(watchLoadComments),
     fork(watchLoadEditPostInfo),
+    fork(watchEditPost),
     fork(watchAddLike),
     fork(watchCancelLike),
   ]);

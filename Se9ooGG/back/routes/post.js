@@ -17,6 +17,7 @@ const {
   addLike,
   cancelLike,
   selectLoadEditPost,
+  updateEditPost,
 } = require('./query/post');
 
 const router = express.Router();
@@ -307,6 +308,7 @@ router.post(`/post/like`, isLoggedIn, async (req, res, next) => {
   }
 });
 
+// 수정할 게시글 정보 가져오기
 router.get(`/post/load`, isLoggedIn, async (req, res, next) => {
   const postId = parseInt(req.query.postId, 10);
 
@@ -318,6 +320,28 @@ router.get(`/post/load`, isLoggedIn, async (req, res, next) => {
     const [post] = await connection.query(selectLoadEditPost, [postId]);
 
     return res.status(200).json(post);
+  } catch (err) {
+    next(err);
+    return res.status(500).json(err);
+  } finally {
+    if (connection !== null) {
+      connection.release();
+    }
+  }
+});
+
+// 게시글 수정하기
+router.post(`/post/editPost`, isLoggedIn, async (req, res, next) => {
+  const { postId, postTitle, postContent } = req.params;
+
+  const connection = await pool.getConnection();
+
+  try {
+    if (!postId) return res.status(401).json('error');
+
+    await connection.execute(updateEditPost, [postTitle, postContent, postId]);
+
+    return res.status(200).json(postId);
   } catch (err) {
     next(err);
     return res.status(500).json(err);

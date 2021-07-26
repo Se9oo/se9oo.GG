@@ -150,6 +150,7 @@ exports.cancelLike = `
   AND post_id = ?
 `;
 
+// 수정할 게시글 정보 가져오기
 exports.selectLoadEditPost = `
   SELECT
     pst.post_title
@@ -158,6 +159,16 @@ exports.selectLoadEditPost = `
   FROM
     post pst
   LEFT OUTER JOIN user usr ON pst.user_email = usr.user_email
+  WHERE
+    post_id = ?
+`;
+
+// 게시글 수정하기
+exports.updateEditPost = `
+  UPDATE post SET
+    post_title = ?
+    , post_content = ?
+    , change_dt = NOW()
   WHERE
     post_id = ?
 `;

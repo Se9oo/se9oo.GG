@@ -26,9 +26,14 @@ export const initialState = {
   loadCommentsLoading: false,
   loadCommentsDone: false,
   loadCommentsError: false,
+  // 수정할 게시글 정보 가져오기
   loadEditPostInfoLoading: false,
   loadEditPostInfoDone: false,
   loadEditPostInfoError: false,
+  // 게시글 수정하기
+  editPostLoading: false,
+  editPostDone: false,
+  editPostError: false,
   // 게시글 좋아요
   addLikeLoading: false,
   addLikeDone: false,
@@ -73,6 +78,11 @@ export const LOAD_MY_POSTS_FAILURE = 'LOAD_MY_POSTS_FAILURE';
 export const LOAD_EDIT_POST_INFO_REQUEST = 'LOAD_EDIT_POST_INFO_REQUEST';
 export const LOAD_EDIT_POST_INFO_SUCCESS = 'LOAD_EDIT_POST_INFO_SUCCESS';
 export const LOAD_EDIT_POST_INFO_FAILURE = 'LOAD_EDIT_POST_INFO_FAILURE';
+
+// 게시글 수정하기
+export const EDIT_POST_REQUEST = 'EDIT_POST_REQUEST';
+export const EDIT_POST_SUCCESS = 'EDIT_POST_SUCCESS';
+export const EDIT_POST_FAILURE = 'EDIT_POST_FAILURE';
 
 // 특정 게시글 댓글 불러오기
 export const LOAD_COMMENTS_REQUEST = 'LOAD_COMMENTS_REQUEST';
@@ -137,6 +147,14 @@ export const loadEditPostInfoRequestAction = (data) => {
     data,
   };
 };
+
+// 게시글 수정하기
+export const editPostRequestAction = (data) => {
+  return {
+    type: EDIT_POST_REQUEST,
+    data,
+  }
+}
 
 export const loadCommentsRequestAction = (postId) => {
   return {
@@ -364,6 +382,7 @@ const reducer = (state = initialState, action) => {
         loadCommentsDone: false,
         laodCommentsError: true,
       };
+    // 수정할 게시글 정보 불러오기
     case LOAD_EDIT_POST_INFO_REQUEST:
       return {
         ...state,
@@ -391,6 +410,28 @@ const reducer = (state = initialState, action) => {
         loadEditPostInfoDone: false,
         loadEditPostInfoError: true,
       };
+    // 게시글 수정하기
+    case EDIT_POST_REQUEST:
+      return {
+        ...state,
+        editPostLoading: true,
+        editPostDone: false,
+        editPostError: false,
+      };
+    case EDIT_POST_SUCCESS:
+      return {
+        ...state,
+        editPostLoading: false,
+        editPostDone: true,
+        editPostError: false,
+      };
+    case EDIT_POST_FAILURE:
+      return {
+        ...state,
+        editPostLoading: false,
+        editPostDone: false,
+        editPostError: false,
+      }
     // 게시글 좋아요 등록
     case ADD_LIKE_REQUEST:
       return {

@@ -1,10 +1,16 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import router from 'next/router';
 import useInput from '../../hooks/useInput';
-import { Button, Form, Input } from 'antd';
+import { editPostRequestAction } from '../../reducer/post';
 import CommonModal from '../CommonModal';
+import { Button, Form, Input } from 'antd';
 import styled from 'styled-components';
 
 const EditPostForm = ({ data }) => {
+  console.log(data);
+  const dispatch = useDispatch('');
+  
   // 제목 입력
   const [postTitle, onChangePostTitle] = useInput(data.postTitle);
   const [postContent, onChangePostContent] = useInput(data.postContent);
@@ -12,6 +18,18 @@ const EditPostForm = ({ data }) => {
   const [modalContent, setModalContent] = useState('');
   // modal show
   const [showModal, setShowModal] = useState(false);
+
+  const onClickEditBtn = () => {
+    dispatch(editPostRequestAction({
+      postId: data.postId,
+      postTitle: postTitle,
+      postContent: postContent,
+    }))
+  };
+
+  const onClickCancelBtn = () => {
+    router.back();
+  }
 
   return (
     <Container>
@@ -35,10 +53,10 @@ const EditPostForm = ({ data }) => {
             style={{ marginBottom: '.5rem' }}
           />
         </Content>
-        <PostButton type="primary" htmlType="submit" style={{ marginBottom: '1rem' }}>
+        <PostButton type="primary" htmlType="submit" style={{ marginBottom: '1rem' }} onClick={onClickEditBtn}>
           수정
         </PostButton>
-        <PostButton onClick="">취소</PostButton>
+        <PostButton onClick={onClickCancelBtn}>취소</PostButton>
       </Form>
       <CommonModal modalContent={modalContent} visible={showModal} />
     </Container>
