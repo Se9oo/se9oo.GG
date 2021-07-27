@@ -386,6 +386,7 @@ const reducer = (state = initialState, action) => {
     case LOAD_EDIT_POST_INFO_REQUEST:
       return {
         ...state,
+        editPostInfo: {},
         loadEditPostInfoLoading: true,
         loadEditPostInfoDone: false,
         loadEditPostInfoError: false,
@@ -406,6 +407,7 @@ const reducer = (state = initialState, action) => {
     case LOAD_EDIT_POST_INFO_FAILURE:
       return {
         ...state,
+        editPostInfo: {},
         loadEditPostInfoLoading: false,
         loadEditPostInfoDone: false,
         loadEditPostInfoError: true,
