@@ -332,7 +332,7 @@ router.get(`/post/load`, isLoggedIn, async (req, res, next) => {
 
 // 게시글 수정하기
 router.post(`/post/editPost`, isLoggedIn, async (req, res, next) => {
-  const { postId, postTitle, postContent } = req.params;
+  const { postId, postTitle, postContent } = req.body;
 
   const connection = await pool.getConnection();
 
@@ -341,7 +341,7 @@ router.post(`/post/editPost`, isLoggedIn, async (req, res, next) => {
 
     await connection.execute(updateEditPost, [postTitle, postContent, postId]);
 
-    return res.status(200).json(postId);
+    return res.status(200).json('success');
   } catch (err) {
     next(err);
     return res.status(500).json(err);

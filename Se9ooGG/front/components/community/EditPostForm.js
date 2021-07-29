@@ -3,12 +3,11 @@ import { useDispatch } from 'react-redux';
 import router from 'next/router';
 import useInput from '../../hooks/useInput';
 import { editPostRequestAction } from '../../reducer/post';
-import CommonModal from '../CommonModal';
+import CommonModal, { errorModal } from '../CommonModal';
 import { Button, Form, Input } from 'antd';
 import styled from 'styled-components';
 
 const EditPostForm = ({ data }) => {
-  console.log(data);
   const dispatch = useDispatch('');
   
   // 제목 입력
@@ -20,16 +19,40 @@ const EditPostForm = ({ data }) => {
   const [showModal, setShowModal] = useState(false);
 
   const onClickEditBtn = () => {
+    if (postTitle === data.postTitle && postContent === data.postContent ) {
+      errorModal('변경된 내용이 없습니다.')
+      return;
+    }
+
+    setModalContent({
+      title: '게시글 수정',
+      onOk: onOkEditModal,
+      onCancel: onCancelEditModal,
+      content: '수정 하시겠습니까?',
+    });
+    setShowModal(true);
+  };
+
+  // 게시글 수정 ok
+  const onOkEditModal = () => {
     dispatch(editPostRequestAction({
       postId: data.postId,
       postTitle: postTitle,
       postContent: postContent,
-    }))
+    }));
+    setShowModal(false);
+    router.back();
   };
 
+  // 게시글 수정 취소
+  const onCancelEditModal = () => {
+    setShowModal(false);
+  };
+
+  // 취소
   const onClickCancelBtn = () => {
     router.back();
-  }
+  };
 
   return (
     <Container>

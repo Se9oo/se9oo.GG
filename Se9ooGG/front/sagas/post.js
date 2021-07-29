@@ -202,10 +202,10 @@ function* loadEditPostInfo(action) {
 
 function* editPost(action) {
   try {
-    const result = yield call(editPostAPI, action.data);
+    yield call(editPostAPI, action.data);
     yield put({
       type: EDIT_POST_SUCCESS,
-      data: result.data,
+      data: action.data,
     });
   } catch (err) {
     yield put({

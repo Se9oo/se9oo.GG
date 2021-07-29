@@ -396,6 +396,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         editPostInfo: {
+          postId: data.post_id,
           postTitle: data.post_title,
           postContent: data.post_content,
           userNickname: data.user_nickname,
@@ -421,19 +422,45 @@ const reducer = (state = initialState, action) => {
         editPostError: false,
       };
     case EDIT_POST_SUCCESS:
-      return {
+
+      const returnValue = {
         ...state,
         editPostLoading: false,
         editPostDone: true,
         editPostError: false,
       };
+
+      // 게시글 목록 update
+      const editPostIdx = state.postList.findIndex((post) => post.postId === parseInt(action.data.postId, 10));
+
+      if (editPostIdx !== -1) {
+        // 깊은 복사
+        const editPostList = JSON.parse(JSON.stringify(state.postList));
+        editPostList[editPostIdx].title = action.data.postTitle;
+        editPostList[editPostIdx].content = action.data.postContent;
+        returnValue.postList = [...editPostList];
+      };
+
+      // 내 게시글 목록 update
+      const editMyPostIdx = state.myPostList.findIndex((post) => post.postId === parseInt(action.data.postId, 10));
+
+      if (editMyPostIdx !== -1) {
+        // 깊은 복사
+        const editMyPostList = JSON.parse(JSON.stringify(state.myPostList));
+        editMyPostList[editMyPostIdx].title = action.data.postTitle;
+        editMyPostList[editMyPostIdx].content = action.data.postContent;
+        returnValue.myPostList = editMyPostList;
+      };
+
+      return returnValue;
+
     case EDIT_POST_FAILURE:
       return {
         ...state,
         editPostLoading: false,
         editPostDone: false,
         editPostError: false,
-      }
+      };
     // 게시글 좋아요 등록
     case ADD_LIKE_REQUEST:
       return {

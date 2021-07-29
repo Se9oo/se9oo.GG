@@ -153,7 +153,8 @@ exports.cancelLike = `
 // 수정할 게시글 정보 가져오기
 exports.selectLoadEditPost = `
   SELECT
-    pst.post_title
+    pst.post_id
+    , pst.post_title
     , pst.post_content
     , usr.user_nickname
   FROM
