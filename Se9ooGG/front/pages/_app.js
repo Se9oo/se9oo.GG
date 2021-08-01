@@ -2,12 +2,11 @@ import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import { useDispatch } from 'react-redux';
-import { createGlobalStyle } from 'styled-components';
-import reset from 'styled-reset';
-import { ThemeProvider } from 'styled-components';
 import wrapper from '../store/configureStore';
-import 'antd/dist/antd.css';
 import { LoadMyInfoRequestAction } from '../reducer/user';
+import 'antd/dist/antd.css';
+import { createGlobalStyle, ThemeProvider } from 'styled-components';
+import reset from 'styled-reset';
 
 const Se9oogg = ({ Component }) => {
   const dispatch = useDispatch('');
