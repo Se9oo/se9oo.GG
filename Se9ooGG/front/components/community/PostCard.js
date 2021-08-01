@@ -1,6 +1,7 @@
 import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
+import crypto from 'crypto-js';
 import { deletePostRequestAction, likeRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
@@ -63,9 +64,11 @@ const PostCard = memo(({ data }) => {
 
   // 게시글 수정
   const onClickEditPostBtn = useCallback(() => {
+    const encryptedPostId = crypto.AES.encrypt(String(data.postId), process.env.CRYPTO_SECRET).toString();
+    
     router.push({
       pathname: '/post/edit/[postId]',
-      query: { postId: data.postId },
+      query: { postId: encryptedPostId },
     });
   }, []);
 

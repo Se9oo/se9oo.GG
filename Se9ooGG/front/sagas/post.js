@@ -66,7 +66,7 @@ function loadCommentsAPI(postId) {
 
 // 수정할 게시글 정보 가져오기
 function loadEditPostInfoAPI(postId) {
-  return axios.get(`/post/load?postId=${postId}`);
+  return axios.get(`/post/load?postId=${encodeURIComponent(postId)}`);
 }
 
 // 게시글 수정하기

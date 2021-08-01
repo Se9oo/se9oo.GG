@@ -1,4 +1,5 @@
 const express = require('express');
+const crypto = require('crypto-js');
 const pool = require('../config/pool');
 const { isLoggedIn } = require('./middlewares');
 const {
@@ -310,7 +311,15 @@ router.post(`/post/like`, isLoggedIn, async (req, res, next) => {
 
 // 수정할 게시글 정보 가져오기
 router.get(`/post/load`, isLoggedIn, async (req, res, next) => {
-  const postId = parseInt(req.query.postId, 10);
+  let bytes;
+  let postId;
+
+  try {
+    bytes = crypto.AES.decrypt(decodeURIComponent(req.query.postId), process.env.CRYPTO_SECRET);
+    postId = JSON.parse(bytes.toString(crypto.enc.Utf8));
+  } catch (err) {
+    return res.status(404).json('error');
+  }
 
   const connection = await pool.getConnection();
 
