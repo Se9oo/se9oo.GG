@@ -42,6 +42,10 @@ export const initialState = {
   cancelLikeLoading: false,
   cancelLikeDone: false,
   cancelLikeError: false,
+  // 신고하기
+  reportPostLoading: false,
+  repostPostDone: false,
+  reportPostError: false,
 };
 
 // 글목록 불러오기
@@ -98,6 +102,11 @@ export const ADD_LIKE_FAILURE = 'ADD_LIKE_FAILURE';
 export const CANCEL_LIKE_REQUEST = 'CANCEL_LIKE_REQUEST';
 export const CANCEL_LIKE_SUCCESS = 'CANCEL_LIKE_SUCCESS';
 export const CANCEL_LIKE_FAILURE = 'CANCEL_LIKE_FAILURE';
+
+// 신고하기
+export const REPORT_POST_REQUEST = 'REPORT_POST_REQUEST';
+export const REPORT_POST_SUCCESS = 'REPORT_POST_SUCCESS';
+export const REPORT_POST_FAILURE = 'REPORT_POST_FAILURE';
 
 export const loadPostsRequestAction = (lastPostId) => {
   return {
@@ -170,6 +179,13 @@ export const likeRequestAction = (data) => {
     data,
   };
 };
+
+export const reportRequestAction = (data) => {
+  return {
+    type: REPORT_POST_REQUEST,
+    data,
+  }
+}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -547,6 +563,27 @@ const reducer = (state = initialState, action) => {
         cancelLikeLoading: false,
         cancelLikeDone: false,
         cancelLikeError: true,
+      };
+    case REPORT_POST_REQUEST:
+      return {
+        ...state,
+        reportPostLoading: true,
+        reportPostDone: false,
+        reportPostError: false,
+      };
+    case REPORT_POST_SUCCESS:
+      return {
+        ...state,
+        reportPostLoading: false,
+        reportPostDone: true,
+        reportPostError: false,
+      };
+    case REPORT_POST_FAILURE:
+      return {
+        ...state,
+        reportPostLoading: false,
+        reportPostDone: false,
+        reportPostError: true,
       };
     default:
       return state;

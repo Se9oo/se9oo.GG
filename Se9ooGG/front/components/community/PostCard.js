@@ -2,10 +2,10 @@ import React, { memo, useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import router from 'next/router';
 import crypto from 'crypto-js';
-import { deletePostRequestAction, likeRequestAction } from '../../reducer/post';
+import { deletePostRequestAction, likeRequestAction, reportRequestAction } from '../../reducer/post';
 import { Avatar, Button, Card, Popover } from 'antd';
 import { SmileOutlined, EllipsisOutlined, CommentOutlined, SmileTwoTone } from '@ant-design/icons';
-import CommonModal from '../CommonModal';
+import CommonModal, { infoModal } from '../CommonModal';
 import CommentCard from './CommentCard';
 import styled from 'styled-components';
 
@@ -79,6 +79,34 @@ const PostCard = memo(({ data }) => {
     setLiked((prevLiked) => !prevLiked);
   }, [liked]);
 
+  // 신고하기
+  const onClickReport = () => {
+    if (!me) {
+      infoModal('신고 기능은 로그인이 필요합니다.\n로그인 페이지로 이동합니다.');
+      router.push('/login');
+    } else {
+      setModalContent({
+        title: '게시글 신고',
+        onOk: onOkReport,
+        onCancel: onCancelReport,
+        content: '해당 게시글을 신고 하시겠습니까?',
+      });
+      setShowPopOver(false);
+      setShowModal(true);
+    }
+  }
+
+  // 신고 하기 ok
+  const onOkReport = () => {
+    dispatch(reportRequestAction({ postId: data.postId }));
+    setShowModal(false);
+  };
+
+  // 신고 하기 cancel
+  const onCancelReport = () => {
+    setShowModal(false);
+  };
+
   return (
     <>
       <Card
@@ -107,7 +135,7 @@ const PostCard = memo(({ data }) => {
                     <Button onClick={onClickDeletePostBtn}>삭제</Button>
                   </>
                 )}
-                <Button type="primary" danger>
+                <Button type="primary" danger onClick={onClickReport}>
                   신고
                 </Button>
               </div>
