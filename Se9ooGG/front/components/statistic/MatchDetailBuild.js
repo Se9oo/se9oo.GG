@@ -9,11 +9,11 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   // 검색한 소환사명
   const { summonerName } = useSelector((state) => state.statistic.summoner);
   // 검색한 소환사의 participantId
-  const summonerParticipantId = match.participantIdentities.filter((summoner) => {
-    return summoner.player.summonerName === summonerName;
+  const summonerParticipantId = match.info.participants.filter((summoner) => {
+    return summoner.summonerName === summonerName;
   })[0].participantId;
   // match의 timeline 추출
-  const matchTimelines = match.matchTimelines.frames;
+  const matchTimelines = match.matchTimelines.info.frames;
   // 위에서 찾은 participantId로 검색한 소환사의 시간대별 events 추출
   const events = matchTimelines.map((v) => {
     return v.events.filter((e) => e.participantId === summonerParticipantId);
@@ -25,7 +25,7 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
 
   // timestamp -> 분으로 변환해서 time property 추가
   // 시간대별로 묶여있는 배열을 풀어서 시간값 추가 후 하나의 큰 배열안에 저장
-  let formedItems = [];
+  const formedItems = [];
   items.map((item) => {
     if (item.length !== 0) {
       item.map((i) => {
@@ -39,9 +39,9 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   // 이전 ITEM TYPE
   let prevType = '';
   // 아이템 Object 저장 array
-  let secondFormedItems = [];
+  const secondFormedItems = [];
   // 아이템 Object의 property 'itemId' 값 저장 array
-  let secondFormedItemsId = [];
+  const secondFormedItemsId = [];
   formedItems.map((f) => {
     if (f.type === 'ITEM_PURCHASED' || f.type === 'ITEM_SOLD') {
       secondFormedItems.push(f);
@@ -61,9 +61,9 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   // 이전 시간
   let prevTime = 0;
   // 같은 시간에 구매/판매 한 아이템 배열
-  let sameTimeArr = [];
+  const sameTimeArr = [];
   // 최종 빌드 아이템 배열
-  let finalItemArr = [];
+  const finalItemArr = [];
   secondFormedItems.map((f, i) => {
     if (prevTime === f.time) {
       sameTimeArr.push(f);
@@ -89,26 +89,34 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   });
 
   // summoner game info 추출
-  const gameInfo = match.participants.filter((summoner) => {
+  const gameInfo = match.info.participants.filter((summoner) => {
     return summoner.participantId === summonerParticipantId;
   })[0];
   // 스킬 빌드에서 사용할 summoner champion id 값 추출
   const championId = gameInfo.championId;
 
-  const stats = gameInfo.stats;
-  const runeInfo = {
-    perkPrimaryStyle: stats.perkPrimaryStyle,
-    perkSubStyle: stats.perkSubStyle,
-    perk0: stats.perk0,
-    perk1: stats.perk1,
-    perk2: stats.perk2,
-    perk3: stats.perk3,
-    perk4: stats.perk4,
-    perk5: stats.perk5,
-    statPerk0: stats.statPerk0,
-    statPerk1: stats.statPerk1,
-    statPerk2: stats.statPerk2,
-  };
+  // 룬 정보 세팅
+  const runeInfo = {};
+  const perkStyles = [];
+  // 메인, 서브 룬 세팅
+  gameInfo.perks.styles.map((perk) => {
+    if (perk.description === 'primaryStyle') {
+      runeInfo.perkPrimaryStyle = perk.style;
+    } else if (perk.description === 'subStyle') {
+      runeInfo.perkSubStyle = perk.style;
+    }
+    perkStyles.push(...perk.selections);
+  });
+
+  // 메인, 서브 하위 룬 세팅
+  perkStyles.map((perk, idx) => {
+    runeInfo[`perk${idx}`] = perk.perk;
+  });
+
+  // 특성 세팅
+  runeInfo.statPerk0 = gameInfo.perks.statPerks.defense;
+  runeInfo.statPerk1 = gameInfo.perks.statPerks.flex;
+  runeInfo.statPerk2 = gameInfo.perks.statPerks.offense;
 
   return (
     <>

@@ -17,29 +17,31 @@ const MatchDetailEtc = memo(({ match, winOrLose }) => {
     [selectedNav]
   );
 
-  const matchTimelines = match.matchTimelines.frames;
+  const matchTimelines = match.matchTimelines.info.frames;
   // 모든 소환사 정보
-  const allSummonerGameInfo = [...match.participants];
+  const allSummonerGameInfo = [...match.info.participants];
   // 승리팀 id
-  const winTeamId = match.teams.find((team) => team.win === 'Win').teamId;
+  const winTeamId = match.info.teams.find((team) => team.win).teamId;
   // 패배팀 id
-  const loseTeamId = match.teams.find((team) => team.win === 'Fail').teamId;
+  const loseTeamId = match.info.teams.find((team) => !team.win).teamId;
   // 승리팀 소환사 게임 정보
-  const winTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === winTeamId);
+  const winTeamInfo = allSummonerGameInfo.filter((summoner) => parseInt(summoner.teamId) === parseInt(winTeamId));
   // 패배팀 소환사 게임 정보
-  const loseTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === loseTeamId);
+  const loseTeamInfo = allSummonerGameInfo.filter((summoner) => parseInt(summoner.teamId) === parseInt(loseTeamId));
 
   // 승리팀 라인에 따른 배열 순서 정렬
-  winTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
-  });
-  winTeamInfo.sort((a, b) => a.order - b.order);
+  winTeamInfo
+    .map((summoner) => {
+      summoner.order = getListOrder(summoner.lane, summoner.role);
+    })
+    .sort((a, b) => a.order - b.order);
 
   // 패배팀 라인에 따른 배열 순서 정렬
-  loseTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
-  });
-  loseTeamInfo.sort((a, b) => a.order - b.order);
+  loseTeamInfo
+    .map((summoner) => {
+      summoner.order = getListOrder(summoner.lane, summoner.role);
+    })
+    .sort((a, b) => a.order - b.order);
   // 승리팀 챔피언 이미지
   const winTeamImg = winTeamInfo.map((info) => {
     return {

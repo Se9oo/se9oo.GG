@@ -8,7 +8,7 @@ export function getListOrder(lane, role) {
     case 'MIDDLE':
       return 2;
     case 'BOTTOM':
-      if (role === 'DUO_CARRY') {
+      if (role === 'CARRY') {
         return 3;
       } else {
         return 4;

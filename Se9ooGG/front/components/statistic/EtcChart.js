@@ -18,22 +18,24 @@ function getValueName(selectedNav) {
 
 const EtcChart = ({ matchTimelines, selectedChampList, selectedNav }) => {
   // 소환사별 타임라인 배열 생성
-  let eachParticipantsTimeLines = Array.from(Array(10), () => Array(1).fill(null));
+  const eachParticipantsTimeLines = Array.from(Array(10), () => Array(1).fill(null));
   // 할당
-  let categories = [];
+  const categories = [];
   matchTimelines.map((timeLine, i) => {
     const time = timeLine.participantFrames;
-    for (let value in time) {
+    for (const value in time) {
       eachParticipantsTimeLines[time[value].participantId - 1][i] = time[value];
     }
     categories.push(i);
   });
 
-  let totalData = [];
+  const totalData = [];
   eachParticipantsTimeLines.map((participant, idx) => {
-    let selectedChampionIdx = selectedChampList.findIndex((champion) => champion.id === participant[idx].participantId);
+    const selectedChampionIdx = selectedChampList.findIndex(
+      (champion) => champion.id === participant[idx].participantId
+    );
     if (selectedChampionIdx !== -1) {
-      let eachTotalData = [];
+      const eachTotalData = [];
       participant.map((summoner) => {
         if (selectedNav === 1) {
           eachTotalData.push(summoner.totalGold);

@@ -9,52 +9,46 @@ import styled from 'styled-components';
 
 const SummonerMatchItem = ({ match }) => {
   // 검색 소환사 accountId
-  const { accountId } = useSelector((state) => state.statistic.summoner);
-  // 검색 소환사 accoutId로 소환사 정보 찾기
-  const findSummoner = match.participantIdentities.find((summoner) => {
-    return summoner.player.accountId === accountId;
+  const { accountId, id } = useSelector((state) => state.statistic.summoner);
+  // 검색 소환사 id로 소환사 및 게임 정보 찾기
+  const summonerInfo = match.info.participants.find((summoner) => {
+    return summoner.summonerId === id;
   });
-  // 소환사 id로 찾은 소환사의 게임 정보
-  const summonerInfo = match.participants.find(
-    (info) => info.participantId === parseInt(findSummoner.participantId, 10)
-  );
-  // 소환사 게임 stat
-  const summonerStats = summonerInfo.stats;
   // 소환사 게임 timeline
-  const summonerTimeLine = summonerInfo.timeline;
+  //const summonerTimeLine = summonerInfo.timeline;
   // 소환사 승패 여부
-  let summonerWinOrLose = '';
-  if (Object.keys(summonerTimeLine).length < 4) {
-    summonerWinOrLose = '무';
-  } else {
-    summonerWinOrLose = summonerStats.win ? '승' : '패';
-  }
+  const summonerWinOrLose = summonerInfo.win ? '승' : '패';
   // 소환사 챔피언 이름
   const championName = getChampionNameById(summonerInfo.championId);
   // 소환사 spell
-  const summonerSpell = getSpellNameById(summonerInfo.spell1Id, summonerInfo.spell2Id);
-  // 소환사 rune
-  const runeInfo = {
-    perkPrimaryStyle: summonerStats.perkPrimaryStyle,
-    perk0: summonerStats.perk0,
-    perkSubStyle: summonerStats.perkSubStyle,
-  };
+  const summonerSpell = getSpellNameById(summonerInfo.summoner1Id, summonerInfo.summoner2Id);
+  // 소환사 rune 정보
+  const runeInfo = {};
+  summonerInfo.perks.styles.map((perk) => {
+    if (perk.description === 'primaryStyle') {
+      runeInfo.perkPrimaryStyle = perk.style;
+      runeInfo.perk0 = perk.selections[0].perk;
+    } else if (perk.description === 'subStyle') {
+      runeInfo.perkSubStyle = perk.style;
+    }
+  });
+
   // 소환사 rune img 경로
   const summonerRune = getRuneImgUrl(runeInfo);
   // 소환사 KDA
-  const summonerKDA = getKDA(summonerStats.kills, summonerStats.deaths, summonerStats.assists);
+  const summonerKDA = getKDA(summonerInfo.kills, summonerInfo.deaths, summonerInfo.assists);
   // 소환사 item
   const summonerItemsArr = [];
   for (let i = 0; i < 7; i++) {
-    summonerItemsArr.push(summonerStats[`item${i}`]);
+    summonerItemsArr.push(summonerInfo[`item${i}`]);
   }
   // 게임 진행 시간
-  const gameDuration = getGameDuration(match.gameDuration);
+  const gameDuration = getGameDuration(match.info.gameDuration);
   // 게임 생성 시간
-  const gameCreateion = getGameCreation(match.gameCreation + match.gameDuration * 1000);
+  const gameCreateion = getGameCreation(match.info.gameCreation + match.info.gameDuration * 1000);
   // Queue 타입
-  const queueType = getQueueType(match.queueId);
-  // match detail toggle
+  const queueType = getQueueType(match.info.queueId);
+  // match.info detail toggle
   const [showDetail, setShowDetail] = useState(false);
   const onToggleDetailBtn = useCallback(() => {
     setShowDetail(!showDetail);
@@ -64,14 +58,8 @@ const SummonerMatchItem = ({ match }) => {
     e.target.src = '/img/item/0.png';
   }, []);
 
-  // 참가자 정보에 이름 추가
-  const participants = [...match.participants];
-  participants.map((participant) => {
-    const participantInfo = match.participantIdentities.find(
-      (summoner) => summoner.participantId === participant.participantId
-    );
-    participant[`summonerName`] = participantInfo.player.summonerName;
-  });
+  // 소환사들 정보
+  const participants = [...match.info.participants];
 
   // 팀 별로 소환사 나누기
   const teamA = participants.filter((summoner) => summoner.teamId === 100);
@@ -104,8 +92,8 @@ const SummonerMatchItem = ({ match }) => {
                   <img src={`./img/champion/${championName.eng}.png`} alt="summoner-champion-image" />
                 </SummonerChampion>
                 <SummonerSpell>
-                  <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell" />
                   <img src={`./img/spell/${summonerSpell[1].eng}.png`} alt="summoner-second-spell" />
+                  <img src={`./img/spell/${summonerSpell[0].eng}.png`} alt="summoner-first-spell" />
                 </SummonerSpell>
                 <SummonerRune>
                   <img src={`./img/${summonerRune.perk0}`} alt="summoner-primary-rune" />
@@ -114,16 +102,16 @@ const SummonerMatchItem = ({ match }) => {
                 <SummonerText>
                   <SummonerKDA>
                     <SummonerScore>
-                      <span>{summonerStats.kills}</span>
-                      <span>{summonerStats.deaths}</span>
-                      <span>{summonerStats.assists}</span>
+                      <span>{summonerInfo.kills}</span>
+                      <span>{summonerInfo.deaths}</span>
+                      <span>{summonerInfo.assists}</span>
                     </SummonerScore>
                     <SummonerKDARate>{`${summonerKDA} : 1`}</SummonerKDARate>
                   </SummonerKDA>
                   <SummonerStats>
-                    <span>{`레벨 ${summonerStats.champLevel}`}</span>
+                    <span>{`레벨 ${summonerInfo.champLevel}`}</span>
                     <span>
-                      {`${parseInt(summonerStats.totalMinionsKilled + summonerStats.neutralMinionsKilled, 10)} CS`}
+                      {`${parseInt(summonerInfo.totalMinionsKilled + summonerInfo.neutralMinionsKilled, 10)} CS`}
                     </span>
                   </SummonerStats>
                 </SummonerText>

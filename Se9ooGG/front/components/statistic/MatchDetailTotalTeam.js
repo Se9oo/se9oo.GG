@@ -3,17 +3,18 @@ import MatchDetailTotalSummoner from './MatchDetailTotalSummoner';
 import styled from 'styled-components';
 
 const MatchDetailTotalTeam = ({ index, team, gameInfo }) => {
+  const objectives = team.objectives;
   return (
     <>
       <MatchDetailTotalHeader index={index}>
-        <WinOrLose winOrLose={team.win}>{team.win === 'Win' ? '승리' : '패배'}</WinOrLose>
+        <WinOrLose winOrLose={team.win}>{team.win ? '승리' : '패배'}</WinOrLose>
         <ObjectKillInfo>
           <dt>타워</dt>
-          <dd>{`${team.towerKills}`}</dd>
+          <dd>{objectives.tower.kills}</dd>
           <dt>용</dt>
-          <dd>{`${team.dragonKills}`}</dd>
+          <dd>{objectives.dragon.kills}</dd>
           <dt>바론</dt>
-          <dd>{`${team.baronKills}`}</dd>
+          <dd>{objectives.baron.kills}</dd>
         </ObjectKillInfo>
       </MatchDetailTotalHeader>
       <MatchDetailTotalSummonersList>
@@ -41,7 +42,7 @@ const MatchDetailTotalHeader = styled.div`
 const WinOrLose = styled.span`
   width: 50%;
   ${(props) => {
-    if (props.winOrLose === 'Win') {
+    if (props.winOrLose) {
       return `color: #339af0;`;
     } else {
       return `color: #e03131;`;

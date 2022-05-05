@@ -1,5 +1,8 @@
 import React, { useCallback, useEffect } from 'react';
+import Router from 'next/router';
+import Head from 'next/head';
 import { useDispatch, useSelector } from 'react-redux';
+
 import { LoadMyInfoRequestAction } from '../reducer/user';
 import {
   loadSummonerDoneClearAction,
@@ -8,20 +11,22 @@ import {
   loadSummonerInGameRequestAction,
   loadSummonerInGameErrorClearAction,
 } from '../reducer/statistic';
-import Router from 'next/router';
-import Head from 'next/head';
-import wrapper from '../store/configureStore';
-import { END } from 'redux-saga';
-import axios from 'axios';
+
 import AppLayout from '../components/AppLayout';
-import useInput from '../hooks/useInput';
 import SummonerRankItem from '../components/statistic/SummonerRankItem';
 import SummonerMostChampionItem from '../components/statistic/SummonerMostChampionItem';
 import SummonerInGame from '../components/statistic/SummonerInGame';
 import SummonerMatchItem from '../components/statistic/SummonerMatchItem';
 import { errorModal } from '../components/CommonModal';
+
+import useInput from '../hooks/useInput';
+
 import { Button, Input } from 'antd';
 import styled from 'styled-components';
+
+import wrapper from '../store/configureStore';
+import { END } from 'redux-saga';
+import axios from 'axios';
 
 const Statistic = () => {
   const dispatch = useDispatch('');
@@ -126,7 +131,7 @@ const Statistic = () => {
           </SummonerMostChampion>
           <ul>
             {summoner.match
-              ? summoner.match.map((match) => <SummonerMatchItem key={match.gameId} match={match} />)
+              ? summoner.match.map((match) => <SummonerMatchItem key={match.info.gameId} match={match} />)
               : null}
           </ul>
         </>

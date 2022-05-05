@@ -26,27 +26,29 @@ function getChartDataName(data) {
 
 const MatchDetailAnalysis = ({ match }) => {
   // 모든 소환사 정보
-  const allSummonerGameInfo = [...match.participants];
+  const allSummonerGameInfo = [...match.info.participants];
   // 승리팀 id
-  const winTeamId = match.teams.find((team) => team.win === 'Win').teamId;
+  const winTeamId = match.info.teams.find((team) => team.win).teamId;
   // 패배팀 id
-  const loseTeamId = match.teams.find((team) => team.win === 'Fail').teamId;
+  const loseTeamId = match.info.teams.find((team) => !team.win).teamId;
   // 승리팀 소환사 게임 정보
   const winTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === winTeamId);
   // 패배팀 소환사 게임 정보
   const loseTeamInfo = allSummonerGameInfo.filter((summoner) => summoner.teamId === loseTeamId);
 
   // 승리팀 라인에 따른 배열 순서 정렬
-  winTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
-  });
-  winTeamInfo.sort((a, b) => a.order - b.order);
+  winTeamInfo
+    .map((summoner) => {
+      summoner.order = getListOrder(summoner.lane, summoner.role);
+    })
+    .sort((a, b) => a.order - b.order);
 
   // 패배팀 라인에 따른 배열 순서 정렬
-  loseTeamInfo.map((summoner) => {
-    summoner.order = getListOrder(summoner.timeline.lane, summoner.timeline.role);
-  });
-  loseTeamInfo.sort((a, b) => a.order - b.order);
+  loseTeamInfo
+    .map((summoner) => {
+      summoner.order = getListOrder(summoner.lane, summoner.role);
+    })
+    .sort((a, b) => a.order - b.order);
 
   // chart에 꽂을 데이터명 state
   const [chartData, setChartData] = useState('totalDamageDealtToChampions');
@@ -82,27 +84,27 @@ const MatchDetailAnalysis = ({ match }) => {
     // data
     winTeamTotalDamageDealtToChampions.push({
       name: championName.eng + '-win',
-      y: summoner.stats.totalDamageDealtToChampions,
+      y: summoner.totalDamageDealtToChampions,
     });
     winTeamGoldEarned.push({
       name: championName.eng + '-win',
-      y: summoner.stats.goldEarned,
+      y: summoner.goldEarned,
     });
     winTeamKills.push({
       name: championName.eng + '-win',
-      y: summoner.stats.kills,
+      y: summoner.kills,
     });
     winWardsPlaced.push({
       name: championName.eng + '-win',
-      y: summoner.stats.wardsPlaced,
+      y: summoner.wardsPlaced,
     });
     winTotalDamageTaken.push({
       name: championName.eng + '-win',
-      y: summoner.stats.totalDamageTaken,
+      y: summoner.totalDamageTaken,
     });
     winCs.push({
       name: championName.eng + '-win',
-      y: parseInt(summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled, 10),
+      y: parseInt(summoner.totalMinionsKilled + summoner.neutralMinionsKilled, 10),
     });
   });
 
@@ -119,27 +121,27 @@ const MatchDetailAnalysis = ({ match }) => {
     // data
     loseTeamTotalDamageDealtToChampions.push({
       name: championName.eng + '-los',
-      y: summoner.stats.totalDamageDealtToChampions,
+      y: summoner.totalDamageDealtToChampions,
     });
     loseTeamGoldEarned.push({
       name: championName.eng + '-los',
-      y: summoner.stats.goldEarned,
+      y: summoner.goldEarned,
     });
     loseTeamKills.push({
       name: championName.eng + '-los',
-      y: summoner.stats.kills,
+      y: summoner.kills,
     });
     loseWardsPlaced.push({
       name: championName.eng + '-los',
-      y: summoner.stats.wardsPlaced,
+      y: summoner.wardsPlaced,
     });
     loseTotalDamageTaken.push({
       name: championName.eng + '-los',
-      y: summoner.stats.totalDamageTaken,
+      y: summoner.totalDamageTaken,
     });
     loseCs.push({
       name: championName.eng + '-los',
-      y: parseInt(summoner.stats.totalMinionsKilled + summoner.stats.neutralMinionsKilled, 10),
+      y: parseInt(summoner.totalMinionsKilled + summoner.neutralMinionsKilled, 10),
     });
   });
 

@@ -7,25 +7,27 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
   // 각 소환사가 선택한 챔피언 고유 id
   const championName = getChampionNameById(gameInfo.championId);
   // list item 순서 (선택 라인에 따라)
-  const order = getListOrder(gameInfo.timeline.lane, gameInfo.timeline.role);
-  // game 데이터
-  const stats = gameInfo.stats;
+  const order = getListOrder(gameInfo.lane, gameInfo.role);
   // 소환사 spell
-  const spell = getSpellNameById(gameInfo.spell1Id, gameInfo.spell2Id);
+  const spell = getSpellNameById(gameInfo.summoner1Id, gameInfo.summoner2Id);
   // 소환사 rune
-  const runeInfo = {
-    perkPrimaryStyle: stats.perkPrimaryStyle,
-    perk0: stats.perk0,
-    perkSubStyle: stats.perkSubStyle,
-  };
+  const runeInfo = {};
+  gameInfo.perks.styles.map((perk) => {
+    if (perk.description === 'primaryStyle') {
+      runeInfo.perkPrimaryStyle = perk.style;
+      runeInfo.perk0 = perk.selections[0].perk;
+    } else if (perk.description === 'subStyle') {
+      runeInfo.perkSubStyle = perk.style;
+    }
+  });
   // 소환사 rune
   const rune = getRuneImgUrl(runeInfo);
   // 소환사 kda
-  const kda = getKDA(stats.kills, stats.deaths, stats.assists);
+  const kda = getKDA(gameInfo.kills, gameInfo.deaths, gameInfo.assists);
   // 소환사 items
   const summonerItemsArr = [];
   for (let i = 0; i < 7; i++) {
-    summonerItemsArr.push(stats[`item${i}`]);
+    summonerItemsArr.push(gameInfo[`item${i}`]);
   }
   // item error alt img
   const onErrorItemImg = useCallback((e) => {
@@ -36,7 +38,7 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
     <SummonerListItem order={order}>
       <ChampionImg>
         <img src={`./img/champion/${championName.eng}.png`} alt="summoner champion image" />
-        <Level>{stats.champLevel}</Level>
+        <Level>{gameInfo.champLevel}</Level>
       </ChampionImg>
       <Spell>
         <img src={`./img/spell/${spell[0].eng}.png`} alt="summoner-first-spell" />
@@ -49,7 +51,7 @@ const MatchDetailTotalSummoner = ({ gameInfo }) => {
       <Info>
         <Nickname>{gameInfo.summonerName}</Nickname>
         <Stats>
-          <span>{`${stats.kills}/${stats.deaths}/${stats.assists}`}</span>
+          <span>{`${gameInfo.kills}/${gameInfo.deaths}/${gameInfo.assists}`}</span>
           <span>{`${kda} : 1`}</span>
         </Stats>
       </Info>
