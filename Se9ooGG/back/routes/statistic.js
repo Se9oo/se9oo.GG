@@ -8,6 +8,8 @@ dotenv.config();
 
 router.get('/statistic/loadSummoner', async (req, res, next) => {
   const { summonerName } = req.query;
+  // 가져오는 게임 정보 수
+  const MAX_GAME_COUNT = 5;
 
   try {
     if (summonerName) {
@@ -53,7 +55,7 @@ router.get('/statistic/loadSummoner', async (req, res, next) => {
 
       // match 정보
       const allMatchesInfo = await axios.get(
-        `https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=20&api_key=${process.env.API_KEY}`
+        `https://asia.api.riotgames.com/lol/match/v5/matches/by-puuid/${puuid}/ids?start=0&count=${MAX_GAME_COUNT}&api_key=${process.env.API_KEY}`
       );
 
       const matchData = await Promise.all(
