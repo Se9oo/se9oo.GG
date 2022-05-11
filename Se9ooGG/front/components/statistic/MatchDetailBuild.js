@@ -61,7 +61,7 @@ const MatchDetailBuild = ({ match, winOrLose }) => {
   // 이전 시간
   let prevTime = 0;
   // 같은 시간에 구매/판매 한 아이템 배열
-  const sameTimeArr = [];
+  let sameTimeArr = [];
   // 최종 빌드 아이템 배열
   const finalItemArr = [];
   secondFormedItems.map((f, i) => {
