@@ -108,7 +108,7 @@ const SkillTable = styled.table`
 
   & td,
   th {
-    width: 5.5%;
+    width: 4.5%;
     padding: 0.8rem 0;
     border: 1px solid #e5e5e5;
     text-align: center;
