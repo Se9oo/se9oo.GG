@@ -2,18 +2,37 @@
 
 > RIOT API를 활용한 리그오브레전드 전적 검색 사이트
 
-## 🖥 실행 화면 
+<br>
+
+## 🛠 사용 기술
+
+### Front-end
+
+- React ( Hooks )
+- Redux & Redux saga
+- Ant Design
+- Styled Component
+- Next.js
+- highcharts.js (chart)
+
+### Back-end
+
+- Express.js ( node )
+- MySQL
+
+### DEVOPS
+
+- AWS ( EC2 )
 
 <br>
 
-<details>
-  <summary><strong>이곳을 클릭해 주세요!</strong></summary>
-  
+## 🖥 실행 화면 
+
 ### 목차  
 [1. 메인](#메인)  
 [2. 전적](#전적)  
-- [2-1. 인게임](#인게임-정보)  
-- [2-2. 전적 상세](#전적-상세-정보)  
+- [2-1. 인게임 정보](#인게임-정보)  
+- [2-2. 전적 상세 정보](#전적-상세-정보)  
 - [2-3. 참가자 상세 정보](#참가자-상세-정보)  
 - [2-4. 팀 분석 정보](#팀-분석-정보)  
 - [2-5. 빌드 정보](#빌드-정보)  
@@ -50,7 +69,7 @@
 <br>
 
 #### 인게임 정보
-![2-1. 인게임](https://user-images.githubusercontent.com/39517335/169260456-bb5f5394-f363-409f-be56-a6dd69cb412e.png)
+![2-1. 인게임 정보](https://user-images.githubusercontent.com/39517335/169260456-bb5f5394-f363-409f-be56-a6dd69cb412e.png)
 - 현재 진행중인 게임 정보를 확인 할 수 있습니다.
 
 [목차로 이동](#목차)
@@ -58,7 +77,7 @@
 <br>
 
 #### 전적 상세 정보
-![2-2. 전적 상세](https://user-images.githubusercontent.com/39517335/169274170-a2566583-9b81-4a1b-9b2f-da2af9dd5037.png)
+![2-2. 전적 상세 ](https://user-images.githubusercontent.com/39517335/169274170-a2566583-9b81-4a1b-9b2f-da2af9dd5037.png)
 - 진행한 게임에 대한 정보(승패, 진행 시기, 게임 총 시간, 오브젝트 점수, 아이템, 스펠, 룬, 스탯, 참가자)가 표시 됩니다.
 
 [목차로 이동](#목차)
@@ -166,7 +185,7 @@
 
 <br>
 
-#### 챔피언 상세 정보
+#### 챔피언 상세 정보 
 ![5-1. 챔피언 상세](https://user-images.githubusercontent.com/39517335/169287825-1a4263c1-9395-439c-ad4f-df956e537a1e.png)
 ![5-1. 챔피언 상세2](https://user-images.githubusercontent.com/39517335/169287992-aac09a9b-be46-428c-983e-499cc5098d99.png)
 ![5-1. 챔피언 상세3](https://user-images.githubusercontent.com/39517335/169288115-ebacb48b-c40a-4f1d-b937-b245ac65ab82.png)
@@ -180,25 +199,3 @@
 [목차로 이동](#목차)
 
 <br>
-
-</details>
-
-## Skill
-
-### Front-end
-
-- React ( Hooks )
-- Redux & Redux saga
-- Ant Design
-- Styled Component
-- Next.js
-- highcharts.js (chart)
-
-### Back-end
-
-- Express.js ( node )
-- MySQL
-
-### DEVOPS
-
-- AWS ( EC2 )
